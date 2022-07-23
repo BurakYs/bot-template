@@ -23,7 +23,6 @@ module.exports = async (client) => {
                     client.application.commands.set([])
                     client.guilds.cache.get(guild.id)?.commands.set(commands)
                 })
-                console.log("aktif")
             } catch (error) {
                 console.log(error)
             }
