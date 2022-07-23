@@ -32,8 +32,6 @@ module.exports = class extends Client {
     });
     this.config = config;
     this.commands = new Collection();
-    const client = this
-    global.client = client
 
     process.on("unhandledRejection", (reason, promise) => { console.log(reason, promise) })
     process.on("uncaughtException", (err) => { console.log(err) })
