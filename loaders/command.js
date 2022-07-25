@@ -8,26 +8,11 @@ module.exports = async (client) => {
         client.commands.set(command.data.name, command);
 
     }
-    client.on("guildCreate", async guild => {
-        try {
-
-            await client.guilds.cache.get(guild.id)?.commands.set(commands)
-        } catch (error) {
-            console.log(error)
-        }
-    })
-
     client.once('ready', async () => {
             try {
-                client.guilds.cache.forEach(guild => {
-                    client.application.commands.set([])
-                    client.guilds.cache.get(guild.id)?.commands.set(commands)
-                })
+                    client.application.commands.set(commands)
             } catch (error) {
                 console.log(error)
             }
-        
     });
-
-
 };
