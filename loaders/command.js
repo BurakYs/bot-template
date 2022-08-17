@@ -1,18 +1,18 @@
-const fs = require('fs');
+const { glob } = require('glob');
+const { promisify } = require('util');
 module.exports = async (client) => {
-    const cmds = fs.readdirSync("./commands/").filter(f => f.split(".").pop() === "js");
+    const commandss = await promisify(glob)("./commands/*/*.js");
     const commands = [];
-    for (const file of cmds) {
-        const command = require(`../commands/${file}`);
-        commands.push(command.data.toJSON());
-        client.commands.set(command.data.name, command);
-
-    }
+    commandss.map((value) => {
+        let file = require(`.${value}`);
+        commands.push(file.data.toJSON());
+        client.commands.set(file.data.name, file);
+    });
     client.once('ready', async () => {
-            try {
-                    client.application.commands.set(commands)
-            } catch (error) {
-                console.log(error)
-            }
+        try {
+            client.application.commands.set(commands)
+        } catch (error) {
+            console.log(error)
+        }
     });
 };
