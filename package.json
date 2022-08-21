@@ -1,15 +1,18 @@
 {
   "name": "bot",
   "version": "1.0.0",
-  "description": "bot",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "BurakYs",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "discord.js": "^14.0.3"
+    "chalk": "^4.0.0",
+    "discord-api-types": "^0.37.2",
+    "discord.js": "^14.2.0",
+    "glob": "^8.0.3"
   }
 }
