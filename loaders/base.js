@@ -22,7 +22,7 @@ module.exports = class extends Client {
         GatewayIntentBits.MessageContent
       ],
 
-      scopes: [OAuth2Scopes.Bot, OAuth2Scopes.Identify, OAuth2Scopes.Email, OAuth2Scopes.ApplicationsCommands, OAuth2Scopes.Guilds],
+      scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
       partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.User, Partials.GuildMember, Partials.ThreadMember, Partials.GuildScheduledEvent],
 
       ws: {
