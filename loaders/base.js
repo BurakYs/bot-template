@@ -42,6 +42,7 @@ module.exports = class extends Client {
     require('../handlers/eventHandler.js')(this);
     require('../loaders/command.js')(this);
     require("../loaders/listeners.js")(this);
+    require("../loaders/messagecommand.js")(this);
     this.login(config.token).catch(e => console.log(e))
   };
 };
