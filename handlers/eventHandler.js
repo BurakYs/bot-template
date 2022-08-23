@@ -7,5 +7,4 @@ module.exports = (client) => {
     var client = global.client
     client.on(event.name, (...args) => event.run(client, ...args));
   });
-  console.log(`eventlre hazır`);
 };
