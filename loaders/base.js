@@ -1,5 +1,5 @@
 const config = require('./../config.js');
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Modal, TextInputBuilder, OAuth2Scopes, resolveColor, Client, Collection, GatewayIntentBits } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Modal, TextInputBuilder, OAuth2Scopes, partials, resolveColor, Client, Collection, GatewayIntentBits } = require("discord.js");
 
 module.exports = class extends Client {
 
@@ -31,6 +31,7 @@ module.exports = class extends Client {
     });
     this.config = config;
     this.commands = new Collection();
+    this.mcommands = new Collection();
     global.client = this
     process.on("unhandledRejection", (reason, promise) => { console.log(reason, promise) })
     process.on("uncaughtException", (err) => { console.log(err) })
