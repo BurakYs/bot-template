@@ -1,5 +1,5 @@
 const config = require('./../config.js');
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Modal, TextInputBuilder, OAuth2Scopes, partials, resolveColor, Client, Collection, GatewayIntentBits } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Modal, TextInputBuilder, OAuth2Scopes, Partials, resolveColor, Client, Collection, GatewayIntentBits } = require("discord.js");
 
 module.exports = class extends Client {
 
