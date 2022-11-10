@@ -1,23 +1,22 @@
-
-    const { ActionRowBuilder, TextInputBuilder, InteractionType, EmbedBuilder, resolveColor, Embed} = require("discord.js");
-    module.exports = {
-        name: 'interactionCreate',
-        async run(client, interaction) {
-            if (!interaction.type === InteractionType.ApplicationCommand) return;
-
-            const command = client.commands.get(interaction.commandName);
+const { InteractionType, EmbedBuilder, resolveColor } = require("discord.js");
+module.exports = {
+    name: 'interactionCreate',
+    async run(client, interaction) {
+        if (interaction.type === InteractionType.ApplicationCommand) {
+            const command = client.slashcmds.get(interaction.commandName);
             if (!command) return;
-
-            if (client.commands.get(interaction.commandName).command.reqPermMember !== "NONE") {
-                const reqPermMember = client.commands.get(interaction.commandName).command.reqPermMember.replace("Administrator", "Yönetici").replace("ManageChannels", "Kanalları Yönet").replace("ManageRoles", "Rolleri Yönet").replace("ManageMessages", "Mesajları Yönet").replace("ManageGuild", "Sunucuyu Yönet").replace("ModerateMembers", "Üyelere Zamanaşımı Uygula").replace("BanMembers", "Üyeleri Yasakla").replace("KickMembers", "Üyeleri At")
-                if (!interaction.member.permissions.has(client.commands.get(interaction.commandName).command.reqPermMember) && !client.config.owners.includes(interaction.user.id)) return interaction.reply({
-                    embeds: [new EmbedBuilder().setTitle("Hata").setColor("Red").setDescription(`\`${reqPermMember}\` iznin yok.`)]
+            if (client.commands.find(x => x.name === interaction.commandName)?.owner === true && !client.config.owners.includes(interaction.user.id)) return;
+            if (client.commands.find(x => x.name === interaction.commandName)?.dm === false && !interaction.guild) return;
+            if (client.commands.find(x => x.name === interaction.commandName).reqPermMember !== "NONE") {
+                const reqPermMember = client.commands.find(x => x.name === interaction.commandName).reqPermMember.replace("Administrator", "Administrator").replace("ManageChannels", "ManageChannels").replace("ManageRoles", "Manage Roles").replace("Manageinteractions", "Manage interactions").replace("ManageGuild", "Manage Server").replace("ModerateMembers", "Timeout Members").replace("BanMembers", "Ban Members").replace("KickMembers", "Kick Members").replace("ManageNicknames", "Manage Nicknames")
+                if (!interaction.member.permissions.has(client.commands.find(x => x.name === interaction.commandName).reqPermMember)) return interaction.reply({
+                    embeds: [new EmbedBuilder().setTitle("Missing Permissions").setColor(resolveColor("Red")).setDescription(`You don't have this permission: \`${reqPermMember}\``)]
                 })
             }
-            if (client.commands.get(interaction.commandName).command.reqPermBot !== "NONE") {
-                const reqPermBot = client.commands.get(interaction.commandName).command.reqPermBot.replace("Administrator", "Yönetici").replace("ManageChannels", "Kanalları Yönet").replace("ManageRoles", "Rolleri Yönet").replace("ManageMessages", "Mesajları Yönet").replace("ManageGuild", "Sunucuyu Yönet").replace("ModerateMembers", "Üyelere Zamanaşımı Uygula").replace("BanMembers", "Üyeleri Yasakla").replace("KickMembers", "Üyeleri At")
-                if (!interaction.guild.members.me.permissions.has(client.commands.get(interaction.commandName).command.reqPermBot)) return interaction.reply({
-                    embeds: [new EmbedBuilder().setTitle("Hata").setColor("Red").setDescription(`\`${reqPermBot}\` iznim yok.`)]
+            if (client.commands.find(x => x.name === interaction.commandName).reqPermBot !== "NONE") {
+                const reqPermBot = client.commands.find(x => x.name === interaction.commandName).reqPermBot.replace("Administrator", "Administrator").replace("ManageChannels", "ManageChannels").replace("ManageRoles", "Manage Roles").replace("Manageinteractions", "Manage interactions").replace("ManageGuild", "Manage Server").replace("ModerateMembers", "Timeout Members").replace("BanMembers", "Ban Members").replace("KickMembers", "Kick Members").replace("ManageNicknames", "Manage Nicknames")
+                if (!interaction.guild.members.me.permissions.has(client.commands.find(x => x.name === interaction.commandName).reqPermBot)) return interaction.reply({
+                    embeds: [new EmbedBuilder().setTitle("Missing Permissions").setColor(resolveColor("Red")).setDescription(`I don't have this permission: \`${reqPermBot}\``)]
                 })
             }
 
@@ -26,8 +25,9 @@
                 await command.run(interaction)
             } catch (error) {
                 if (error) {
-                console.log(error)
+                    return console.log(error)
+                }
             }
         }
-        },
-    };
+    },
+};
