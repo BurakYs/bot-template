@@ -8,14 +8,8 @@ module.exports = async (client) => {
         commands.push(file.data.toJSON())
         client.slashcmds.set(file.data.name, file);
     });
-    const folder2 = await promisify(glob)("./commands/context/*/*.js");
+    const folder2 = await promisify(glob)("./commands/message/*/*.js");
     folder2.map((value) => {
-        let file = require(`.${value}`);
-        commands.push(file.data.toJSON())
-        client.contextcmds.set(file.data.name, file);
-    });
-    const folder3 = await promisify(glob)("./commands/message/*/*.js");
-    folder3.map((value) => {
         let file = require(`.${value}`);
         client.messagecmds.set(file.command.name, file);
     });
