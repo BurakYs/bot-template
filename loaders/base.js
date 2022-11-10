@@ -1,6 +1,5 @@
-const config = require('./../config.js');
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, Modal, TextInputBuilder, OAuth2Scopes, Partials, resolveColor, Client, Collection, GatewayIntentBits } = require("discord.js");
-
+const config = require("./../config.js");
+const { OAuth2Scopes, Client, Collection, GatewayIntentBits, Partials } = require("discord.js");
 module.exports = class extends Client {
 
   constructor() {
@@ -10,15 +9,7 @@ module.exports = class extends Client {
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMembers,
         GatewayIntentBits.GuildBans,
-        GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.GuildIntegrations,
-        GatewayIntentBits.GuildWebhooks,
-        GatewayIntentBits.GuildInvites,
-        GatewayIntentBits.GuildVoiceStates,
-        GatewayIntentBits.GuildPresences,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.GuildMessageTyping,
         GatewayIntentBits.MessageContent
       ],
 
@@ -30,20 +21,29 @@ module.exports = class extends Client {
       }
     });
     this.config = config;
-    this.commands = new Collection();
-    this.mcommands = new Collection();
+    this.slashcmds = new Collection();
+    this.messagecmds = new Collection();
+    this.contextcmds = new Collection()
     global.client = this
+    this.commands = [
+      {
+        name: 'help',
+        desc: 'Sends help menu',
+        category: 'Bot',
+        reqPermMember: 'NONE',
+        reqPermBot: 'NONE',
+        cooldown: 5000
+      }
+    ]
     process.on("unhandledRejection", (reason, promise) => { console.log(reason, promise) })
-    process.on("uncaughtException", (err) => { console.log(err) })
-    process.on("uncaughtExceptionMonitor", (err) => { console.log(err) })
+    process.on("uncaughtException", (err) => { if (err === "DiscordAPIError[10062]: Unknown interaction" || err === "DiscordAPIError[40060]: Interaction has already been acknowledged.") return; console.log(err) })
+    process.on("uncaughtExceptionMonitor", (err) => { if (err === "DiscordAPIError[10062]: Unknown interaction" || err === "DiscordAPIError[40060]: Interaction has already been acknowledged.") return; console.log(err) })
   }
 
   loader() {
-
-    require('../handlers/eventHandler.js')(this);
-    require('../loaders/command.js')(this);
+    require("../handlers/eventHandler.js")(this);
+    require("../loaders/command.js")(this);
     require("../loaders/listeners.js")(this);
-    require("../loaders/messagecommand.js")(this);
     this.login(config.token).catch(e => console.log(e))
   };
 };
