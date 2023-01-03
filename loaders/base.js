@@ -27,8 +27,8 @@ module.exports = class extends Client {
     global.client = this
     this.commands = [
       {
-        name: 'help',
-        desc: 'Sends help menu',
+        name: 'ping',
+        desc: 'Ping Pong',
         category: 'Bot',
         reqPermMember: 'NONE',
         reqPermBot: 'NONE',
