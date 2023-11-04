@@ -133,7 +133,6 @@ module.exports = class extends Client {
         })
     }
 
-<<<<<<< HEAD
     async loader() {
         try {
             require("../extensions/array.js")();
@@ -150,96 +149,3 @@ module.exports = class extends Client {
         }
     }
 };
-=======
-      intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildModeration,
-        GatewayIntentBits.GuildEmojisAndStickers,
-        GatewayIntentBits.GuildPresences,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.MessageContent
-      ],
-
-      scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
-      partials: [Partials.Message, Partials.Channel, Partials.Reaction, Partials.User, Partials.GuildMember],
-    });
-    global.client = this
-    this.slashcmds = new Collection();
-    this.messagecmds = new Collection();
-    this.contextcmds = new Collection();
-    this.aliases = new Collection()
-    this.config = config;
-    this.utils = {
-      logger: require("../utils/logger.js"),
-      findCommand: require("../utils/findCommand.js")
-    }
-    this.error = async function error(interaction, { description, ephemeral = false } = {}) {
-      return await interaction.reply({
-        embeds: [new EmbedBuilder()
-          .setTitle("Error")
-          .setColor(resolveColor("Red"))
-          .setDescription(description)
-        ],
-        ephemeral: ephemeral,
-      }
-      )
-    };
-    this.success = async function success(interaction, { description, ephemeral = false } = {}) {
-      return await interaction.reply({
-        embeds: [new EmbedBuilder()
-          .setTitle("Successful")
-          .setColor(resolveColor("Green"))
-          .setDescription(description)
-        ],
-        ephemeral: ephemeral,
-      }
-      )
-    };
-    this.warn = async function warn(interaction, { description, ephemeral = false } = {}) {
-      return await interaction.reply({
-        embeds: [new EmbedBuilder()
-          .setTitle("Warn")
-          .setColor(resolveColor("Gold"))
-          .setDescription(description)
-        ],
-        ephemeral: ephemeral,
-      }
-      )
-    };
-    this.commands = [
-      {
-        name: 'ping',
-        desc: 'Ping Pong!',
-        aliases: ["pong"],
-        category: 'Bot',
-        reqPermMember: 'NONE',
-        reqPermBot: 'NONE'
-      }
-    ]
-    process.on("unhandledRejection", (reason) => {
-      if (["DiscordAPIError[10062]: Unknown interaction", "DiscordAPIError[40060]: Interaction has already been acknowledged."].includes(reason)) return;
-      console.log(`${chalk.red("--------------------------------------------------")}`)
-      console.log(`${chalk.red("[Error Handler]: Unhandled Rejection")}`)
-      console.error(reason)
-      console.log(`${chalk.red("--------------------------------------------------")}`)
-    })
-    process.on("uncaughtException", (err) => {
-      if (["DiscordAPIError[10062]: Unknown interaction", "DiscordAPIError[40060]: Interaction has already been acknowledged."].includes(err)) return;
-      console.log(`${chalk.red("--------------------------------------------------")}`)
-      console.log(`${chalk.red("[Error Handler]: Uncaught Exception")}`)
-      console.error(err)
-      console.log(`${chalk.red("--------------------------------------------------")}`)
-    })
-  }
-
-  loader() {
-    require("./definitions.js")(this)
-    require("../loaders/event.js")(this);
-    require("../loaders/command.js")(this);
-    require("../loaders/listeners.js")(this);
-    this.login(config.bot.token).catch(e => console.error(e))
-  };
-};
->>>>>>> 94a3c68f27bd8ae856f00c3d1bf666a54dacbde4

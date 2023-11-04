@@ -2,37 +2,6 @@ const { InteractionType, EmbedBuilder, resolveColor } = require("discord.js");
 module.exports = {
     name: 'interactionCreate',
     async run(client, interaction) {
-<<<<<<< HEAD
-=======
-        if (interaction.isMessageContextMenuCommand() || interaction.isUserContextMenuCommand()) {
-            const command = client.contextcmds.get(interaction.commandName);
-            if (!command) return;
-            try {
-                await command.run({ client, interaction })
-            } catch (error) {
-                if (error) {
-                    client.channels.cache.get(client.config.channels.errorLog)?.send({
-                        content: `<@&${client.config.roles.errorPings}>`,
-                        embeds: [
-                            new EmbedBuilder()
-                                .setTitle("Error (Context)")
-                                .setColor(resolveColor("Red"))
-                                .setDescription(`
-\`Server:\` ${interaction.guild?.name || "DM"} | ${interaction.guildId || "DM"}
-\`Channel:\` ${interaction.channel?.name || "DM"} ${interaction.channel?.id || "DM"}
-\`User:\` ${interaction.user.tag} | ${interaction.user.id}
-\`Command:\` ${interaction.commandName}
-        
-\`Error:\` \`\`\`js\n${error.toString().slice(0, 3000)}\`\`\` 
-        `)
-                        ]
-                    })
-                    console.error(error)
-                    return client.error(interaction, { description: `There was an error while executing this command! Error has been submitted to developers. Join our [support server](${client.config.guilds.supportServer.invite}) for advanced help.`, ephemeral: true })
-                }
-            }
-        }
->>>>>>> 94a3c68f27bd8ae856f00c3d1bf666a54dacbde4
         if (interaction.type === InteractionType.ApplicationCommand) {
             const command = client.slashcmds.get(interaction.commandName);
             if (!command) return;
@@ -69,11 +38,7 @@ module.exports = {
                     }).catch(() => { })
 
                     console.error(error)
-<<<<<<< HEAD
                     return client.error(interaction, { descriotion: `There was an error while executing this command! Error has been submitted to developers. Join our [support server](${client.config.guilds.supportServer.invite}) for updates.` })
-=======
-                    return client.error(interaction, { description: `There was an error while executing this command! Error has been submitted to developers. Join our [support server](${client.config.guilds.supportServer.invite}) for advanced help.`, ephemeral: true })
->>>>>>> 94a3c68f27bd8ae856f00c3d1bf666a54dacbde4
                 }
             }
         }

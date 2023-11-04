@@ -1,11 +1,15 @@
-const chalk = require("chalk") // Version: 4.0.0
-function error(e) {
-    console.log(`${chalk.red("[Error]")} ${chalk.white(e)}`)
+const chalk = require("chalk")
+
+function error(message) {
+    return console.log(`${chalk.red("[Error]")} ${chalk.white(message)}`)
 }
-function success(e) {
-    console.log(`${chalk.green("[Success]")} ${chalk.white(e)}`)
+
+function success(message) {
+    return console.log(`${chalk.green("[Success]")} ${chalk.white(message)}`)
 }
-function info(e) {
-    console.log(`${chalk.blue("[Info]")} ${chalk.white(e)}`)
+
+function info(message) {
+    return console.log(`${chalk.blue("[Info]")} ${chalk.white(message)}`)
 }
+
 module.exports = { error, success, info }

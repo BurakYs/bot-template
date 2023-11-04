@@ -1,29 +1,27 @@
 const { resolveColor } = require("discord.js")
 module.exports = {
     project: {
-        redeployCommands: true, // Making this true will redeploy the slash commands
+        redeployCommands: true,
         mongo: "" // MongoDB connection uri, you can leave this empty
     },
     bot: {
         admins: [], // Bot admins who can use owner commands, first ID is the owner
         token: "",
-        invite: "" // Bot invite URL
+        invite: ""
     },
     presence: {
-        activity: "",
-        status: "", // Status of the bot (online, idle, dnd, invisible)
+        activity: "https://github.com/BurakYs/bot-template",
+        status: "online",
     },
     guilds: {
-        test: {
-            id: "" // Test guild id, where you can use all commands and where owner commands will be
-        },
+        test: "",
         supportServer: {
             id: "",
             invite: ""
         },
     },
     roles: {
-        errorPings: "" // Error ping role, which is on the test server to receive pings when there is an error
+        errorPings: ""
     },
     channels: {
         errorLog: ""
