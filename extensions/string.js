@@ -10,7 +10,7 @@ module.exports = function () {
             }
         },
         'change': {
-            value: function (replacements) {
+            value: function (replacements = {}) {
                 return this.replace(/\[([^\]]+?)\]/g, (match, key) => {
                     const split = key.split(':');
                     const key2 = split.length > 1 ? split[1] : split[0];
