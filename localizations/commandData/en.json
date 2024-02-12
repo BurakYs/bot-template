@@ -1,0 +1,19 @@
+[
+  {
+    "name": "help",
+    "localizedName": "help",
+    "localizedDescription": "View information about the bot and its commands",
+    "options": [
+      {
+        "name": "command",
+        "localizedName": "command",
+        "localizedDescription": "View information about a command"
+      }
+    ]
+  },
+  {
+    "name": "ping",
+    "localizedName": "ping",
+    "localizedDescription": "Check the bot's latency and response time"
+  }
+]

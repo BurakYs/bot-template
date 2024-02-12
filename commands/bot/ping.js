@@ -1,9 +1,17 @@
-const { SlashCommandBuilder } = require("discord.js");
-module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('ping')
-        .setDescription("Ping Pong"),
-    async run({ client, interaction }) {
-        return interaction.reply({ content: `${client.ws.ping}ms` })
-    }
-}
+const { CommandBuilder } = require('../../classes');
+
+module.exports = new CommandBuilder()
+    .setName('ping')
+    .setDescription('Check the bot\'s latency and response time')
+    .setCategory('Bot')
+    .setRun(async ({ client, interaction }) => {
+        const dateBefore = Date.now();
+        const message = await interaction.reply({ content: 'Ping', fetchReply: true });
+
+        return await message.edit({
+            content: `
+🏓 Pong!
+Discord API: ${Date.now() - dateBefore}ms
+Discord Gateway: ${client.ws.ping}ms`
+        });
+    });

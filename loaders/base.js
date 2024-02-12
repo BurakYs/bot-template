@@ -1,151 +1,161 @@
-const config = require("../config.js");
-const { OAuth2Scopes, Client, GatewayIntentBits, Partials, Collection, EmbedBuilder } = require("discord.js");
-const chalk = require("chalk")
-const Cache = require("../classes/Cache.js")
-
-function dynamicImport(path) {
-    let file = require.resolve(path)
-    delete require.cache[file]
-    return require(path)
-}
+const config = require('../config.js');
+const { OAuth2Scopes, Client, GatewayIntentBits, Partials, EmbedBuilder, Options } = require('discord.js');
+const { getTranslations } = require('../utils');
 
 module.exports = class extends Client {
     constructor() {
         super({
             intents: [
-                GatewayIntentBits.Guilds,
+                GatewayIntentBits.Guilds
             ],
             scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
-            partials: [Partials.Message, Partials.Channel, Partials.User]
+            partials: [Partials.Message, Partials.Channel, Partials.User],
+            sweepers: {
+                messages: {
+                    interval: 1800,
+                    lifetime: 300
+                },
+                users: {
+                    interval: 3600,
+                    filter: () => user => user.bot && user.id !== this.user.id
+                },
+                channels: {
+                    interval: 3600,
+                    filter: () => channel => channel.guild.id === config.guilds.supportServer.id
+                }
+            },
+            makeCache: Options.cacheWithLimits({
+                MessageManager: 0,
+                GuildMemberManager: 0,
+                PresenceManager: 0,
+                ReactionManager: 0,
+                ReactionUserManager: 0,
+                ThreadManager: 0,
+                ThreadMemberManager: 0,
+                UserManager: 0,
+                BaseGuildEmojiManager: 0
+            })
         });
-        global.client = this
+    }
+
+    create() {
+        global.client = this;
         global.setLongTimeout = function (callback, delay) {
             if (delay <= 0) {
-                callback()
+                callback();
             } else if (delay <= 2147483647) {
-                setTimeout(callback, delay)
+                setTimeout(callback, delay);
             } else {
                 setTimeout(() => {
-                    setLongTimeout(callback, delay - 2147483647)
-                }, 2147483647)
+                    setLongTimeout(callback, delay - 2147483647);
+                }, 2147483647);
             }
-        }
-        this.slashCommands = new Collection()
-        this.utils = new Proxy({}, {
-            get: function (target, prop) {
-                return dynamicImport(`../utils/${prop}.js`);
-            },
-        });
-        Object.defineProperty(this, 'config', {
-            get: () => {
-                return dynamicImport('../config.js')
-            },
-        });
-        this.cache = new Cache()
-        this.error = function error(interaction, {
-            content = null,
-            description,
-            ephemeral = false,
-            noEmbed = false,
-            author = null,
-            title = null,
-            image = null,
-            thumbnail = null,
-            color = null,
-            footer = null,
-            operation = "reply",
-        } = {}) {
-            if (interaction.deferred) {
-                operation = "editReply"
-            }
-            if (noEmbed) return interaction[operation]({
-                content: `${title ? `## ${title}\n` : ""}${description}${footer ? `\n\n${typeof footer === "object" ? footer.text : footer}` : ""}`,
-                allowedMentions: { parse: [] },
-                ephemeral,
-            })
-            const randomTitle = ["Error", "Whoops!"].random()
-            return interaction[operation]({
-                content: content,
-                embeds: [new EmbedBuilder()
-                    .setAuthor(author)
-                    .setThumbnail(thumbnail)
-                    .setImage(image)
-                    .setTitle(title || randomTitle)
-                    .setColor(color || this.config.embedColors.error)
-                    .setDescription(description)
-                    .setFooter(footer),
-                ],
-                ephemeral,
-                components: [],
-            }).catch(() => null)
+        };
 
-        };
-        this.success = function success(interaction, {
-            content = null,
-            description,
-            ephemeral = false,
-            noEmbed = false,
-            author = null,
-            title = null,
-            image = null,
-            thumbnail = null,
-            color = null,
-            footer = null,
-            operation = "reply",
-        } = {}) {
-            if (interaction.deferred) {
-                operation = "editReply"
+        this.config = require('../config.js');
+
+        this.error = function error(interaction, options = {}) {
+            const operation = (interaction.deferred || interaction.replied) ? 'editReply' : options.type || 'reply';
+            options.title = createTitle(options.title, getTranslations(interaction, 'common.embeds.errorTitles').random(), ':x:');
+            options.thumbnail = options.thumbnail?.url || options.thumbnail;
+            options.image = options.image?.url || options.image;
+
+            if (options.noEmbed && !Object.keys(options.fields).length) {
+                return interaction[operation]({
+                    content: `${options.title ? `## ${options.title}\n` : ''}${options.description}${options.footer ? `\n\n${options.footer.text || options.footer}` : ''}`,
+                    allowedMentions: { parse: [] },
+                    ephemeral: options.ephemeral || false
+                });
             }
-            if (noEmbed) return interaction[operation]({
-                content: `${title ? `## ${title}\n` : ""}${description}${footer ? `\n\n${typeof footer === "object" ? footer.text : footer}` : ""}`,
-                allowedMentions: { parse: [] },
-                ephemeral,
-            })
-            const randomTitle = ["Success", "Successful"].random()
+
+            const embed = new EmbedBuilder()
+                .setAuthor(options.author)
+                .setThumbnail(options.thumbnail?.url)
+                .setImage(options.image?.url)
+                .setTitle(options.title)
+                .setColor(options.color || this.config.embedColors.error)
+                .setDescription(options.description)
+                .setFooter(options.footer)
+                .addFields(options.fields || []);
+
             return interaction[operation]({
-                content: content,
-                embeds: [new EmbedBuilder()
-                    .setAuthor(author)
-                    .setThumbnail(thumbnail)
-                    .setImage(image)
-                    .setTitle(title || randomTitle)
-                    .setColor(color || this.config.embedColors.success)
-                    .setDescription(description),
-                ],
-                ephemeral,
-                components: [],
-            }).catch(() => null)
+                content: options.content,
+                embeds: [embed],
+                ephemeral: options.ephemeral || false,
+                components: []
+            }).catch(() => null);
         };
-        this.commands = []
-        process.on("unhandledRejection", (reason) => {
-            if (reason.toString().includes("DiscordAPIError")) return;
-            console.log(`${chalk.red("--------------------------------------------------")}`)
-            console.log(`${chalk.red("[Error Handler]: Unhandled Rejection")}`)
-            console.error(reason)
-            console.log(`${chalk.red("--------------------------------------------------")}`)
-        })
-        process.on("uncaughtException", (err) => {
-            if (err.toString().includes("DiscordAPIError")) return;
-            console.log(`${chalk.red("--------------------------------------------------")}`)
-            console.log(`${chalk.red("[Error Handler]: Uncaught Exception")}`)
-            console.error(err)
-            console.log(`${chalk.red("--------------------------------------------------")}`)
-        })
+
+        this.success = function success(interaction, options = {}) {
+            const operation = (interaction.deferred || interaction.replied) ? 'editReply' : (options.type || 'reply');
+            options.title = createTitle(options.title, getTranslations(interaction, 'common.embeds.successTitles').random(), ':white_check_mark:');
+            options.thumbnail = options.thumbnail?.url || options.thumbnail;
+            options.image = options.image?.url || options.image;
+
+            if (options.noEmbed && !Object.keys(options.fields).length) {
+                return interaction[operation]({
+                    content: `${options.title ? `## ${options.title}\n` : ''}${options.description}${options.footer ? `\n\n${typeof options.footer === 'object' ? options.footer.text : options.footer || null}` : ''}`,
+                    allowedMentions: { parse: [] },
+                    ephemeral: options.ephemeral || false
+                });
+            }
+
+            return interaction[operation]({
+                content: options.content || null,
+                embeds: [new EmbedBuilder()
+                    .setAuthor(options.author || null)
+                    .setThumbnail(options.thumbnail || null)
+                    .setImage(options.image || null)
+                    .setTitle(options.title)
+                    .setColor(options.color || this.config.embedColors.success)
+                    .setDescription(options.description || null)
+                    .addFields(options.fields || [])
+                ],
+                ephemeral: options.ephemeral || false,
+                components: []
+            }).catch(() => null);
+        };
+
+        this.commands = [];
+
+        process.on('unhandledRejection', (err) => {
+            if (err?.message?.toLowerCase()?.includes('discordapierror')) return;
+            logger.error(err);
+        });
+        process.on('uncaughtException', (err) => {
+            if (err?.message?.toLowerCase()?.includes('discordapierror')) return;
+            logger.error(err);
+        });
+
+        return this;
     }
 
     async loader() {
         try {
-            require("../extensions/array.js")();
-            require("../extensions/date.js")();
-            require("../extensions/number.js")();
-            require("../extensions/string.js")();
-            config.project.mongo ? await require("./mongo.js")(this) : null;
-            await require("./listeners.js")(this);
-            require("./event.js")(this);
+            require('../extensions/array.js')();
+            require('../extensions/date.js')();
+            require('../extensions/number.js')();
+            require('../extensions/string.js')();
+            require('../extensions/object.js')();
+
+            await require('./command.js')(this);
+            await require('./listeners.js')(this);
             await this.login(config.bot.token);
-            await require("./command.js")(this);
         } catch (e) {
-            console.error(e);
+            logger.error(e);
         }
     }
 };
+
+function createTitle(title, defaultTitle, emoji) {
+    if (title?.includes(':')) return title;
+
+    if (Math.random() < 0.9) {
+        title ||= defaultTitle;
+        title = Math.random() < 0.5 ? title + ` ${emoji}` : `${emoji} ` + title;
+    } else if (Math.random() < 0.25) {
+        title = null;
+    }
+
+    return title;
+}

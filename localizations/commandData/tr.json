@@ -1,0 +1,19 @@
+[
+  {
+    "name": "help",
+    "localizedName": "yardım",
+    "localizedDescription": "Bot ve komutları hakkındaki bilgileri görüntüleyin",
+    "options": [
+      {
+        "name": "command",
+        "localizedName": "komut",
+        "localizedDescription": "Bir komut hakkındaki bilgileri görüntüleyin"
+      }
+    ]
+  },
+  {
+    "name": "ping",
+    "localizedName": "ping",
+    "localizedDescription": "Botun gecikme ve yanıt süresini kontrol edin"
+  }
+]

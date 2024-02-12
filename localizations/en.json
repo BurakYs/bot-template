@@ -1,0 +1,41 @@
+{
+  "commands": {
+    "help": {
+      "commandNotFound": "No command was found with the name [name].",
+      "info": "Information",
+      "command": "Command",
+      "category": "Category",
+      "embed": {
+        "title": "Help Menu",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec nunc tincidunt tincidunt."
+      },
+      "links": "Links",
+      "website": "Website",
+      "privacyPolicy": "Privacy Policy",
+      "termsOfService": "Terms of Service",
+      "supportServer": "Support Server",
+      "inviteLink": "Invite Link"
+    }
+  },
+  "common": {
+    "commandDMOnly": "This command can only be used in DMs.",
+    "commandGuildOnly": "This command can only be used in servers.",
+    "commandDisabled": "This command is disabled temporarily.",
+    "commandSupportServerOnly": "This command can only be used in [our support server]([support]).",
+    "commandUserMissingPerms": "You are missing the following permissions to run this command: [permissions]",
+    "commandBotMissingPerms": "I am missing the following permissions to run this command: [permissions]",
+    "unexpectedErrorOccurred": "An unexpected error occurred. Please try again later.",
+    "embeds": {
+      "errorTitles": [
+        "Error!",
+        "Oops!",
+        "Uh oh!"
+      ],
+      "successTitles": [
+        "Success!",
+        "Nice!",
+        "Great!"
+      ]
+    }
+  }
+}

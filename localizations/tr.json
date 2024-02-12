@@ -1,0 +1,41 @@
+{
+  "commands": {
+    "help": {
+      "commandNotFound": "[name] adında bir komut bulunamadı.",
+      "info": "Bilgiler",
+      "command": "Komut",
+      "category": "Kategori",
+      "embed": {
+        "title": "Yardım Menüsü",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec nunc tincidunt tincidunt."
+      },
+      "links": "Linkler",
+      "website": "Web Sitesi",
+      "privacyPolicy": "Gizlilik Politikası",
+      "termsOfService": "Kullanım Koşulları",
+      "supportServer": "Destek Sunucusu",
+      "inviteLink": "Davet Linki"
+    }
+  },
+  "common": {
+    "commandDMOnly": "Bu komut sadece DM'lerde kullanılabilir.",
+    "commandGuildOnly": "Bu komut sadece sunucularda kullanılabilir.",
+    "commandDisabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
+    "commandSupportServerOnly": "Bu komut yalnızca [destek sunucumuzda]([support]) kullanılabilir.",
+    "commandUserMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: [izinler]",
+    "commandBotMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalıyım: [izinler]",
+    "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+    "embeds": {
+      "errorTitles": [
+        "Hata!",
+        "Oops!",
+        "Uh oh!"
+      ],
+      "successTitles": [
+        "Başarılı!",
+        "Güzel!",
+        "Harika!"
+      ]
+    }
+  }
+}

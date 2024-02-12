@@ -1,21 +1,36 @@
 const fs = require('fs');
 
 class Database {
-    constructor(path) {
-        this.path = path;
+    constructor(options = {}) {
+        this.path = options.path;
+        this.cache = options.cache ? {} : null;
+        this.readedFile = false;
     }
 
     /**
-     * Reads the data from the file and returns it
+     * Reads the data and returns it
      * @returns {Object}
      */
     all() {
+        if (this.cache && (this.readedFile || !this.path)) return this.cache;
+        if (this.cache && !this.readedFile && this.path) {
+            this.readedFile = true;
+            const data = fs.readFileSync(this.path, 'utf8');
+            return this.cache = JSON.parse(data);
+        }
         try {
             const data = fs.readFileSync(this.path, 'utf8');
             return JSON.parse(data);
         } catch (error) {
-            fs.writeFileSync(this.path, "{}");
-            return {};
+            try {
+                fs.writeFileSync(this.path, '{}');
+                return {};
+            } catch (e) {
+                const folderPath = this.path.substring(0, this.path.lastIndexOf('/'));
+                fs.mkdirSync(folderPath, { recursive: true });
+                fs.writeFileSync(this.path, '{}');
+                return {};
+            }
         }
     }
 
@@ -45,7 +60,7 @@ class Database {
         }
         updatedData[lastKey] = current[lastKey];
 
-        fs.writeFileSync(this.path, JSON.stringify(data, null, 2));
+        !this.cache ? fs.writeFileSync(this.path, JSON.stringify(data, null, 2)) : this.cache = data;
 
         return value;
     }
@@ -69,7 +84,6 @@ class Database {
                 break;
             }
         }
-
         return current;
     }
 
@@ -82,9 +96,7 @@ class Database {
     push(key, value) {
         let currentValue = this.get(key);
 
-        if (!Array.isArray(currentValue)) {
-            currentValue = [];
-        }
+        if (!Array.isArray(currentValue)) currentValue = [];
 
         currentValue.push(value);
         this.set(key, currentValue);
@@ -111,9 +123,7 @@ class Database {
     add(key, value) {
         const currentValue = this.get(key);
 
-        if (typeof value !== 'number') {
-            return undefined;
-        }
+        if (isNaN(value)) return undefined;
 
         this.set(key, currentValue + value);
 
@@ -129,13 +139,21 @@ class Database {
     subtract(key, value) {
         const currentValue = this.get(key);
 
-        if (typeof currentValue !== 'number') {
-            return undefined;
-        }
+        if (isNaN(currentValue)) return undefined;
 
         this.set(key, currentValue - value);
 
         return value;
+    }
+
+    /**
+     * Deletes all keys from the database
+     * @returns {boolean} Whether the database was successfully cleared
+     */
+    destroy() {
+        this.cache = {};
+        fs.writeFileSync(this.path, '{}');
+        return true;
     }
 }
 

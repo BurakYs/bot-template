@@ -1,34 +1,94 @@
-const {
-    Events,
-    ActivityType,
-} = require("discord.js");
-const { default: axios } = require("axios");
-axios.interceptors.response.use(response => {
-    return response?.data;
-}, error => {
-    return error.response?.data;
-});
+const { EmbedBuilder, resolveColor, InteractionType, Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require('discord.js');
+const { Environments } = require('../classes/enums');
+const moment = require('moment');
+require('moment-duration-format');
+const handlers = {
+    applicationCommand: require('../events/applicationCommand.js'),
+    button: require('../events/button.js'),
+    modal: require('../events/modal.js'),
+    autoComplete: require('../events/autoComplete.js')
+};
 
 module.exports = async (client) => {
-    client.once(Events.ClientReady, async () => {
-        client.utils.logger.success(`Logged in as ${client.user.tag}`)
-        const { activity, status } = client.config.presence
-        const activityName = activity.replaceAll("{u}", client.guilds.cache.reduce((a, g) => a + g.memberCount, 0).toLocaleString()).replaceAll("{s}", client.guilds.cache.size)
-        await client.user.setPresence({
-            activities: [{
-                name: activityName, type: ActivityType.Custom, state: activityName,
-            }],
-            status: status,
-        })
+    client.on(Events.ClientReady, async () => {
+        moment.locale(client.config.bot.defaultLanguage);
+        logger.success(`Logged in as ${client.user.tag}`);
+        await setPresence();
 
-        setInterval(async () => {
-            const activityName2 = activity.replaceAll("{u}", client.guilds.cache.reduce((a, g) => a + g.memberCount, 0).toLocaleString()).replaceAll("{s}", client.guilds.cache.size)
-            await client.user.setPresence({
-                activities: [{
-                    name: activityName2, type: ActivityType.Custom, state: activityName2,
-                }],
-                status: status,
-            })
-        }, 60000)
-    })
-}
+        setInterval(() => {
+            setPresence();
+        }, 60000);
+    });
+
+    client.on(Events.InteractionCreate, async interaction => {
+        if (interaction.type === InteractionType.ApplicationCommand) return await handlers.applicationCommand.run(client, interaction);
+        if (interaction.isButton()) return await handlers.button.run(client, interaction);
+        if (interaction.type === InteractionType.ModalSubmit) return await handlers.modal.run(client, interaction);
+        if (interaction.type === InteractionType.ApplicationCommandAutocomplete) return await handlers.autoComplete.run(client, interaction);
+    });
+
+    client.on(Events.GuildCreate, async guild => {
+        if (![Environments.Production].includes(client.config.project.environment)) return;
+
+        await setPresence();
+        const owner = await client.users.fetch(guild.ownerId).catch(() => null);
+        const embed = new EmbedBuilder()
+            .setTitle('Guild Join')
+            .setColor(client.config.embedColors.success)
+            .addFields(
+                { name: 'Name', value: `${guild.name} | ${guild.id}` },
+                {
+                    name: 'Members',
+                    value: `Total: **${guild.memberCount}**`
+                },
+                { name: 'Owner', value: `${owner?.discriminator === '0' ? owner.username : owner.tag} | ${guild.ownerId}` },
+                { name: 'Total Guilds', value: `${client.guilds.cache.size}` })
+            .setTimestamp(guild.createdAt)
+            .setThumbnail(guild.iconURL() ? guild.iconURL() : null);
+
+        return await client.channels.cache.get(client.config.channels.botLog)?.send({
+            embeds: [embed], components: [new ActionRowBuilder().addComponents(new ButtonBuilder()
+                .setLabel('Leave')
+                .setStyle(ButtonStyle.Danger)
+                .setCustomId(`LeaveGuild:${guild.id}`))]
+        });
+    });
+
+    client.on(Events.GuildDelete, async guild => {
+        if (![Environments.Production].includes(client.config.project.environment)) return;
+
+        await setPresence();
+        const owner = await client.users.fetch(guild.ownerId).catch(() => null);
+        const embed = new EmbedBuilder()
+            .setTitle('Guild Leave')
+            .setColor(resolveColor('Red'))
+            .addFields(
+                { name: 'Name', value: `${guild.name} | ${guild.id}` },
+                {
+                    name: 'Members',
+                    value: `Total: **${guild.memberCount}**`
+                },
+                { name: 'Owner', value: `${owner?.discriminator === '0' ? owner.username : owner.tag} | ${guild.ownerId}` },
+                { name: 'Total Guilds', value: `${client.guilds.cache.size}` })
+            .setTimestamp(guild.createdAt)
+            .setThumbnail(guild.iconURL() ? guild.iconURL() : null);
+
+        return await client.channels.cache.get(client.config.channels.botLog)?.send({
+            embeds: [embed]
+        });
+    });
+
+    async function setPresence() {
+        const { activity, status } = client.config.presence;
+        const activityName = activity.replaceAll('{u}', client.guilds.cache.reduce((a, g) => a + g.memberCount, 0).toLocaleString()).replaceAll('{s}', client.guilds.cache.size);
+
+        return client.user.setPresence({
+            activities: [{
+                name: activityName,
+                type: ActivityType.Custom,
+                state: activityName
+            }],
+            status: status
+        });
+    }
+};

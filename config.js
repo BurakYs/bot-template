@@ -1,34 +1,46 @@
-const { resolveColor } = require("discord.js")
+const { resolveColor } = require('discord.js');
+
 module.exports = {
     project: {
-        redeployCommands: true,
-        mongo: "" // MongoDB connection uri, you can leave this empty
+        environment: 'dev', // dev, prod, staging
+        timezone: 'Europe/Istanbul'
     },
     bot: {
-        admins: [], // Bot admins who can use owner commands, first ID is the owner
-        token: "",
-        invite: ""
+        admins: ['269677849810698249'],
+        token: '',
+        redeployCommands: false,
+        invite: '',
+        supportedLanguages: {
+            'en-US': 'en',
+            'en-GB': 'en',
+            'tr': 'tr'
+        },
+        defaultLanguage: 'en-US'
+    },
+    website: {
+        url: 'https://google.com'
     },
     presence: {
-        activity: "https://github.com/BurakYs/bot-template",
-        status: "online",
+        activity: '/help | {u} users | {s} servers',
+        status: 'online'
     },
     guilds: {
-        test: "",
+        test: '',
         supportServer: {
-            id: "",
-            invite: ""
-        },
+            id: '',
+            invite: ''
+        }
     },
     roles: {
-        errorPings: ""
+        errorPings: ''
     },
     channels: {
-        errorLog: ""
+        botLog: '',
+        errorLog: ''
     },
     embedColors: {
-        default: resolveColor("#5865F2"),
-        error: resolveColor("#DE2B0B"),
-        success: resolveColor("#56B849")
-    },
-}
+        default: resolveColor('#5865F2'),
+        error: resolveColor('#f04a47'),
+        success: resolveColor('#56B849')
+    }
+};
