@@ -1,8 +1,4 @@
 /node_modules
 package-lock.json
-config.js
 /.idea
-/assets/smallIcons/**
-/assets/icons/**
-jsons/cache/**
-outputs/**
+.git
