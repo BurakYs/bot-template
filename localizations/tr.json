@@ -24,18 +24,18 @@
     "commandSupportServerOnly": "Bu komut yalnızca [destek sunucumuzda]([support]) kullanılabilir.",
     "commandUserMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: [izinler]",
     "commandBotMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalıyım: [izinler]",
-    "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
-    "embeds": {
-      "errorTitles": [
-        "Hata!",
-        "Oops!",
-        "Uh oh!"
-      ],
-      "successTitles": [
-        "Başarılı!",
-        "Güzel!",
-        "Harika!"
-      ]
-    }
+    "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+  },
+  "embeds": {
+    "errorTitles": [
+      "Hata!",
+      "Oops!",
+      "Uh oh!"
+    ],
+    "successTitles": [
+      "Başarılı!",
+      "Güzel!",
+      "Harika!"
+    ]
   }
 }

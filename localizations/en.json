@@ -24,18 +24,18 @@
     "commandSupportServerOnly": "This command can only be used in [our support server]([support]).",
     "commandUserMissingPerms": "You are missing the following permissions to run this command: [permissions]",
     "commandBotMissingPerms": "I am missing the following permissions to run this command: [permissions]",
-    "unexpectedErrorOccurred": "An unexpected error occurred. Please try again later.",
-    "embeds": {
-      "errorTitles": [
-        "Error!",
-        "Oops!",
-        "Uh oh!"
-      ],
-      "successTitles": [
-        "Success!",
-        "Nice!",
-        "Great!"
-      ]
-    }
+    "unexpectedErrorOccurred": "An unexpected error occurred. Please try again later."
+  },
+  "embeds": {
+    "errorTitles": [
+      "Error!",
+      "Oops!",
+      "Uh oh!"
+    ],
+    "successTitles": [
+      "Success!",
+      "Nice!",
+      "Great!"
+    ]
   }
 }

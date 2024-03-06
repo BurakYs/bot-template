@@ -15,14 +15,15 @@ module.exports = class extends Client {
 	create() {
 		global.client = this;
 		global.setLongTimeout = function (callback, delay) {
+			const max32 = 2147483647;
 			if (delay <= 0) {
 				callback();
-			} else if (delay <= 2147483647) {
+			} else if (delay <= max32) {
 				setTimeout(callback, delay);
 			} else {
 				setTimeout(() => {
-					setLongTimeout(callback, delay - 2147483647);
-				}, 2147483647);
+					setLongTimeout(callback, delay - max32);
+				}, max32);
 			}
 		};
 
@@ -30,7 +31,7 @@ module.exports = class extends Client {
 
 		this.error = function error(interaction, options = {}) {
 			const operation = (interaction.deferred || interaction.replied) ? 'editReply' : options.type || 'reply';
-			options.title = createTitle(options.title, getTranslations(interaction, 'common.embeds.errorTitles').random(), ':x:');
+			options.title = createTitle(options.title, getTranslations(interaction, 'embeds.errorTitles').random(), ':x:');
 			options.thumbnail = options.thumbnail?.url || options.thumbnail;
 			options.image = options.image?.url || options.image;
 
@@ -62,7 +63,7 @@ module.exports = class extends Client {
 
 		this.success = function success(interaction, options = {}) {
 			const operation = (interaction.deferred || interaction.replied) ? 'editReply' : (options.type || 'reply');
-			options.title = createTitle(options.title, getTranslations(interaction, 'common.embeds.successTitles').random(), ':white_check_mark:');
+			options.title = createTitle(options.title, getTranslations(interaction, 'embeds.successTitles').random(), ':white_check_mark:');
 			options.thumbnail = options.thumbnail?.url || options.thumbnail;
 			options.image = options.image?.url || options.image;
 
