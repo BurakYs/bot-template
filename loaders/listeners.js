@@ -1,5 +1,4 @@
 const { EmbedBuilder, resolveColor, InteractionType, Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require('discord.js');
-const { Environments } = require('../classes/enums');
 const moment = require('moment');
 require('moment-duration-format');
 const handlers = {
@@ -28,8 +27,6 @@ module.exports = async (client) => {
     });
 
     client.on(Events.GuildCreate, async guild => {
-        if (![Environments.Production].includes(client.config.project.environment)) return;
-
         await setPresence();
         const owner = await client.users.fetch(guild.ownerId).catch(() => null);
         const embed = new EmbedBuilder()
@@ -55,8 +52,6 @@ module.exports = async (client) => {
     });
 
     client.on(Events.GuildDelete, async guild => {
-        if (![Environments.Production].includes(client.config.project.environment)) return;
-
         await setPresence();
         const owner = await client.users.fetch(guild.ownerId).catch(() => null);
         const embed = new EmbedBuilder()

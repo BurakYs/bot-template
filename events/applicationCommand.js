@@ -1,6 +1,5 @@
 const { InteractionType, EmbedBuilder, resolveColor } = require('discord.js');
 const { getTranslations } = require('../utils');
-const { Environments } = require('../classes/enums');
 
 module.exports = {
     name: 'applicationCommand',
@@ -32,7 +31,7 @@ module.exports = {
                     if (interaction.commandName !== 'eval') {
                         if (['DiscordAPIError[10062]: Unknown interaction', 'DiscordAPIError[40060]: Interaction has already been acknowledged.'].includes(error.toString())) return;
 
-                        if ([Environments.Production, Environments.Staging].includes(client.config.project.environment)) await client.channels.cache.get(client.config.channels.errorLog)?.send({
+                        await client.channels.cache.get(client.config.channels.errorLog)?.send({
                             content: `<@&${client.config.roles.errorPings}>`,
                             embeds: [
                                 new EmbedBuilder()

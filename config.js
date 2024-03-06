@@ -2,7 +2,6 @@ const { resolveColor } = require('discord.js');
 
 module.exports = {
     project: {
-        environment: 'dev', // dev, prod, staging
         timezone: 'Europe/Istanbul'
     },
     bot: {
