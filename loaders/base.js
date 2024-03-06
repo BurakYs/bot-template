@@ -1,5 +1,4 @@
-const config = require('../config.js');
-const { OAuth2Scopes, Client, GatewayIntentBits, Partials, EmbedBuilder, Options } = require('discord.js');
+const { OAuth2Scopes, Client, GatewayIntentBits, Partials, EmbedBuilder } = require('discord.js');
 const { getTranslations } = require('../utils');
 
 module.exports = class extends Client {
@@ -44,13 +43,13 @@ module.exports = class extends Client {
             }
 
             const embed = new EmbedBuilder()
-                .setAuthor(options.author)
-                .setThumbnail(options.thumbnail?.url)
-                .setImage(options.image?.url)
-                .setTitle(options.title)
+                .setAuthor(options.author || null)
+                .setThumbnail(options.thumbnail?.url || null)
+                .setImage(options.image?.url || null)
+                .setTitle(options.title || null)
                 .setColor(options.color || this.config.embedColors.error)
-                .setDescription(options.description)
-                .setFooter(options.footer)
+                .setDescription(options.description || null)
+                .setFooter(options.footer || null)
                 .addFields(options.fields || []);
 
             return interaction[operation]({
@@ -81,7 +80,7 @@ module.exports = class extends Client {
                     .setAuthor(options.author || null)
                     .setThumbnail(options.thumbnail || null)
                     .setImage(options.image || null)
-                    .setTitle(options.title)
+                    .setTitle(options.title || null)
                     .setColor(options.color || this.config.embedColors.success)
                     .setDescription(options.description || null)
                     .addFields(options.fields || [])

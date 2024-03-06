@@ -11,6 +11,7 @@
   "dependencies": {
     "colorette": "^2.0.20",
     "discord.js": "^14.13.0",
+    "dotenv": "^16.4.5",
     "glob": "^10.2.6",
     "moment": "^2.29.4",
     "moment-duration-format": "^2.3.2"

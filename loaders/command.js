@@ -32,10 +32,13 @@ module.exports = async (client) => {
             const processCommands = async (commands) => {
                 commands.map(x => x).forEach(x => {
                     const command = client.commands.find(y => y.name === x.name);
-                    command.mention = `</${x.name}:${x.id}>`;
-                    x.options?.filter(x => x.type === 1).forEach(y => {
-                        command.options.find(z => z.name === y.name).mention = `</${x.name} ${y.name}:${x.id}>`;
-                    });
+                    if (command) {
+                        command.mention = `</${x.name}:${x.id}>`;
+                        x.options?.filter(x => x.type === 1).forEach(y => {
+                            const option = command.options.find(z => z.name === y.name);
+                            if (option) option.mention = `</${x.name} ${y.name}:${x.id}>`;
+                        });
+                    }
                 });
                 return commands;
             };
@@ -49,7 +52,7 @@ module.exports = async (client) => {
                     logger.error(err);
                 }
 
-                if (client.config.guilds.test) {
+                if (client.config.guilds.test && ownerCommands.length) {
                     try {
                         await client.application.commands.set(ownerCommands, client.config.guilds.test);
                         logger.success('Loaded global slash commands successfully');

@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-const SubcommandBuilder = require('./SubcommandBuilder');
 
 class CommandBuilder extends SlashCommandBuilder {
     constructor() {
@@ -9,6 +8,11 @@ class CommandBuilder extends SlashCommandBuilder {
 
     setCategory(category) {
         this.category = category;
+        return this;
+    }
+
+    setTags(tags) {
+        this.tags = tags;
         return this;
     }
 
@@ -47,13 +51,6 @@ class CommandBuilder extends SlashCommandBuilder {
         return this;
     }
 
-    addSubcommand(subcommand) {
-        const subcommandBuilder = new SubcommandBuilder();
-        const subcommandData = subcommand(subcommandBuilder);
-        this.options.push(subcommandData);
-        return this;
-    }
-
     match(interaction) {
         const interactionSubcommandGroup = interaction.options._group;
         const interactionSubcommand = interaction.options._subcommand;
@@ -64,20 +61,19 @@ class CommandBuilder extends SlashCommandBuilder {
             : findOption(this.options, interactionSubcommand)) || this;
 
         return {
-            tags: command.tags,
-            category: command.category,
-            loginRequired: command.loginRequired,
-            guildOnly: command.guildOnly,
-            ownerOnly: command.ownerOnly,
-            dmOnly: command.dmOnly,
-            memberPermission: command.memberPermission,
-            botPermission: command.botPermission,
-            disabled: command.disabled,
-            premiumOnly: command.premiumOnly,
-            premiumType: command.premiumType,
-            options: command.options,
-            run: command.run,
-            supportServerOnly: command.supportServerOnly
+            tags: command.tags || this.tags,
+            category: command.category || this.category,
+            guildOnly: command.guildOnly || this.guildOnly,
+            ownerOnly: command.ownerOnly || this.ownerOnly,
+            dmOnly: command.dmOnly || this.dmOnly,
+            memberPermission: command.memberPermission || this.memberPermission,
+            botPermission: command.botPermission || this.botPermission,
+            disabled: command.disabled || this.disabled,
+            premiumOnly: command.premiumOnly || this.premiumOnly,
+            premiumType: command.premiumType || this.premiumType,
+            options: command.options || this.options,
+            run: command.run || this.run,
+            supportServerOnly: command.supportServerOnly || this.supportServerOnly
         };
     }
 

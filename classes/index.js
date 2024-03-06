@@ -1,5 +1,5 @@
 const classes = {};
-const classesArray = ['CommandBuilder', 'Database', 'SubcommandBuilder'];
+const classesArray = ['CommandBuilder', 'Database'];
 
 classesArray.forEach((name) => {
     classes[name] = require(`./${name}`);

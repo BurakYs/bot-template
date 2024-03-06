@@ -3,21 +3,13 @@ const fs = require('fs');
 const config = require('../config.js');
 
 class Logger {
-    constructor(
-        {
-            saveToFile = false,
-            logFolder = './logs',
-            resetInterval = 24 * 60 * 60 * 1000,
-            resetOnStart = false,
-            timeZone = config.project.timezone
-        } = {}
-    ) {
+    constructor(options = {}) {
         global.logger = this;
-        this.saveToFile = saveToFile;
-        this.logFolder = logFolder;
-        this.resetInterval = resetInterval;
-        this.resetOnStart = resetOnStart;
-        this.timeZone = timeZone;
+        this.saveToFile = options.saveToFile || false;
+        this.logFolder = options.logFolder || './logs';
+        this.resetInterval = options.resetInterval || 24 * 60 * 60 * 1000;
+        this.resetOnStart = options.resetOnStart || false;
+        this.timeZone = options.timeZone || config.project.timezone;
         this.files = {};
         this.init();
     }
@@ -100,7 +92,11 @@ class Logger {
     }
 
     getFileName(error) {
-        return error.stack?.split('\n')[2].split('at ')[1].trim().match(/(?<=\\)(.*?)(?=:)/g)?.[0]?.split('\\')?.slice(-2)?.join('/') || 'NOT/FOUND';
+        const stackLine = error.stack?.split('\n')[2];
+        const fileName = stackLine?.split('at ')[1].trim().match(/(?<=\\)(.*?)(?=:)/g)?.[0]?.split('\\')?.slice(-2)?.join('/') || 'NOT/FOUND';
+        const lineAndColumn = stackLine?.replace(/.*\((.*)\).*/, '$1').split(':').slice(-2).join(':') || '0:0';
+
+        return `${fileName}:${lineAndColumn}`;
     }
 
     getDate() {
@@ -117,8 +113,8 @@ class Logger {
     }
 
     formatMessage(message) {
-        const spaces = message.map(m => typeof m === 'object' ? this.stringify(m, 2) : m).join(' ');
-        const noSpaces = message.map(m => typeof m === 'object' ? this.stringify(m, 0) : m).join(' ');
+        const spaces = message.map(m => typeof m === 'object' ? m instanceof Error ? m.message : this.stringify(m, 2) : m).join(' ');
+        const noSpaces = message.map(m => typeof m === 'object' ? m instanceof Error ? m.message : this.stringify(m, 0) : m).join(' ');
 
         return { spaces, noSpaces };
     }
