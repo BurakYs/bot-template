@@ -9,32 +9,7 @@ module.exports = class extends Client {
                 GatewayIntentBits.Guilds
             ],
             scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands],
-            partials: [Partials.Message, Partials.Channel, Partials.User],
-            sweepers: {
-                messages: {
-                    interval: 1800,
-                    lifetime: 300
-                },
-                users: {
-                    interval: 3600,
-                    filter: () => user => user.bot && user.id !== this.user.id
-                },
-                channels: {
-                    interval: 3600,
-                    filter: () => channel => channel.guild.id === config.guilds.supportServer.id
-                }
-            },
-            makeCache: Options.cacheWithLimits({
-                MessageManager: 0,
-                GuildMemberManager: 0,
-                PresenceManager: 0,
-                ReactionManager: 0,
-                ReactionUserManager: 0,
-                ThreadManager: 0,
-                ThreadMemberManager: 0,
-                UserManager: 0,
-                BaseGuildEmojiManager: 0
-            })
+            partials: [Partials.Message, Partials.Channel, Partials.User]
         });
     }
 
