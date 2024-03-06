@@ -131,6 +131,8 @@ module.exports = class extends Client {
     }
 
     async loader() {
+        if (!process.env.TOKEN) return logger.error('Don\'t forget to set the TOKEN in the .env file.');
+
         try {
             require('../extensions/array.js')();
             require('../extensions/date.js')();
@@ -140,7 +142,7 @@ module.exports = class extends Client {
 
             await require('./command.js')(this);
             await require('./listeners.js')(this);
-            await this.login(config.bot.token);
+            await this.login(process.env.TOKEN);
         } catch (e) {
             logger.error(e);
         }

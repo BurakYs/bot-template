@@ -6,7 +6,6 @@ module.exports = {
     },
     bot: {
         admins: ['269677849810698249'],
-        token: '',
         redeployCommands: false,
         invite: '',
         supportedLanguages: {
