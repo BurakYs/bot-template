@@ -12,9 +12,8 @@
 
 - **Command Structure**: Organize your bot commands into categories in the `commands` folder.
     - Example: `commands/categoryName/command.js`
-- **Useful Classes**: Utilize handy classes like `Cache` and a JSON-based `Database` with JSDoc documentation.
-- **Extensions**: Extend JavaScript's built-in objects with helpful methods in the `extensions` folder.
-    - Example: `extensions/string.js` enhances the `String` prototype.
+- **Extensions**: Extend JavaScript's built-in methods in the `extensions` folder.
+    - Example: `extensions/string.js` extends the `String` prototype.
 - **Localizations**: Add localizations for your bot in the `localizations` folder.
 
 ## License
