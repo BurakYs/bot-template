@@ -3,10 +3,11 @@
 ## Getting Started
 
 1. Clone this repository.
-2. Configure your bot token, admins, and other settings in `config.js`.
-3. Add your event listeners in `listeners.js`.
-4. Organize your commands in the `commands` folder.
-5. Add your localizations in the `localizations` folder.
+2. Configure your bot token in `.env`.
+3. Configure your bot settings in `config.json`.
+4. Add your event listeners in `listeners.js`.
+5. Organize your commands in the `commands` folder.
+6. Add your localizations in the `localizations` folder.
 
 ## Features
 
