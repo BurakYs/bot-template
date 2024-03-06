@@ -55,8 +55,7 @@ module.exports = {
 					logger.error(error);
 					return client.error(interaction, {
 						description: translations.unexpectedErrorOccurred.change({ support: client.config.guilds.supportServer.invite }),
-						ephemeral: true,
-						errorF: error
+						ephemeral: true
 					});
 				}
 			}
