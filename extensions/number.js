@@ -1,12 +1,12 @@
 'use strict';
 
 module.exports = function () {
-    Object.defineProperties(Number.prototype, {
-        'formatTime': {
-            value: function (code = 'D') {
-                return `<t:${Math.floor(this / 1000)}:${code}>`;
-            }
-        }
-    });
-    return true;
+	Object.defineProperties(Number.prototype, {
+		'formatTime': {
+			value: function (code = 'D') {
+				return `<t:${Math.floor(this / 1000)}:${code}>`;
+			}
+		}
+	});
+	return true;
 };

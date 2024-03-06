@@ -1,4 +1,4 @@
 module.exports = {
-    name: 'button',
-    async run(client, interaction) {}
+	name: 'button',
+	async run(client, interaction) {}
 };
