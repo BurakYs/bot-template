@@ -11,10 +11,11 @@ module.exports = new CommandBuilder()
 			const translations = getTranslations(interaction, 'commands.help');
 
 			const commandName = interaction.options.getString('command')?.split(' ')[0];
-			const command = commandName && (client.commands.find(x => x.name === commandName) || client.commands.filter(x => !x.owner && x.name_localizations).find(x => Object.values(x.name_localizations).includes(commandName)));
+			const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.owner && x.name_localizations).find(x => Object.values(x.name_localizations).includes(commandName)) : null;
 
-			if (!command || !command.owner) return client.error(interaction, { description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
-			if (command) {
+			if (commandName) {
+				if (!command || command.owner) return client.error(interaction, { description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
+
 				const embed = new EmbedBuilder()
 					.setTitle(commandName.title())
 					.setColor(client.config.embedColors.default)
