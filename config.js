@@ -33,12 +33,12 @@ module.exports = {
 		errorPings: ''
 	},
 	channels: {
-		botLog: '',
+		botLog: '', // Guild join/leave logs
 		errorLog: ''
 	},
 	embedColors: {
 		default: resolveColor('#5865F2'),
-		error: resolveColor('#f04a47'),
+		error: resolveColor('#F04A47'),
 		success: resolveColor('#56B849')
 	}
 };
