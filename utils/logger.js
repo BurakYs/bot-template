@@ -15,6 +15,8 @@ class Logger {
 	}
 
 	init() {
+		Error.prepareStackTrace = (_, stack) => stack;
+
 		if (this.saveToFile) {
 			if (!fs.existsSync(this.logFolder)) fs.mkdirSync(this.logFolder);
 
@@ -92,11 +94,11 @@ class Logger {
 	}
 
 	getFileName(error) {
-		const stackLine = error.stack?.split('\n')[2];
-		const fileName = stackLine?.split('at ')[1].trim().match(/(?<=\\)(.*?)(?=:)/g)?.[0]?.split('\\')?.slice(-2)?.join('/') || 'NOT/FOUND';
-		const lineAndColumn = stackLine?.replace(/.*\((.*)\).*/, '$1').split(':').slice(-2).join(':') || '0:0';
+		const fileName = error.stack[1].getFileName().split('\\').slice(-2).join('/');
+		const lineNumber = error.stack[1].getLineNumber();
+		const columnNumber = error.stack[1].getColumnNumber();
 
-		return `${fileName}:${lineAndColumn}`;
+		return `${fileName}:${lineNumber}:${columnNumber}`;
 	}
 
 	getDate() {
