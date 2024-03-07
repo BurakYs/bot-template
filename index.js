@@ -6,7 +6,7 @@ const startArgs = process.argv.slice(2);
 config.bot.redeployCommands = ['--redeploy-commands', '-rc', '--redeploy', '-r']
 	.some(arg => startArgs.includes(arg));
 
-const Logger = require('./utils/logger.js');
+const Logger = require('./utils/Logger.js');
 new Logger();
 
 logger.info('Starting the project');

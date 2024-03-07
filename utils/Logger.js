@@ -94,7 +94,7 @@ class Logger {
 	}
 
 	getFileName(error) {
-		const fileName = error.stack[1].getFileName().split('\\').slice(-2).join('/');
+		const fileName = error.stack[1].getFileName().replace(/\\/g, '/').split('/').slice(-2).join('/');
 		const lineNumber = error.stack[1].getLineNumber();
 		const columnNumber = error.stack[1].getColumnNumber();
 
