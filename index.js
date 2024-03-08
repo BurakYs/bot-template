@@ -27,19 +27,6 @@ class Client extends DiscordClient {
 
 	create() {
 		global.client = this;
-		global.setLongTimeout = function (callback, delay) {
-			const max32 = 2147483647;
-			if (delay <= 0) {
-				callback();
-			} else if (delay <= max32) {
-				setTimeout(callback, delay);
-			} else {
-				setTimeout(() => {
-					setLongTimeout(callback, delay - max32);
-				}, max32);
-			}
-		};
-
 		this.config = config
 
 		this.error = function error(interaction, options = {}) {
