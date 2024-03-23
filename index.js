@@ -6,7 +6,7 @@ const startArgs = process.argv.slice(2);
 config.bot.redeployCommands = ['--redeploy-commands', '-rc', '--redeploy', '-r']
 	.some(arg => startArgs.includes(arg));
 
-const Logger = require('./utils/classes/Logger.js');
+const { Logger } = require('./utils/classes');
 new Logger();
 
 const dotenv = require('dotenv');

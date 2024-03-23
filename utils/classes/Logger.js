@@ -1,4 +1,5 @@
 const { blue, green, red, white, yellow } = require('colorette');
+const StackTraceHelper = require('./StackTraceHelper');
 const fs = require('fs');
 const config = require('../../config.js');
 
@@ -15,8 +16,6 @@ class Logger {
 	}
 
 	init() {
-		Error.prepareStackTrace = (_, stack) => stack;
-
 		if (this.saveToFile) {
 			if (!fs.existsSync(this.logFolder)) fs.mkdirSync(this.logFolder);
 
@@ -94,11 +93,11 @@ class Logger {
 	}
 
 	getFileName(error) {
-		const fileName = error.stack[1].getFileName().replace(/\\/g, '/').split('/').slice(-2).join('/');
-		const lineNumber = error.stack[1].getLineNumber();
-		const columnNumber = error.stack[1].getColumnNumber();
+		const stack = StackTraceHelper.parse(error)[1];
+		const fileName = stack.fileName.replace(/\\/g, '/').split('/').slice(-2).join('/') || 'NOT/FOUND';
+		const lineAndColumn = `${stack.lineNumber}:${stack.columnNumber}` || '0:0';
 
-		return `${fileName}:${lineNumber}:${columnNumber}`;
+		return `${fileName}:${lineAndColumn}`;
 	}
 
 	getDate() {
