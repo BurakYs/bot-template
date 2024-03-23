@@ -10,7 +10,7 @@ module.exports = {
 
 			interaction.language = client.config.bot.supportedLanguages[interaction.locale] || client.config.bot.supportedLanguages[client.config.bot.defaultLanguage];
 
-			const translations = getTranslations(interaction, 'common');
+			const translations = getTranslations(interaction, 'standard');
 
 			const match = cmd.match(interaction);
 			const { disabled, guildOnly, dmOnly, memberPermission, botPermission, ownerOnly, supportServerOnly } = match;
@@ -32,7 +32,7 @@ module.exports = {
 			} catch (error) {
 				if (error) {
 					if (interaction.commandName !== 'eval') {
-						if (['DiscordAPIError[10062]: Unknown interaction', 'DiscordAPIError[40060]: Interaction has already been acknowledged.'].includes(error.toString())) return;
+						if (error instanceof Error && ['unknown interaction', 'interaction has already been acknowledged'].includes(error.message)) return;
 
 						await client.channels.cache.get(client.config.channels.errorLog)?.send({
 							content: `<@&${client.config.roles.errorPings}>`,

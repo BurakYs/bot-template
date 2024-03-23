@@ -1,6 +1,6 @@
 const { blue, green, red, white, yellow } = require('colorette');
 const fs = require('fs');
-const config = require('../config.js');
+const config = require('../../config.js');
 
 class Logger {
 	constructor(options = {}) {

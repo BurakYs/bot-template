@@ -1,4 +1,4 @@
-const Database = require('../classes/Database.js');
+const { Database } = require('./classes');
 const languages = {
 	'tr': new Database({ path: './localizations/tr.json', cache: true }),
 	'en-US': new Database({ path: './localizations/en.json', cache: true })

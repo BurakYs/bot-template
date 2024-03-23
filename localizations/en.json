@@ -17,7 +17,7 @@
       "inviteLink": "Invite Link"
     }
   },
-  "common": {
+  "standard": {
     "commandDMOnly": "This command can only be used in DMs.",
     "commandGuildOnly": "This command can only be used in servers.",
     "commandDisabled": "This command is disabled temporarily.",

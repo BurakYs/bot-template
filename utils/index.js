@@ -1,5 +1,5 @@
 const utils = {};
-const utilsArray = ['disableAll', 'getTranslations', 'Logger', 'createTitle'];
+const utilsArray = ['disableAll', 'getTranslations', 'createTitle'];
 
 utilsArray.forEach((name) => {
 	utils[name] = require(`./${name}`);

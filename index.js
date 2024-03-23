@@ -6,10 +6,8 @@ const startArgs = process.argv.slice(2);
 config.bot.redeployCommands = ['--redeploy-commands', '-rc', '--redeploy', '-r']
 	.some(arg => startArgs.includes(arg));
 
-const Logger = require('./utils/Logger.js');
+const Logger = require('./utils/classes/Logger.js');
 new Logger();
-
-logger.info('Starting the project');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -109,11 +107,11 @@ class Client extends DiscordClient {
 		if (!process.env.TOKEN) return logger.error('Don\'t forget to set the TOKEN in the .env file.');
 
 		try {
-			require('./extensions/array')();
-			require('./extensions/date')();
-			require('./extensions/number')();
-			require('./extensions/string')();
-			require('./extensions/object')();
+			require('./utils/extensions/array')();
+			require('./utils/extensions/date')();
+			require('./utils/extensions/number')();
+			require('./utils/extensions/string')();
+			require('./utils/extensions/object')();
 
 			await require('./loaders/command')(this);
 			await require('./loaders/listeners')(this);
@@ -124,4 +122,5 @@ class Client extends DiscordClient {
 	}
 };
 
+logger.info('Starting the bot');
 new Client().create().loader();

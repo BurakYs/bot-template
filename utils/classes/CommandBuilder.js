@@ -61,7 +61,7 @@ class CommandBuilder extends SlashCommandBuilder {
 			: findOption(this.options, interactionSubcommand)) || this;
 
 		return {
-			tags: command.tags || this.tags,
+			tags: command.tags || this.tags || [],
 			category: command.category || this.category,
 			guildOnly: command.guildOnly || this.guildOnly,
 			ownerOnly: command.ownerOnly || this.ownerOnly,
@@ -85,7 +85,7 @@ class CommandBuilder extends SlashCommandBuilder {
 	toJSON(showAll = false) {
 		const data = {
 			...super.toJSON(),
-			tags: this.tags,
+			tags: this.tags || [],
 			category: this.category,
 			loginRequired: this.loginRequired,
 			guildOnly: this.guildOnly,

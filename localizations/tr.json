@@ -17,7 +17,7 @@
       "inviteLink": "Davet Linki"
     }
   },
-  "common": {
+  "standard": {
     "commandDMOnly": "Bu komut sadece DM'lerde kullanılabilir.",
     "commandGuildOnly": "Bu komut sadece sunucularda kullanılabilir.",
     "commandDisabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
