@@ -1,4 +1,4 @@
-const { blue, green, red, white, yellow } = require('colorette');
+const { blue, green, red, white, yellow, gray, bgRedBright, bold } = require('colorette');
 const StackTraceHelper = require('./StackTraceHelper');
 const fs = require('fs');
 const config = require('../../config.js');
@@ -44,12 +44,12 @@ class Logger {
 
 		if (this.saveToFile) {
 			const file = this.files[type];
-			const zeroSpaces = typeof message === 'string' ? message : message.noSpaces;
+			const unformatted = typeof message === 'string' ? message : message.unformatted;
 
-			fs.appendFileSync(file, `[${this.getDate()} - ${fileName}] - ${zeroSpaces}\n`);
+			fs.appendFileSync(file, `[${this.getDate()} - ${fileName}] - ${unformatted}\n`);
 		}
 
-		console.log(`${white(`(${fileName})`)} ${yellow(this.getDate())} ${color(`- ${typeof message === 'string' ? message : message.spaces}`)}`);
+		console.log(`${white(`(${fileName})`)} ${yellow(this.getDate())} ${color(`- ${typeof message === 'string' ? message : message.formatted}`)}`);
 	}
 
 	send(...message) {
@@ -114,10 +114,33 @@ class Logger {
 	}
 
 	formatMessage(message) {
-		const spaces = message.map(m => typeof m === 'object' ? m instanceof Error ? m.message : this.stringify(m, 2) : m).join(' ');
-		const noSpaces = message.map(m => typeof m === 'object' ? m instanceof Error ? m.message : this.stringify(m, 0) : m).join(' ');
+		const projectRoot = process.cwd().replace(/\\/g, '/');
 
-		return { spaces, noSpaces };
+		const formatted = message.map(m => {
+			if (typeof m === 'object') {
+				if (m instanceof Error) {
+					const errorStacks = JSON.parse(JSON.stringify(StackTraceHelper.parse(m), null, 2)).slice(0, 4);
+					const formattedErrorStacks = errorStacks.map(stack => {
+						const filePath = stack.fileName.replace(/\\/g, '/').replace(projectRoot, '').replace('node:', '') || 'NOT/FOUND';
+						const fileName = filePath.split('/').pop();
+
+						return `
+	- ${yellow(fileName)}	${white(stack.functionName || stack.methodName || 'anonymous')}
+	   ${gray(filePath)}`;
+					});
+
+					return `\n${bgRedBright(bold(white(' ' + (m.name || 'UNKNOWN') + ' ')))} ${white(m.message)}${formattedErrorStacks.join('')}`;
+				} else {
+					return JSON.stringify(m, null, 2);
+				}
+			} else {
+				return m;
+			}
+		}).join(' ');
+
+		const unformatted = message.map(m => typeof m === 'object' ? m instanceof Error ? m.message : this.stringify(m, 0) : m).join(' ');
+
+		return { formatted, unformatted };
 	}
 
 	stringify(obj, space = 2) {
