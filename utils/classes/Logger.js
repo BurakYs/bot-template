@@ -94,7 +94,7 @@ class Logger {
 
 	getFileName(error) {
 		const stack = StackTraceHelper.parse(error)[1];
-		const fileName = stack.fileName.replace(/\\/g, '/').split('/').slice(-2).join('/') || 'NOT/FOUND';
+		const fileName = stack.fileName?.replace(/\\/g, '/')?.split('/')?.slice(-2)?.join('/') || 'NOT/FOUND';
 		const lineAndColumn = `${stack.lineNumber}:${stack.columnNumber}` || '0:0';
 
 		return `${fileName}:${lineAndColumn}`;
@@ -121,7 +121,7 @@ class Logger {
 				if (m instanceof Error) {
 					const errorStacks = JSON.parse(JSON.stringify(StackTraceHelper.parse(m), null, 2)).slice(0, 4);
 					const formattedErrorStacks = errorStacks.map(stack => {
-						const filePath = stack.fileName.replace(/\\/g, '/').replace(projectRoot, '').replace('node:', '') || 'NOT/FOUND';
+						const filePath = stack.fileName?.replace(/\\/g, '/')?.replace(projectRoot, '')?.replace('node:', '') || 'NOT/FOUND';
 						const fileName = filePath.split('/').pop();
 
 						return `
