@@ -43,8 +43,8 @@ class Client extends DiscordClient {
 
 			const embed = new EmbedBuilder()
 				.setAuthor(options.author || null)
-				.setThumbnail(options.thumbnail?.url || null)
-				.setImage(options.image?.url || null)
+				.setThumbnail(options.thumbnail || null)
+				.setImage(options.image || null)
 				.setTitle(options.title || null)
 				.setColor(options.color || this.config.embedColors.error)
 				.setDescription(options.description || null)
