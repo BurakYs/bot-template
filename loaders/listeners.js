@@ -1,11 +1,14 @@
 const { EmbedBuilder, resolveColor, InteractionType, Events, ActionRowBuilder, ButtonBuilder, ButtonStyle, ActivityType } = require('discord.js');
 const moment = require('moment');
 require('moment-duration-format');
+
 const handlers = {
-	applicationCommand: require('../events/applicationCommand.js'),
-	button: require('../events/button.js'),
-	modal: require('../events/modal.js'),
-	autoComplete: require('../events/autoComplete.js')
+	interactions: {
+		applicationCommand: require('../events/interactions/applicationCommand.js'),
+		button: require('../events/interactions/button.js'),
+		modal: require('../events/interactions/modal.js'),
+		autoComplete: require('../events/interactions/autoComplete.js')
+	}
 };
 
 module.exports = async (client) => {
@@ -21,10 +24,10 @@ module.exports = async (client) => {
 	});
 
 	client.on(Events.InteractionCreate, async interaction => {
-		if (interaction.type === InteractionType.ApplicationCommand) return await handlers.applicationCommand.run(client, interaction);
-		if (interaction.isButton()) return await handlers.button.run(client, interaction);
-		if (interaction.type === InteractionType.ModalSubmit) return await handlers.modal.run(client, interaction);
-		if (interaction.type === InteractionType.ApplicationCommandAutocomplete) return await handlers.autoComplete.run(client, interaction);
+		if (interaction.type === InteractionType.ApplicationCommand) return await handlers.interactions.applicationCommand.run(client, interaction);
+		if (interaction.isButton()) return await handlers.interactions.button.run(client, interaction);
+		if (interaction.type === InteractionType.ModalSubmit) return await handlers.interactions.modal.run(client, interaction);
+		if (interaction.type === InteractionType.ApplicationCommandAutocomplete) return await handlers.interactions.autoComplete.run(client, interaction);
 	});
 
 	client.on(Events.GuildCreate, async guild => {
