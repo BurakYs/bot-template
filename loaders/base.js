@@ -15,7 +15,7 @@ module.exports = class extends DiscordClient {
 
 	create() {
 		global.client = this;
-		this.config = config
+		this.config = config;
 
 		this.error = function error(interaction, options = {}) {
 			const operation = (interaction.deferred || interaction.replied) ? 'editReply' : options.type || 'reply';
@@ -81,14 +81,8 @@ module.exports = class extends DiscordClient {
 
 		this.commands = [];
 
-		process.on('unhandledRejection', (err) => {
-			if (err?.message?.toLowerCase()?.includes('discordapierror')) return;
-			logger.error(err);
-		});
-		process.on('uncaughtException', (err) => {
-			if (err?.message?.toLowerCase()?.includes('discordapierror')) return;
-			logger.error(err);
-		});
+		process.on('unhandledRejection', logger.error);
+		process.on('uncaughtException', logger.error);
 
 		return this;
 	}
