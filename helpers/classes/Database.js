@@ -4,7 +4,7 @@ class Database {
 	constructor(options = {}) {
 		this.path = options.path;
 		this.cache = options.cache ? {} : null;
-		this.readedFile = false;
+		this.fileRead = false;
 	}
 
 	/**
@@ -12,12 +12,13 @@ class Database {
 	 * @returns {Object}
 	 */
 	all() {
-		if (this.cache && (this.readedFile || !this.path)) return this.cache;
-		if (this.cache && !this.readedFile && this.path) {
-			this.readedFile = true;
+		if (this.cache && (this.fileRead || !this.path)) return this.cache;
+		if (this.cache && !this.fileRead && this.path) {
+			this.fileRead = true;
 			const data = fs.readFileSync(this.path, 'utf8');
 			return this.cache = JSON.parse(data);
 		}
+
 		try {
 			const data = fs.readFileSync(this.path, 'utf8');
 			return JSON.parse(data);
