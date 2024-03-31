@@ -21,18 +21,14 @@ module.exports = {
 			if (disabled && !client.config.bot.admins.includes(interaction.user.id)) return client.error(interaction, { description: translations.commandDisabled });
 			if (supportServerOnly && ![client.config.guilds.supportServer.id, client.config.guilds.test.id].includes(interaction.guild?.id)) return client.error(interaction, { description: translations.commandSupportServerOnly.change({ support: client.config.guilds.supportServer.invite }) });
 			if (memberPermission && !interaction.member.permissions.has(memberPermission)) return client.error(interaction, { description: translations.commandUserMissingPerms.change({ permissions: `\`${memberPermission}\`` }) });
-			if (botPermission) {
-				if (!interaction.guild.members.me.permissions.has(botPermission)) {
-					return client.error(interaction, { description: translations.commandBotMissingPerms.change({ permissions: `\`${botPermission}\`` }) });
-				}
-			}
+			if (botPermission && !interaction.guild.members.me.permissions.has(botPermission)) return client.error(interaction, { description: translations.commandBotMissingPerms.change({ permissions: `\`${botPermission}\`` }) });
 
 			try {
 				await cmd.run({ client, interaction });
 			} catch (error) {
 				if (error) {
 					if (interaction.commandName !== 'eval') {
-						if (error instanceof Error && ['unknown interaction', 'interaction has already been acknowledged'].includes(error.message)) return;
+						if (error instanceof Error && ['unknown interaction', 'interaction has already been acknowledged'].includes(error.message?.toLowerCase())) return;
 
 						await client.channels.cache.get(client.config.channels.errorLog)?.send({
 							content: `<@&${client.config.roles.errorPings}>`,
