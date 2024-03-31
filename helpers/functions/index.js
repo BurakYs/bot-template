@@ -1,8 +1,9 @@
-const utils = {};
-const utilsArray = ['disableAll', 'getTranslations', 'createTitle'];
+const disableAll = require('./disableAll');
+const getTranslations = require('./getTranslations');
+const createTitle = require('./createTitle');
 
-utilsArray.forEach((name) => {
-	utils[name] = require(`./${name}`);
-});
-
-module.exports = utils;
+module.exports = {
+	disableAll,
+	getTranslations,
+	createTitle
+}

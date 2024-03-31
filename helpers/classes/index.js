@@ -1,8 +1,11 @@
-const classes = {};
-const classesArray = ['CommandBuilder', 'Database', 'Logger', 'StackTraceHelper'];
+const CommandBuilder = require('./CommandBuilder');
+const Database = require('./Database');
+const Logger = require('./Logger');
+const StackTraceHelper = require('./StackTraceHelper');
 
-classesArray.forEach((name) => {
-	classes[name] = require(`./${name}`);
-});
-
-module.exports = classes;
+module.exports = {
+	CommandBuilder,
+	Database,
+	Logger,
+	StackTraceHelper
+}
