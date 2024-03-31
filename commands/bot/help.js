@@ -1,6 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
-const { getTranslations } = require('../../utils');
-const { CommandBuilder } = require('../../utils/classes');
+const { getTranslations } = require('../../helpers/functions');
+const { CommandBuilder } = require('../../helpers/classes');
 
 module.exports = new CommandBuilder()
 	.setName('help')

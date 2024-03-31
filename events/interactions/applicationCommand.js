@@ -1,5 +1,5 @@
 const { InteractionType, EmbedBuilder, resolveColor } = require('discord.js');
-const { getTranslations } = require('../../utils');
+const { getTranslations } = require('../../helpers/functions');
 
 module.exports = {
 	name: 'applicationCommand',

@@ -1,4 +1,4 @@
-const { CommandBuilder } = require('../../utils/classes');
+const { CommandBuilder } = require('../../helpers/classes');
 
 module.exports = new CommandBuilder()
 	.setName('ping')
