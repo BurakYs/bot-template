@@ -81,8 +81,8 @@ module.exports = class extends DiscordClient {
 
 		this.commands = [];
 
-		process.on('unhandledRejection', logger.error);
-		process.on('uncaughtException', logger.error);
+		process.on('unhandledRejection', (error) => logger.error(error));
+		process.on('uncaughtException', (error) => logger.error(error));
 
 		return this;
 	}
