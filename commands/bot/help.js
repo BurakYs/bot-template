@@ -6,7 +6,17 @@ module.exports = new CommandBuilder()
 	.setName('help')
 	.setDescription('View information about the bot and its commands')
 	.setCategory('Bot')
-	.addStringOption(o => o.setName('command').setDescription('View information about a command'))
+	.addSubcommand(s => s
+		.setName('command')
+		.setDescription('View information about a specific command')
+		.setCategory('User')
+
+		.addStringOption(o => o
+			.setName('command')
+			.setDescription('The command to get information about')
+			.setRequired(true)
+		)
+	)
 	.setRun(async ({ client, interaction }) => {
 			const translations = getTranslations(interaction, 'commands.help');
 
