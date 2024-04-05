@@ -27,13 +27,13 @@ ${translations.category}: ${command?.category}
 					)
 					.setThumbnail(client.user.displayAvatarURL());
 
-				return await interaction.reply({
+				await interaction.reply({
 					embeds: [embed]
 				});
 			} else {
 				const { url: website } = client.config.website;
 
-				return await interaction.reply({
+				await interaction.reply({
 					embeds: [new EmbedBuilder()
 						.setTitle(translations.embed.title)
 						.setDescription(translations.embed.description.change({ name: client.user.username }))

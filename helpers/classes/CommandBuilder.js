@@ -1,54 +1,108 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, CommandInteraction } = require('discord.js');
 const SubcommandBuilder = require('./SubcommandBuilder');
 
 class CommandBuilder extends SlashCommandBuilder {
 	constructor() {
 		super();
-		this.tags = [];
 	}
 
+	/**
+	 * Set the category of the command
+	 * @param {string} category The category of the command
+	 * @returns {CommandBuilder}
+	 */
 	setCategory(category) {
 		this.category = category;
 		return this;
 	}
 
+	/**
+	 * Set the tags of the command
+	 * @param {string[]} tags The tags of the command
+	 * @returns {CommandBuilder}
+	 */
 	setTags(tags) {
 		this.tags = tags;
 		return this;
 	}
 
+	/**
+	 * Set if the command can only be used in a guild
+	 * @param {boolean} guildOnly If the command can only be used in a guild
+	 * @returns {CommandBuilder}
+	 */
 	setGuildOnly(guildOnly) {
 		this.guildOnly = guildOnly;
 		return this;
 	}
 
+	/**
+	 * Set if the command can only be used by the bot owners
+	 * @param {boolean} ownerOnly If the command can only be used by the bot owner
+	 * @returns {CommandBuilder}
+	 */
 	setOwnerOnly(ownerOnly) {
 		this.ownerOnly = ownerOnly;
 		return this;
 	}
 
+	/**
+	 * Set if the command can only be used in DMs
+	 * @param {boolean} dmOnly If the command can only be used in a DM
+	 * @returns {CommandBuilder}
+	 */
 	setDMOnly(dmOnly) {
 		this.dmOnly = dmOnly;
 		return this;
 	}
 
+	/**
+	 * Set the member permission required to run the command
+	 * @param {string} permission The permission required to run the command
+	 * @returns {CommandBuilder}
+	 */
 	setMemberPermission(permission) {
 		this.memberPermission = permission;
 		return this;
 	}
 
+	/**
+	 * Set the bot permission required to run the command
+	 * @param {string} permission The permission required to run the command
+	 * @returns {CommandBuilder}
+	 */
 	setBotPermission(permission) {
 		this.botPermission = permission;
 		return this;
 	}
 
+	/**
+	 * Set if the command is disabled
+	 * @param {boolean} disabled If the command is disabled
+	 * @returns {CommandBuilder}
+	 */
 	setDisabled(disabled) {
 		this.disabled = disabled;
 		return this;
 	}
 
+	/**
+	 * Set if the command can only be used in the support server
+	 * @param {boolean} supportServerOnly If the command can only be used in the support server
+	 * @returns {CommandBuilder}
+	 */
 	setSupportServerOnly(supportServerOnly) {
 		this.supportServerOnly = supportServerOnly;
+		return this;
+	}
+
+	/**
+	 * Set the run function of the command
+	 * @param {function({ client: Client, interaction: CommandInteraction, translations?: Object }): Promise<any>} run The run function of the command
+	 * @returns {CommandBuilder}
+	 */
+	setRun(run) {
+		this.run = run;
 		return this;
 	}
 
@@ -59,7 +113,11 @@ class CommandBuilder extends SlashCommandBuilder {
 
 		return this;
 	}
-
+	/**
+	 * Match the command data with the interaction
+	 * @param {CommandInteraction} interaction The interaction to match the command data with
+	 * @returns {{memberPermission: string, botPermission: string, ownerOnly: boolean, supportServerOnly: boolean, options: any[], disabled: boolean, run, category: string, guildOnly: boolean, tags: ([]|*[]), dmOnly: boolean}}
+	 */
 	match(interaction) {
 		const interactionSubcommandGroup = interaction.options._group;
 		const interactionSubcommand = interaction.options._subcommand;
@@ -80,13 +138,8 @@ class CommandBuilder extends SlashCommandBuilder {
 			botPermission: command.botPermission || this.botPermission,
 			disabled: command.disabled ?? this.disabled,
 			options: command.options || this.options,
-			run: this.run,
+			run: this.run
 		};
-	}
-
-	setRun(run) {
-		this.run = run;
-		return this;
 	}
 
 	toJSON(showAll = false) {
@@ -112,6 +165,6 @@ class CommandBuilder extends SlashCommandBuilder {
 
 		return data;
 	}
-}
+};
 
 module.exports = CommandBuilder;
