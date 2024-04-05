@@ -1,25 +1,11 @@
 const { EmbedBuilder } = require('discord.js');
-const { getTranslations } = require('../../helpers/functions');
 const { CommandBuilder } = require('../../helpers/classes');
 
 module.exports = new CommandBuilder()
 	.setName('help')
 	.setDescription('View information about the bot and its commands')
 	.setCategory('Bot')
-	.addSubcommand(s => s
-		.setName('command')
-		.setDescription('View information about a specific command')
-		.setCategory('User')
-
-		.addStringOption(o => o
-			.setName('command')
-			.setDescription('The command to get information about')
-			.setRequired(true)
-		)
-	)
-	.setRun(async ({ client, interaction }) => {
-			const translations = getTranslations(interaction, 'commands.help');
-
+	.setRun(async ({ client, interaction, translations }) => {
 			const commandName = interaction.options.getString('command')?.split(' ')[0];
 			const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.owner && x.name_localizations).find(x => Object.values(x.name_localizations).includes(commandName)) : null;
 

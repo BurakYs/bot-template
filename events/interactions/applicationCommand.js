@@ -11,20 +11,29 @@ module.exports = {
 			interaction.language = client.config.bot.supportedLanguages[interaction.locale] || client.config.bot.supportedLanguages[client.config.bot.defaultLanguage];
 
 			const translations = getTranslations(interaction, 'standard');
+			const permissions = getTranslations(interaction, 'permissions');
 
-			const match = cmd.match(interaction);
-			const { disabled, guildOnly, dmOnly, memberPermission, botPermission, ownerOnly, supportServerOnly } = match;
+			const commandData = cmd.match(interaction);
 
-			if (ownerOnly === true && !client.config.bot.admins.includes(interaction.user.id)) return;
-			if (dmOnly === true && interaction.guild) return client.error(interaction, { description: translations.commandDMOnly });
-			if (guildOnly === true && !interaction.guild) return client.error(interaction, { description: translations.commandGuildOnly });
-			if (disabled && !client.config.bot.admins.includes(interaction.user.id)) return client.error(interaction, { description: translations.commandDisabled });
-			if (supportServerOnly && ![client.config.guilds.supportServer.id, client.config.guilds.test.id].includes(interaction.guild?.id)) return client.error(interaction, { description: translations.commandSupportServerOnly.change({ support: client.config.guilds.supportServer.invite }) });
-			if (memberPermission && !interaction.member.permissions.has(memberPermission)) return client.error(interaction, { description: translations.commandUserMissingPerms.change({ permissions: `\`${memberPermission}\`` }) });
-			if (botPermission && !interaction.guild.members.me.permissions.has(botPermission)) return client.error(interaction, { description: translations.commandBotMissingPerms.change({ permissions: `\`${botPermission}\`` }) });
+			if (commandData.ownerOnly === true && !client.config.bot.admins.includes(interaction.user.id)) return;
+			if (commandData.dmOnly === true && interaction.guild) return client.error(interaction, { description: translations.commandDMOnly });
+			if (commandData.guildOnly === true && !interaction.guild) return client.error(interaction, { description: translations.commandGuildOnly });
+			if (commandData.disabled && !client.config.bot.admins.includes(interaction.user.id)) return client.error(interaction, { description: translations.commandDisabled });
+			if (commandData.supportServerOnly && ![client.config.guilds.supportServer.id, client.config.guilds.test.id].includes(interaction.guild?.id)) return client.error(interaction, { description: translations.commandSupportServerOnly.change({ support: client.config.guilds.supportServer.invite }) });
+			if (commandData.memberPermission && !interaction.member.permissions.has(commandData.memberPermission)) {
+				const permission = permissions[commandData.memberPermission] || commandData.memberPermission;
+				
+				return client.error(interaction, { description: translations.commandUserMissingPerms.change({ permissions: `\`${permission}\`` }) });
+			}
+			if (commandData.botPermission && !interaction.guild.members.me.permissions.has(commandData.botPermission)) {
+				const permission = permissions[commandData.botPermission] || commandData.botPermission;
+				
+				return client.error(interaction, { description: translations.commandBotMissingPerms.change({ permissions: `\`${permission}\`` }) });
+			}
 
 			try {
-				await cmd.run({ client, interaction });
+				const commandTranslations = getTranslations(interaction, `commands.${interaction.commandName}`);
+				await cmd.run({ client, interaction, translations: commandTranslations });
 			} catch (error) {
 				if (error) {
 					if (interaction.commandName !== 'eval') {

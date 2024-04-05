@@ -17,6 +17,18 @@
       "inviteLink": "Invite Link"
     }
   },
+  "permissions": {
+    "KickMembers": "Kick Members",
+    "BanMembers": "Ban Members",
+    "Administrator": "Administrator",
+    "ManageChannels": "Manage Channels",
+    "ManageGuild": "Manage Server",
+    "ManageMessages": "Manage Messages",
+    "ManageNicknames": "Manage Nicknames",
+    "ManageRoles": "Manage Roles",
+    "ManageThreads": "Manage Threads",
+    "ModerateMembers": "Timeout Members"
+  },
   "standard": {
     "commandDMOnly": "This command can only be used in DMs.",
     "commandGuildOnly": "This command can only be used in servers.",

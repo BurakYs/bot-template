@@ -17,6 +17,18 @@
       "inviteLink": "Davet Linki"
     }
   },
+  "permissions": {
+    "KickMembers": "Üyeleri At",
+    "BanMembers": "Üyeleri Yasakla",
+    "Administrator": "Yönetici",
+    "ManageChannels": "Kanalları Yönet",
+    "ManageGuild": "Sunucuyu Yönet",
+    "ManageMessages": "Mesajları Yönet",
+    "ManageNicknames": "Takma Adları Yönet",
+    "ManageRoles": "Rolleri Yönet",
+    "ManageThreads": "Alt Başlıkları Yönet",
+    "ModerateMembers": "Üyelere Zaman Aşımı Uygula"
+  },
   "standard": {
     "commandDMOnly": "Bu komut sadece DM'lerde kullanılabilir.",
     "commandGuildOnly": "Bu komut sadece sunucularda kullanılabilir.",

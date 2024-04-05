@@ -6,9 +6,9 @@ module.exports = new CommandBuilder()
 	.setCategory('Bot')
 	.setRun(async ({ client, interaction }) => {
 		const dateBefore = Date.now();
-		const message = await interaction.reply({ content: 'Ping' });
+		await interaction.reply({ content: 'Ping' });
 
-		return await message.edit({
+		return await interaction.editReply({
 			content: `
 🏓 Pong!
 Discord API: ${Date.now() - dateBefore}ms
