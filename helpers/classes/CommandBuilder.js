@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, CommandInteraction } = require('discord.js');
+const { SlashCommandBuilder, ChatInputCommandInteraction } = require('discord.js');
 const SubcommandBuilder = require('./SubcommandBuilder');
 
 class CommandBuilder extends SlashCommandBuilder {
@@ -98,13 +98,14 @@ class CommandBuilder extends SlashCommandBuilder {
 
 	/**
 	 * Set the run function of the command
-	 * @param {function({ client: Client, interaction: CommandInteraction, translations?: Object }): Promise<any>} run The run function of the command
+	 * @param {function({ client: Client, interaction: ChatInputCommandInteraction, translations?: Object }): Promise<any>} run The run function of the command
 	 * @returns {CommandBuilder}
 	 */
 	setRun(run) {
 		this.run = run;
 		return this;
 	}
+
 
 	addSubcommand(subcommand) {
 		const subcommandBuilder = new SubcommandBuilder();
@@ -113,9 +114,10 @@ class CommandBuilder extends SlashCommandBuilder {
 
 		return this;
 	}
+
 	/**
 	 * Match the command data with the interaction
-	 * @param {CommandInteraction} interaction The interaction to match the command data with
+	 * @param {ChatInputCommandInteraction} interaction The interaction to match the command data with
 	 * @returns {{memberPermission: string, botPermission: string, ownerOnly: boolean, supportServerOnly: boolean, options: any[], disabled: boolean, run, category: string, guildOnly: boolean, tags: ([]|*[]), dmOnly: boolean}}
 	 */
 	match(interaction) {

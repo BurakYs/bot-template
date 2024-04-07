@@ -1,8 +1,12 @@
-const { InteractionType, EmbedBuilder, resolveColor } = require('discord.js');
+const { InteractionType, EmbedBuilder, resolveColor, ChatInputCommandInteraction } = require('discord.js');
 const { getTranslations } = require('../../helpers/functions');
 
 module.exports = {
 	name: 'applicationCommand',
+	/**
+	 * @param {import('../../loaders/base')} client
+	 * @param {ChatInputCommandInteraction & { language: string }} interaction
+	 */
 	async run(client, interaction) {
 		if (interaction.type === InteractionType.ApplicationCommand) {
 			const cmd = client.commands.find(x => x.name === interaction.commandName);

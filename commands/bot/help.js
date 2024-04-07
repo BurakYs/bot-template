@@ -5,14 +5,27 @@ module.exports = new CommandBuilder()
 	.setName('help')
 	.setDescription('View information about the bot and its commands')
 	.setCategory('Bot')
+	.addSubcommand(s => s
+		.setName('command')
+		.setDescription('View information about a specific command')
+		.setCategory('User')
+
+		.addStringOption(o => o
+			.setName('command')
+			.setDescription('The command to get information about')
+			.setRequired(true)
+		)
+	)
 	.setRun(async ({ client, interaction, translations }) => {
 			const commandName = interaction.options.getString('command')?.split(' ')[0];
 			const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.owner && x.name_localizations).find(x => Object.values(x.name_localizations).includes(commandName)) : null;
+			const { url: website } = client.config.website;
+			let embed;
 
 			if (commandName) {
 				if (!command || command.owner) return client.error(interaction, { description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
 
-				const embed = new EmbedBuilder()
+				embed = new EmbedBuilder()
 					.setTitle(commandName.title())
 					.setColor(client.config.embedColors.default)
 					.setDescription(command.description)
@@ -26,15 +39,8 @@ ${translations.category}: ${command?.category}
 						}
 					)
 					.setThumbnail(client.user.displayAvatarURL());
-
-				await interaction.reply({
-					embeds: [embed]
-				});
 			} else {
-				const { url: website } = client.config.website;
-
-				await interaction.reply({
-					embeds: [new EmbedBuilder()
+				embed = new EmbedBuilder()
 						.setTitle(translations.embed.title)
 						.setDescription(translations.embed.description.change({ name: client.user.username }))
 						.addFields(
@@ -50,8 +56,11 @@ ${translations.category}: ${command?.category}
 						)
 						.setThumbnail(client.user.displayAvatarURL())
 						.setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-						.setColor(client.config.embedColors.default)]
-				});
+						.setColor(client.config.embedColors.default)
 			}
+
+			await interaction.reply({
+				embeds: [embed]
+			});
 		}
 	);
