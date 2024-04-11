@@ -5,7 +5,7 @@ module.exports = {
 	name: 'applicationCommand',
 	/**
 	 * @param {import('../../loaders/base')} client
-	 * @param {ChatInputCommandInteraction & { language: string }} interaction
+	 * @param {ChatInputCommandInteraction & { language: string, success: Function, error: Function }} interaction
 	 */
 	async run(client, interaction) {
 		if (interaction.type === InteractionType.ApplicationCommand) {
@@ -20,19 +20,19 @@ module.exports = {
 			const commandData = cmd.match(interaction);
 
 			if (commandData.ownerOnly === true && !client.config.bot.admins.includes(interaction.user.id)) return;
-			if (commandData.dmOnly === true && interaction.guild) return client.error(interaction, { description: translations.commandDMOnly });
-			if (commandData.guildOnly === true && !interaction.guild) return client.error(interaction, { description: translations.commandGuildOnly });
-			if (commandData.disabled && !client.config.bot.admins.includes(interaction.user.id)) return client.error(interaction, { description: translations.commandDisabled });
-			if (commandData.supportServerOnly && ![client.config.guilds.supportServer.id, client.config.guilds.test.id].includes(interaction.guild?.id)) return client.error(interaction, { description: translations.commandSupportServerOnly.change({ support: client.config.guilds.supportServer.invite }) });
+			if (commandData.dmOnly === true && interaction.guild) return interaction.error({ description: translations.commandDMOnly });
+			if (commandData.guildOnly === true && !interaction.guild) return interaction.error({ description: translations.commandGuildOnly });
+			if (commandData.disabled && !client.config.bot.admins.includes(interaction.user.id)) return interaction.error({ description: translations.commandDisabled });
+			if (commandData.supportServerOnly && ![client.config.guilds.supportServer.id, client.config.guilds.test.id].includes(interaction.guild?.id)) return interaction.error({ description: translations.commandSupportServerOnly.change({ support: client.config.guilds.supportServer.invite }) });
 			if (commandData.memberPermission && !interaction.member.permissions.has(commandData.memberPermission)) {
 				const permission = permissions[commandData.memberPermission] || commandData.memberPermission;
 				
-				return client.error(interaction, { description: translations.commandUserMissingPerms.change({ permissions: `\`${permission}\`` }) });
+				return interaction.error({ description: translations.commandUserMissingPerms.change({ permissions: `\`${permission}\`` }) });
 			}
 			if (commandData.botPermission && !interaction.guild.members.me.permissions.has(commandData.botPermission)) {
 				const permission = permissions[commandData.botPermission] || commandData.botPermission;
 				
-				return client.error(interaction, { description: translations.commandBotMissingPerms.change({ permissions: `\`${permission}\`` }) });
+				return interaction.error({ description: translations.commandBotMissingPerms.change({ permissions: `\`${permission}\`` }) });
 			}
 
 			try {
@@ -62,7 +62,7 @@ module.exports = {
 					}
 
 					logger.error(error);
-					return client.error(interaction, {
+					return interaction.error({
 						description: translations.unexpectedErrorOccurred.change({ support: client.config.guilds.supportServer.invite }),
 						ephemeral: true
 					});

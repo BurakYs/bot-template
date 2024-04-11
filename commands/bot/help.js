@@ -23,7 +23,7 @@ module.exports = new CommandBuilder()
 			let embed;
 
 			if (commandName) {
-				if (!command || command.owner) return client.error(interaction, { description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
+				if (!command || command.owner) return interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
 
 				embed = new EmbedBuilder()
 					.setTitle(commandName.title())

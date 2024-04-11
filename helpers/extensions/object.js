@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function () {
 	Object.defineProperties(Object.prototype, {
 		'equalsTo': {
