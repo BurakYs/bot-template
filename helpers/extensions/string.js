@@ -9,7 +9,7 @@ module.exports = function () {
 		},
 		'change': {
 			value: function (replacements = {}) {
-				return this.replace(/\[([^\]]+?)]/g, (match, key) => {
+				return this.replace(/\{([^}]+?)}/g, (match, key) => {
 					const split = key.split(':');
 					const key2 = split.length > 1 ? split[1] : split[0];
 					return replacements[key2] || client.commands.find(x => x.name === key2)?.mention || match;

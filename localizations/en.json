@@ -1,7 +1,7 @@
 {
   "commands": {
     "help": {
-      "commandNotFound": "No command was found with the name [name].",
+      "commandNotFound": "No command was found with the name {name}.",
       "info": "Information",
       "command": "Command",
       "category": "Category",
@@ -33,9 +33,9 @@
     "commandDMOnly": "This command can only be used in DMs.",
     "commandGuildOnly": "This command can only be used in servers.",
     "commandDisabled": "This command is disabled temporarily.",
-    "commandSupportServerOnly": "This command can only be used in [our support server]([support]).",
-    "commandUserMissingPerms": "You are missing the following permissions to run this command: [permissions]",
-    "commandBotMissingPerms": "I am missing the following permissions to run this command: [permissions]",
+    "commandSupportServerOnly": "This command can only be used in [our support server]({support}).",
+    "commandUserMissingPerms": "You are missing the following permissions to run this command: {permissions}",
+    "commandBotMissingPerms": "I am missing the following permissions to run this command: {permissions}",
     "unexpectedErrorOccurred": "An unexpected error occurred. Please try again later."
   },
   "embeds": {

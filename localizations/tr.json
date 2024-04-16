@@ -1,7 +1,7 @@
 {
   "commands": {
     "help": {
-      "commandNotFound": "[name] adında bir komut bulunamadı.",
+      "commandNotFound": "{name} adında bir komut bulunamadı.",
       "info": "Bilgiler",
       "command": "Komut",
       "category": "Kategori",
@@ -33,9 +33,9 @@
     "commandDMOnly": "Bu komut sadece DM'lerde kullanılabilir.",
     "commandGuildOnly": "Bu komut sadece sunucularda kullanılabilir.",
     "commandDisabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
-    "commandSupportServerOnly": "Bu komut yalnızca [destek sunucumuzda]([support]) kullanılabilir.",
-    "commandUserMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: [izinler]",
-    "commandBotMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalıyım: [izinler]",
+    "commandSupportServerOnly": "Bu komut yalnızca [destek sunucumuzda]({support}) kullanılabilir.",
+    "commandUserMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: {permissions}",
+    "commandBotMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalıyım: {permissions}",
     "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin."
   },
   "embeds": {

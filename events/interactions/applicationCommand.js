@@ -55,7 +55,7 @@ module.exports = {
 \`User:\` ${interaction.user.tag} | ${interaction.user.id}
 \`Command:\` ${interaction.commandName}
         
-\`Error:\` \`\`\`js\n${error.toString().slice(0, 3000)}\`\`\` 
+\`Error:\` \`\`\`js\n${error.toString().slice(0, 3900)}\`\`\` 
 `)
 							]
 						});
