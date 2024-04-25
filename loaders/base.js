@@ -31,7 +31,6 @@ module.exports = class extends DiscordClient {
 			require('../helpers/extensions/date')();
 			require('../helpers/extensions/number')();
 			require('../helpers/extensions/string')();
-			require('../helpers/extensions/object')();
 			require('../helpers/extensions/message')();
 
 			await require('./command')(this);
