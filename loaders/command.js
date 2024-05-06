@@ -30,7 +30,7 @@ module.exports = async (client) => {
 		if (client.config.bot.redeployCommands) {
 			await client.application.commands.set(commands).then(async () => {
 				logger.info('Loaded global slash commands successfully');
-				await processCommands(commands);
+				setCommandMentions(commands);
 			}).catch(err => logger.error(err));
 
 			if (client.config.guilds.test && ownerCommands.length) {
@@ -39,10 +39,10 @@ module.exports = async (client) => {
 				}).catch(err => logger.error(err));
 			}
 		} else {
-			await processCommands(await client.application.commands.fetch());
+			setCommandMentions(await client.application.commands.fetch());
 		}
 
-		async function processCommands(commands) {
+		function setCommandMentions(commands) {
 			commands.map(x => x).forEach(x => {
 				const command = client.commands.find(y => y.name === x.name);
 				if (command) {
@@ -53,7 +53,6 @@ module.exports = async (client) => {
 					});
 				}
 			});
-			return commands;
 		}
 	});
 };
