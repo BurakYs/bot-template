@@ -7,7 +7,7 @@
       {
         "name": "command",
         "localizedName": "command",
-        "localizedDescription": "View information about a command"
+        "localizedDescription": "The command you want to get information about"
       }
     ]
   },

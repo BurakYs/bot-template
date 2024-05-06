@@ -7,12 +7,9 @@
       "category": "Category",
       "embed": {
         "title": "Help Menu",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec nunc tincidunt tincidunt."
+        "description": "I'm a very cool bot!"
       },
       "links": "Links",
-      "website": "Website",
-      "privacyPolicy": "Privacy Policy",
-      "termsOfService": "Terms of Service",
       "supportServer": "Support Server",
       "inviteLink": "Invite Link"
     }

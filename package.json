@@ -13,8 +13,12 @@
     "discord.js": "^14.13.0",
     "dotenv": "^16.4.5",
     "glob": "^10.2.6",
+    "module-alias": "^2.2.3",
     "moment": "^2.29.4",
     "moment-duration-format": "^2.3.2",
     "tslog": "^4.9.2"
+  },
+  "_moduleAliases": {
+    "@": "./"
   }
 }

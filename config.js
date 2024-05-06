@@ -6,7 +6,6 @@ module.exports = {
 	},
 	bot: {
 		admins: ['269677849810698249'],
-		redeployCommands: false,
 		invite: '',
 		supportedLanguages: {
 			'en-US': 'en',
@@ -14,9 +13,6 @@ module.exports = {
 			'tr': 'tr'
 		},
 		defaultLanguage: 'en-US'
-	},
-	website: {
-		url: 'https://google.com'
 	},
 	presence: {
 		activity: '/help | {u} users | {s} servers',

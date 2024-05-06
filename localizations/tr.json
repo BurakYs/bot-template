@@ -7,12 +7,9 @@
       "category": "Kategori",
       "embed": {
         "title": "Yardım Menüsü",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec nunc tincidunt tincidunt."
+        "description": "Çok havalı bir botum!"
       },
       "links": "Linkler",
-      "website": "Web Sitesi",
-      "privacyPolicy": "Gizlilik Politikası",
-      "termsOfService": "Kullanım Koşulları",
       "supportServer": "Destek Sunucusu",
       "inviteLink": "Davet Linki"
     }

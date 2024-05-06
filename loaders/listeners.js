@@ -13,7 +13,7 @@ const handlers = {
 
 module.exports = async (client) => {
 	client.on(Events.ClientReady, async () => {
-		logger.success(`Logged in as ${client.user.tag}`);
+		logger.info(`Logged in as ${client.user.tag}`);
 
 		moment.locale(client.config.bot.defaultLanguage);
 		await setPresence();

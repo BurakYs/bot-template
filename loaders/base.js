@@ -27,11 +27,7 @@ module.exports = class extends DiscordClient {
 		if (!process.env.TOKEN) return logger.error('Don\'t forget to set the TOKEN in the .env file.');
 
 		try {
-			require('../helpers/extensions/array')();
-			require('../helpers/extensions/date')();
-			require('../helpers/extensions/number')();
-			require('../helpers/extensions/string')();
-			require('../helpers/extensions/message')();
+			['array', 'date', 'number', 'string', 'message'].forEach(extension => require(`@/helpers/extensions/${extension}`)());
 
 			await require('./command')(this);
 			await require('./listeners')(this);

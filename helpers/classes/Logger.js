@@ -21,7 +21,6 @@ class Logger extends tslog.Logger {
 					WARN: ['bold', 'yellow'],
 					ERROR: ['bold', 'red'],
 					FATAL: ['bold', 'redBright'],
-					SUCCESS: ['bold', 'green'],
 					REQUEST: ['bold', 'white']
 				},
 				dateIsoStr: 'yellow',
@@ -35,15 +34,6 @@ class Logger extends tslog.Logger {
 		});
 
 		global.logger = this;
-	}
-
-	/**
-	 * Logs a success message.
-	 * @param args - Multiple log attributes that should be logged.
-	 * @return LogObject with meta property, when log level is >= minLevel
-	 */
-	success(...args){
-		return super.log(8, 'SUCCESS', ...args);
 	}
 }
 
