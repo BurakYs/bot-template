@@ -1,5 +1,4 @@
-const { SlashCommandBuilder, ChatInputCommandInteraction } = require('discord.js');
-const SubcommandBuilder = require('./SubcommandBuilder');
+const { SlashCommandBuilder, SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandBuilder, ChatInputCommandInteraction } = require('discord.js');
 
 class CommandBuilder extends SlashCommandBuilder {
 	constructor() {
@@ -97,21 +96,34 @@ class CommandBuilder extends SlashCommandBuilder {
 	}
 
 	/**
+	 * Adds a new subcommand group to this command.
+	 * @param {(SlashCommandSubcommandGroupBuilder) | ((subcommandGroup: SlashCommandSubcommandGroupBuilder) => SlashCommandSubcommandGroupBuilder)} input The subcommand group to add, or a function that returns a subcommand group
+	 * @returns {CommandBuilder}
+	 */
+	addSubcommandGroup(input) {
+		const subcommandGroup = input instanceof SlashCommandSubcommandGroupBuilder ? input : input(new SlashCommandSubcommandGroupBuilder());
+		super.addSubcommandGroup(subcommandGroup);
+		return this;
+	}
+
+	/**
+	 * Adds a new subcommand to this command.
+	 * @param {SlashCommandSubcommandBuilder | ((subcommand: SlashCommandSubcommandBuilder) => SlashCommandSubcommandBuilder)} input The subcommand to add, or a function that returns a subcommand
+	 * @returns {CommandBuilder}
+	 */
+	addSubcommand(input) {
+		const subcommand = input instanceof SlashCommandSubcommandBuilder ? input : input(new SlashCommandSubcommandBuilder());
+		super.addSubcommand(subcommand);
+		return this;
+	}
+
+	/**
 	 * Set the run function of the command
 	 * @param {function({ client: Client, interaction: ChatInputCommandInteraction, translations?: Object }): Promise<any>} run The run function of the command
 	 * @returns {CommandBuilder}
 	 */
 	setRun(run) {
 		this.run = run;
-		return this;
-	}
-
-
-	addSubcommand(subcommand) {
-		const subcommandBuilder = new SubcommandBuilder();
-		const subcommandData = subcommand(subcommandBuilder);
-		this.options.push(subcommandData);
-
 		return this;
 	}
 
