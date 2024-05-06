@@ -12,7 +12,7 @@ module.exports = async (client) => {
 	const ownerCommands = [];
 
 	folder.map(value => {
-		const file = require(`../${value}`);
+		const file = require(`@/${value}`);
 		const json = file.toJSON(true);
 
 		for (const lang in localizations) {
@@ -28,15 +28,19 @@ module.exports = async (client) => {
 
 	client.once(Events.ClientReady, async () => {
 		if (client.config.bot.redeployCommands) {
-			await client.application.commands.set(commands).then(async () => {
-				logger.info('Loaded global slash commands successfully');
-				setCommandMentions(commands);
-			}).catch(err => logger.error(err));
+			await client.application.commands.set(commands)
+				.then(() => {
+					logger.info('Loaded global slash commands successfully');
+					setCommandMentions(commands);
+				})
+				.catch(err => logger.error(err));
 
 			if (client.config.guilds.test && ownerCommands.length) {
-				await client.application.commands.set(ownerCommands, client.config.guilds.test).then(() => {
-					logger.info('Loaded global slash commands successfully');
-				}).catch(err => logger.error(err));
+				await client.application.commands.set(ownerCommands, client.config.guilds.test)
+					.then(() => {
+						logger.info('Loaded global slash commands successfully');
+					})
+					.catch(err => logger.error(err));
 			}
 		} else {
 			setCommandMentions(await client.application.commands.fetch());
