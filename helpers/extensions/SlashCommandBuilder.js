@@ -4,6 +4,12 @@ module.exports = function () {
 	// TODO: Code suggestions don't work for these functions
 
 	const commandBuilderFunctions = {
+		setName: {
+			value: function (name) {
+				this.name = name;
+				return this;
+			}
+		},
 		setCategory: {
 			value: function (category) {
 				this.category = category;
