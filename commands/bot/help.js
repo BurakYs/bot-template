@@ -1,7 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
-const { CommandBuilder } = require('@/helpers/classes');
+const { SlashCommandBuilder } = require('discord.js');
 
-module.exports = new CommandBuilder()
+module.exports = new SlashCommandBuilder()
 	.setName('help')
 	.setDescription('View information about the bot and its commands')
 	.setCategory('Bot')
