@@ -1,4 +1,6 @@
-const { SlashCommandBuilder, SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandBuilder, ChatInputCommandInteraction } = require('discord.js');
+const { SlashCommandBuilder, SlashCommandSubcommandBuilder, ChatInputCommandInteraction } = require('discord.js');
+
+// TODO: Shit is still broken
 
 class CommandBuilder extends SlashCommandBuilder {
 	constructor() {
@@ -97,23 +99,23 @@ class CommandBuilder extends SlashCommandBuilder {
 
 	/**
 	 * Adds a new subcommand group to this command.
-	 * @param {(SlashCommandSubcommandGroupBuilder) | ((subcommandGroup: SlashCommandSubcommandGroupBuilder) => SlashCommandSubcommandGroupBuilder)} input The subcommand group to add, or a function that returns a subcommand group
+	 * @param {SubcommandGroupBuilder | any} input The subcommand group to add, or a function that returns a subcommand group
 	 * @returns {CommandBuilder}
 	 */
 	addSubcommandGroup(input) {
-		const subcommandGroup = input instanceof SlashCommandSubcommandGroupBuilder ? input : input(new SlashCommandSubcommandGroupBuilder());
-		super.addSubcommandGroup(subcommandGroup);
+		const subcommandGroup = input instanceof SubcommandGroupBuilder ? input : input(new SubcommandGroupBuilder());
+		this.options.push(subcommandGroup);
 		return this;
 	}
 
 	/**
 	 * Adds a new subcommand to this command.
-	 * @param {SlashCommandSubcommandBuilder | ((subcommand: SlashCommandSubcommandBuilder) => SlashCommandSubcommandBuilder)} input The subcommand to add, or a function that returns a subcommand
+	 * @param {SlashCommandSubcommandBuilder | any} input The subcommand to add, or a function that returns a subcommand
 	 * @returns {CommandBuilder}
 	 */
 	addSubcommand(input) {
-		const subcommand = input instanceof SlashCommandSubcommandBuilder ? input : input(new SlashCommandSubcommandBuilder());
-		super.addSubcommand(subcommand);
+		const subcommand = input instanceof SubcommandBuilder ? input : input(new SubcommandBuilder());
+		this.options.push(subcommand);
 		return this;
 	}
 
@@ -179,6 +181,18 @@ class CommandBuilder extends SlashCommandBuilder {
 
 		return data;
 	}
-};
+}
+
+class SubcommandGroupBuilder extends CommandBuilder {
+	constructor() {
+		super();
+	}
+}
+
+class SubcommandBuilder extends CommandBuilder {
+	constructor() {
+		super();
+	}
+}
 
 module.exports = CommandBuilder;
