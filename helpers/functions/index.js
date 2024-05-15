@@ -4,8 +4,8 @@ const createTitle = require('./createTitle');
 const messages = require('./messages');
 
 module.exports = {
-	disableAll,
-	getTranslations,
-	createTitle,
-	messages
-}
+    disableAll,
+    getTranslations,
+    createTitle,
+    messages
+};

@@ -4,7 +4,11 @@
   "description": "An easy-to-use Discord bot template built with discord.js",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node . --env=production",
+    "dev": "node . --env=development",
+    "commands": "node . --redeployCommands",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "BurakYs",
   "license": "MIT",
@@ -12,11 +16,13 @@
     "colorette": "^2.0.20",
     "discord.js": "^14.13.0",
     "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
     "glob": "^10.2.6",
     "module-alias": "^2.2.3",
     "moment": "^2.29.4",
     "moment-duration-format": "^2.3.2",
-    "tslog": "^4.9.2"
+    "tslog": "^4.9.2",
+    "yargs": "^17.7.2"
   },
   "_moduleAliases": {
     "@": "./"
