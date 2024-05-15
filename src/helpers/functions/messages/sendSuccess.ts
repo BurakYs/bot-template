@@ -1,16 +1,18 @@
-const { EmbedBuilder } = require('discord.js');
-const getTranslations = require('../getTranslations');
-const createTitle = require('../createTitle');
-const config = require('@/config');
+import { EmbedBuilder } from 'discord.js';
+import { Interaction, SendMessageOptions } from '@/interfaces';
+import { createTitle, getTranslations } from '@/helpers/functions';
+import config from '@/config';
 
-function sendSuccess(interaction, options = {}) {
+export default async function (interaction: Interaction, options: Partial<SendMessageOptions>) {
     const action = interaction.deferred || interaction.replied ? 'editReply' : options.type || 'reply';
     const randomTitle = getTranslations(interaction, 'embeds.successTitles').random();
     options.title = createTitle(options.title, randomTitle, ':white_check_mark:');
+    // @ts-ignore
     options.thumbnail = options.thumbnail?.url || options.thumbnail;
+    // @ts-ignore
     options.image = options.image?.url || options.image;
 
-    if (options.noEmbed && !Object.keys(options.fields).length)
+    if (options.noEmbed && !Object.keys(options.fields || {}).length)
         return interaction[action]({
             content: `${options.title ? `## ${options.title}\n` : ''}${options.description}${options.footer ? `\n\n${typeof options.footer === 'object' ? options.footer.text : options.footer || null}` : ''}`,
             allowedMentions: { parse: [] },
@@ -18,7 +20,7 @@ function sendSuccess(interaction, options = {}) {
         });
 
     return interaction[action]({
-        content: options.content || null,
+        content: options.content || undefined,
         embeds: [new EmbedBuilder()
             .setAuthor(options.author || null)
             .setThumbnail(options.thumbnail || null)
@@ -33,5 +35,3 @@ function sendSuccess(interaction, options = {}) {
         components: []
     }).catch(() => null);
 }
-
-module.exports = sendSuccess;

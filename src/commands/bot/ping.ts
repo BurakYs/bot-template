@@ -1,6 +1,6 @@
-const { SlashCommandBuilder } = require('discord.js');
+import { CommandBuilder } from '@/helpers/classes';
 
-module.exports = new SlashCommandBuilder()
+export default new CommandBuilder()
     .setName('ping')
     .setDescription('Check the bot\'s latency and response time')
     .setCategory('Bot')

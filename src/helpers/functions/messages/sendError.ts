@@ -1,24 +1,26 @@
-const { EmbedBuilder } = require('discord.js');
-const getTranslations = require('../getTranslations');
-const createTitle = require('../createTitle');
-const config = require('@/config');
+import { EmbedBuilder } from 'discord.js';
+import { Interaction, SendMessageOptions } from '@/interfaces';
+import { getTranslations, createTitle } from '@/helpers/functions';
+import config from '@/config';
 
-function sendError(interaction, options = {}) {
+export default async function (interaction: Interaction, options: Partial<SendMessageOptions>) {
     const action = interaction.deferred || interaction.replied ? 'editReply' : options.type || 'reply';
     const randomTitle = getTranslations(interaction, 'embeds.errorTitles').random();
     options.title = createTitle(options.title, randomTitle, ':x:');
+    // @ts-ignore
     options.thumbnail = options.thumbnail?.url || options.thumbnail;
+    // @ts-ignore
     options.image = options.image?.url || options.image;
 
-    if (options.noEmbed && !Object.keys(options.fields).length)
+    if (options.noEmbed && !Object.keys(options.fields || {}).length)
         return interaction[action]({
-            content: `${options.title ? `## ${options.title}\n` : ''}${options.description}${options.footer ? `\n\n${typeof options.footer === 'object' ? options.footer.text : options.footer || null}` : ''}`,
+            content: `${options.title ? `## ${options.title}\n` : ''}${options.description}${options.footer ? `\n\n${options.footer ? options.footer.text : null}` : ''}`,
             allowedMentions: { parse: [] },
             ephemeral: options.ephemeral || false
         });
 
-    return interaction[action]({
-        content: options.content || null,
+    return await interaction[action]({
+        content: options.content || undefined,
         embeds: [new EmbedBuilder()
             .setAuthor(options.author || null)
             .setThumbnail(options.thumbnail || null)
@@ -27,11 +29,9 @@ function sendError(interaction, options = {}) {
             .setColor(options.color || config.embedColors.error)
             .setDescription(options.description || null)
             .setFooter(options.footer || null)
-            .addFields(options.fields || [])
+            .setFields(options.fields || [])
         ],
         ephemeral: options.ephemeral || false,
         components: []
-    }).catch(() => null);
+    });
 }
-
-module.exports = sendError;

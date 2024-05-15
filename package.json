@@ -2,7 +2,7 @@
   "name": "bot-template",
   "version": "1.0.0",
   "description": "A template for creating Discord bots with Discord.js",
-  "main": "src/index.js",
+  "main": "dist/index",
   "scripts": {
     "start": "node . --env=production",
     "dev": "node . --env=development",
@@ -22,6 +22,12 @@
     "yargs": "^17.7.2"
   },
   "_moduleAliases": {
-    "@": "./src"
+    "@": "./dist"
+  },
+  "devDependencies": {
+    "@types/module-alias": "^2.0.4",
+    "@types/yargs": "^17.0.32",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0"
   }
 }

@@ -1,19 +1,15 @@
-/* eslint-disable-next-line no-unused-vars */
-const { ChatInputCommandInteraction, Events } = require('discord.js');
-const config = require('@/config');
+import { Events } from 'discord.js';
+import { Interaction } from '@/interfaces';
+import Client from '@/loaders/base';
+import config from '@/config';
 
-module.exports = {
+export default {
     name: Events.InteractionCreate,
     load: true,
-    /**
-     * @param {import('@/loaders/base')} client
-     * @param {ChatInputCommandInteraction & { language: string, success: Function, error: Function }} interaction
-     */
-    run: async (client, interaction) => {
-        /* eslint-disable comma-dangle */
+    run: async (client: Client, interaction: Interaction) => {
         const interactionTypes = {
             //1: 'ping',
-            2: 'applicationCommand',
+            2: 'applicationCommand'
             //3: 'button',
             //4: 'autoComplete',
             //5: 'modal'
@@ -22,7 +18,7 @@ module.exports = {
         const interactionType = interactionTypes[interaction.type];
         if (!interactionType) return;
 
-        const handler = require(`@/events/interactions/${interactionTypes[interaction.type]}`);
+        const handler = (await import(`@/events/interactions/${interactionTypes[interaction.type]}`))?.default;
         if (!handler) return;
 
         const supportedLanguages = config.bot.supportedLanguages;

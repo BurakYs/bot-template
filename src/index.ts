@@ -1,9 +1,11 @@
-require('dotenv/config');
-require('module-alias/register');
+import 'dotenv/config';
+import 'module-alias/register';
 
-const { argv } = require('yargs');
-const Client = require('@/loaders/base');
-const { Logger } = require('@/helpers/classes');
+import yargs from 'yargs';
+import Client from '@/loaders/base';
+import { Logger } from '@/helpers/classes';
+
+const argv: any = yargs;
 new Logger();
 
 const redeployCommands = argv.redeployCommands || argv.redeploy;

@@ -1,8 +1,8 @@
-const { EmbedBuilder } = require('discord.js');
-const { SlashCommandBuilder } = require('discord.js');
-const config = require('@/config');
+import { CommandBuilder } from '@/helpers/classes';
+import { EmbedBuilder } from 'discord.js';
+import config from '@/config';
 
-module.exports = new SlashCommandBuilder()
+export default new CommandBuilder()
     .setName('help')
     .setDescription('View information about the bot and its commands')
     .setCategory('Bot')
@@ -12,11 +12,11 @@ module.exports = new SlashCommandBuilder()
             .setRequired(false))
     .setRun(async ({ client, interaction, translations }) => {
         const commandName = interaction.options.getString('command')?.split(' ')[0];
-        const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.owner && x.name_localizations).find(x => Object.values(x.name_localizations).includes(commandName)) : null;
+        const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.ownerOnly && x.name_localizations).find(x => Object.values(x.name_localizations).includes(commandName)) : null;
         let embed;
 
         if (commandName) {
-            if (!command || command.owner) return interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
+            if (!command || command.ownerOnly) return interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
 
             embed = new EmbedBuilder()
                 .setTitle(commandName.title())
@@ -26,16 +26,16 @@ module.exports = new SlashCommandBuilder()
                     {
                         name: '> ' + translations.info,
                         value: `
-${translations.command}: ${command.mention}
+${translations.command}: ${client.commandMentions[command.name] || command.name}
 ${translations.category}: ${command?.category}
 `
                     }
                 )
-                .setThumbnail(client.user.displayAvatarURL());
+                .setThumbnail(interaction.client.user.displayAvatarURL());
         } else {
             embed = new EmbedBuilder()
                 .setTitle(translations.embed.title)
-                .setDescription(translations.embed.description.change({ name: client.user.username }))
+                .setDescription(translations.embed.description.change({ name: interaction.client.user.username }))
                 .addFields(
                     {
                         name: '> ' + translations.links, value: `
@@ -44,8 +44,8 @@ ${translations.category}: ${command?.category}
 `
                     }
                 )
-                .setThumbnail(client.user.displayAvatarURL())
-                .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
+                .setThumbnail(interaction.client.user.displayAvatarURL())
+                .setAuthor({ name: interaction.client.user.username, iconURL: client.user!.displayAvatarURL() })
                 .setColor(config.embedColors.default);
         }
 

@@ -1,6 +1,6 @@
-const { resolveColor } = require('discord.js');
+import { resolveColor } from 'discord.js';
 
-module.exports = {
+export default {
     project: {
         timezone: 'Europe/Istanbul'
     },
@@ -11,7 +11,7 @@ module.exports = {
             'en-US': 'en',
             'en-GB': 'en',
             'tr': 'tr'
-        },
+        } as Record<string, string>,
         defaultLanguage: 'en-US'
     },
     presence: {

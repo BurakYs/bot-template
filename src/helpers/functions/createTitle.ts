@@ -1,4 +1,4 @@
-function createTitle(title, defaultTitle, emoji) {
+export default function (title: string | null | undefined, defaultTitle: string, emoji: string) {
     if (title?.includes(':')) return title;
 
     if (Math.random() < 0.9) {
@@ -10,5 +10,3 @@ function createTitle(title, defaultTitle, emoji) {
 
     return title;
 }
-
-module.exports = createTitle;

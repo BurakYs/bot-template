@@ -8,7 +8,10 @@ module.exports = {
         'client': 'writable',
         'dontRestart': 'writable'
     },
-    'extends': 'eslint:recommended',
+    'extends': [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended'
+    ],
     'overrides': [
         {
             'env': {
@@ -22,10 +25,17 @@ module.exports = {
             }
         }
     ],
+    'parser': '@typescript-eslint/parser',
     'parserOptions': {
-        'ecmaVersion': 'latest'
+        'ecmaVersion': 'latest',
+        'sourceType': 'module'
     },
+    'plugins': [
+        '@typescript-eslint'
+    ],
     'rules': {
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
         'indent': [
             'error',
             4

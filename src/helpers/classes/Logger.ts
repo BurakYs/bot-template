@@ -1,11 +1,9 @@
-const tslog = require('tslog');
+import { ILogObj, Logger } from 'tslog';
 
-class Logger extends tslog.Logger {
+export default class extends Logger<ILogObj> {
     constructor() {
         super({
             type: 'pretty',
-            displayDateTime: 'dd/MM/yyyy hh:mm:ss',
-            rewriteTime: true,
             prettyLogTemplate: '{{dd}}-{{mm}}-{{yyyy}} {{hh}}:{{mm}}:{{ss}} {{logLevelName}} {{filePathWithLine}}{{name}}  ',
             prettyErrorTemplate: '{{errorName}} {{errorMessage}}\n{{errorStack}}',
             prettyErrorStackTemplate: '  • {{fileName}} - {{method}} - {{filePathWithLine}}',
@@ -36,5 +34,3 @@ class Logger extends tslog.Logger {
         global.logger = this;
     }
 }
-
-module.exports = Logger;
