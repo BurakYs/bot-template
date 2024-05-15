@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require('discord.js');
 const { SlashCommandBuilder } = require('discord.js');
+const config = require('@/config');
 
 module.exports = new SlashCommandBuilder()
     .setName('help')
@@ -19,7 +20,7 @@ module.exports = new SlashCommandBuilder()
 
             embed = new EmbedBuilder()
                 .setTitle(commandName.title())
-                .setColor(client.config.embedColors.default)
+                .setColor(config.embedColors.default)
                 .setDescription(command.description)
                 .addFields(
                     {
@@ -38,14 +39,14 @@ ${translations.category}: ${command?.category}
                 .addFields(
                     {
                         name: '> ' + translations.links, value: `
-🛠️ [${translations.supportServer}](${client.config.guilds.supportServer.invite})
-🔗 [${translations.inviteLink}](${client.config.bot.invite})
+🛠️ [${translations.supportServer}](${config.guilds.supportServer.invite})
+🔗 [${translations.inviteLink}](${config.bot.invite})
 `
                     }
                 )
                 .setThumbnail(client.user.displayAvatarURL())
                 .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() })
-                .setColor(client.config.embedColors.default);
+                .setColor(config.embedColors.default);
         }
 
         await interaction.reply({

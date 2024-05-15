@@ -1,6 +1,7 @@
+const { EmbedBuilder } = require('discord.js');
 const getTranslations = require('../getTranslations');
 const createTitle = require('../createTitle');
-const { EmbedBuilder } = require('discord.js');
+const config = require('@/config');
 
 function sendSuccess(interaction, options = {}) {
     const action = interaction.deferred || interaction.replied ? 'editReply' : options.type || 'reply';
@@ -23,7 +24,7 @@ function sendSuccess(interaction, options = {}) {
             .setThumbnail(options.thumbnail || null)
             .setImage(options.image || null)
             .setTitle(options.title || randomTitle)
-            .setColor(options.color || client.config.embedColors.success)
+            .setColor(options.color || config.embedColors.success)
             .setDescription(options.description || null)
             .setFooter(options.footer || null)
             .addFields(options.fields || [])
