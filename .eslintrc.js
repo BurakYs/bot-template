@@ -4,9 +4,8 @@ module.exports = {
         'es2021': true
     },
     'globals': {
-        'logger': 'writable',
-        'client': 'writable',
-        'dontRestart': 'writable'
+        'logger': 'readonly',
+        'client': 'readonly'
     },
     'extends': [
         'eslint:recommended',
