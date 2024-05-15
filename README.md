@@ -21,6 +21,7 @@ A template for creating Discord bots with Discord.js
 
 ## 📚 To-Do
 - [x] Organize the project structure
+- [ ] Use a better way to handle helpers
 - [ ] Fix CommandBuilder typings
 
 ## 📝 License
