@@ -18,6 +18,7 @@ A template for creating Discord bots with Discord.js using TypeScript
 
 ## ✨ Features
 
+- Written in TypeScript
 - Uses latest Discord.js version
 - Easy to understand and modify
 - Multiple language support both for messages and commands
