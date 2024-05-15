@@ -1,3 +1,4 @@
+/* eslint-disable-next-line no-unused-vars */
 const { InteractionType, EmbedBuilder, resolveColor, ChatInputCommandInteraction } = require('discord.js');
 const { getTranslations } = require('@/helpers/functions');
 

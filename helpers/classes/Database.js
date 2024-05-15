@@ -78,7 +78,7 @@ class Database {
         let current = this.all();
 
         for (let i = 0; i < keys.length; i++) {
-            if (current.hasOwnProperty(keys[i])) {
+            if (Object.prototype.hasOwnProperty.call(current, keys[i])) {
                 current = current[keys[i]];
             } else {
                 current = null;
