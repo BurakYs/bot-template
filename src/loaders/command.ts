@@ -40,7 +40,7 @@ export default class CommandLoader {
         if (register) {
             const userCommands = await client.application!.commands.set(commands);
             logger.info('Loaded global slash commands');
-            this.setCommandMentions(userCommands);
+            this.setCommandMentions(client, userCommands);
 
             if (config.guilds.test && ownerCommands.length) {
                 await client.application!.commands.set(ownerCommands, config.guilds.test);
@@ -48,11 +48,11 @@ export default class CommandLoader {
             }
 
         } else {
-            this.setCommandMentions(await client.application!.commands.fetch());
+            this.setCommandMentions(client, await client.application!.commands.fetch());
         }
     }
 
-    static setCommandMentions(commands: Collection<Snowflake, ApplicationCommand>) {
+    static setCommandMentions(client: Client, commands: Collection<Snowflake, ApplicationCommand>) {
         client.commandMentions = {};
 
         commands.forEach(x => {
