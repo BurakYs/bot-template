@@ -13,7 +13,7 @@ languages['en'] = languages['en-US'];
 
 
 export default class Utils {
-    static createTitle(title: string | null | undefined, defaultTitle: unknown, emoji: string) {
+    static createTitle(title: string | null | undefined, defaultTitle: string, emoji: string) {
         if (title?.includes(':')) return title;
 
         if (Math.random() < 0.9) {
