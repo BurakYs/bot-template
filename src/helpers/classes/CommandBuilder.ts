@@ -72,7 +72,7 @@ export default class CommandBuilder extends SlashCommandBuilder {
         const interactionSubcommandGroup = interaction.options.getSubcommandGroup(false);
         const interactionSubcommand = interaction.options.getSubcommand(false);
 
-        const findOption = (options: any[], name: string | null) => options.find(option => option.data.name === name);
+        const findOption = (options: any[], name: string | null) => options.find(option => option.name === name);
         const command = interactionSubcommandGroup
             ? findOption(findOption(this.options, interactionSubcommandGroup)?.options || [], interactionSubcommand)
             : findOption(this.options, interactionSubcommand) || this;
