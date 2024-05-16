@@ -10,8 +10,6 @@ const languages: Record<string, Database> = {
 languages['en-GB'] = languages['en-US'];
 languages['en'] = languages['en-US'];
 
-
-
 export default class Utils {
     static createTitle(title: string | null | undefined, defaultTitle: string, emoji: string) {
         if (title?.includes(':')) return title;
