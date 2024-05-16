@@ -30,28 +30,26 @@ export default class Client extends DiscordClient {
     async start(options: Partial<StartOptions>) {
         if (!process.env.TOKEN) return logger.fatal('Don\'t forget to set the TOKEN in the .env file.');
 
-        try {
-            this.create();
+        this.create();
 
-            for (const extension of ['string', 'message', 'commandBuilder']) {
-                (await import(`@/helpers/extensions/${extension}`)).default(this);
-            }
-
-            await this.login(process.env.TOKEN);
-
-            this.once('ready', async () => {
-                logger.info(`Logged in as ${this.user!.tag}`);
-
-                await (await import('@/loaders/command')).default.loadCommands(this, !!options.registerCommands);
-                await (await import('@/loaders/event')).default(this);
-
-                setInterval(() => {
-                    this.setPresence();
-                }, 60000);
-            });
-        } catch (e) {
-            logger.error(e);
+        for (const extension of ['string', 'message', 'commandBuilder']) {
+            (await import(`@/helpers/extensions/${extension}`)).default(this);
         }
+
+        await this.login(process.env.TOKEN);
+
+        this.once('ready', async (client) => {
+            logger.info(`Logged in as ${client.user.tag}`);
+
+            await (await import('@/loaders/command')).default.loadCommands(this, !!options.registerCommands);
+            await (await import('@/loaders/event')).default(this);
+
+            setInterval(() => {
+                this.setPresence();
+            }, 60000);
+        });
+
+        return this;
     }
 
     create() {

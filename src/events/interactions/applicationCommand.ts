@@ -1,4 +1,4 @@
-import { EmbedBuilder, resolveColor } from 'discord.js';
+import { EmbedBuilder, PermissionResolvable, resolveColor } from 'discord.js';
 import utils from '@/helpers';
 import { Interaction } from '@/interfaces';
 import Client from '@/loaders/base';
@@ -16,18 +16,18 @@ export default {
 
         const commandData = cmd.match(interaction);
 
-        if (commandData.ownerOnly === true && !config.bot.admins.includes(interaction.user.id)) return;
-        if (commandData.dmOnly === true && interaction.guild) return interaction.error({ description: translations.commandDMOnly });
-        if (commandData.guildOnly === true && !interaction.guild) return interaction.error({ description: translations.commandGuildOnly });
-        if (commandData.disabled && !config.bot.admins.includes(interaction.user.id)) return interaction.error({ description: translations.commandDisabled });
-        if (commandData.supportServerOnly && ![config.guilds.supportServer.id, config.guilds.test].includes(interaction.guild?.id || '')) return interaction.error({ description: translations.commandSupportServerOnly.change({ support: config.guilds.supportServer.invite }) });
+        if (commandData.ownerOnly && !config.bot.developers.includes(interaction.user.id)) return;
+        if (commandData.dmOnly && interaction.guild) return interaction.error({ description: translations.commandDMOnly });
+        if (commandData.guildOnly && !interaction.guild) return interaction.error({ description: translations.commandGuildOnly });
+        if (commandData.disabled && !config.bot.developers.includes(interaction.user.id)) return interaction.error({ description: translations.commandDisabled });
+        if (commandData.supportServerOnly && (![config.guilds.supportServer.id, config.guilds.test].includes(interaction.guild?.id || ''))) return interaction.error({ description: translations.commandSupportServerOnly.change({ support: config.guilds.supportServer.invite }) });
 
-        if (interaction.inCachedGuild() && commandData.memberPermission && !interaction.member.permissions.has(commandData.memberPermission)) {
+        if (interaction.inCachedGuild() && commandData.memberPermission && !interaction.member.permissions.has(commandData.memberPermission as PermissionResolvable)) {
             const permission = permissions[commandData.memberPermission] || commandData.memberPermission;
 
             return interaction.error({ description: translations.commandUserMissingPerms.change({ permissions: `\`${permission}\`` }) });
         }
-        if (interaction.inCachedGuild() && commandData.botPermission && !interaction.guild.members.me?.permissions.has(commandData.botPermission)) {
+        if (interaction.inCachedGuild() && commandData.botPermission && !interaction.guild.members.me?.permissions.has(commandData.botPermission as PermissionResolvable)) {
             const permission = permissions[commandData.botPermission] || commandData.botPermission;
 
             return interaction.error({ description: translations.commandBotMissingPerms.change({ permissions: `\`${permission}\`` }) });

@@ -5,7 +5,7 @@ export default {
         timezone: 'Europe/Istanbul'
     },
     bot: {
-        admins: ['269677849810698249'],
+        developers: ['269677849810698249'],
         invite: '',
         supportedLanguages: {
             'en-US': 'en',

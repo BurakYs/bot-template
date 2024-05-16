@@ -66,16 +66,11 @@ export default class CommandLoader {
     static setLocalizations(lang: string, obj: CommandData, commandData: CommandLocalization | undefined) {
         if (!commandData) return;
 
-        obj.name_localizations ||= {};
-        obj.name_localizations[lang] = commandData.localizedName;
+        obj.setNameLocalization(lang as any, commandData.localizedName);
+        obj.setDescriptionLocalization(lang as any, commandData.localizedDescription);
 
-        obj.description_localizations ||= {};
-        obj.description_localizations[lang] = commandData.localizedDescription;
-
-        if (obj.options?.length) {
-            obj.options.forEach((option: CommandData) =>
-                this.setLocalizations(lang, option, commandData.options?.find((x: CommandLocalization) => x.name === option.name))
-            );
-        }
+        if (obj.options?.length) obj.options.forEach((option: any) =>
+            this.setLocalizations(lang, option, commandData.options?.find((x: CommandLocalization) => x.name === option.name))
+        );
     }
 }

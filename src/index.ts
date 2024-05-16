@@ -5,11 +5,13 @@ import yargs from 'yargs';
 import Client from '@/loaders/base';
 import { Logger } from '@/helpers/classes';
 
-const argv = yargs as unknown as Partial<{
+interface StartOptions {
     redeployCommands: boolean;
     redeploy: boolean;
     env: string;
-}>;
+}
+
+const argv = yargs.argv as Partial<StartOptions>;
 new Logger();
 
 const redeployCommands = argv.redeployCommands || argv.redeploy;

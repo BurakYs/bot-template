@@ -11,7 +11,7 @@ export default new SlashCommandBuilder()
             .setRequired(false))
     .setRun(async ({ client, interaction, translations }) => {
         const commandName = interaction.options.getString('command')?.split(' ')[0];
-        const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.ownerOnly && x.name_localizations).find(x => Object.values(x.name_localizations).includes(commandName)) : null;
+        const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.ownerOnly && x.name_localizations).find(x => Object.values(x.name_localizations || {}).includes(commandName)) : null;
         let embed;
 
         if (commandName) {
