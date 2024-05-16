@@ -30,6 +30,7 @@ A template for creating Discord bots with Discord.js using TypeScript
 - [x] Rewrite in TypeScript
 - [x] Use a better way to handle helpers
 - [ ] Use better types instead of `any`
+- [ ] Change the way of handling command builders
 
 > I'm not that experienced with TypeScript, so I'm open to any suggestions.
 
