@@ -6,7 +6,7 @@ interface StartOptions {
     registerCommands: boolean;
 }
 
-export default class extends DiscordClient {
+export default class Client extends DiscordClient {
     commands: CommandData[] = [];
     commandMentions: Record<string, string> = {};
 
@@ -40,7 +40,7 @@ export default class extends DiscordClient {
             await this.login(process.env.TOKEN);
 
             this.once('ready', async () => {
-                logger.info(`Logged in as ${client.user!.tag}`);
+                logger.info(`Logged in as ${this.user!.tag}`);
 
                 await (await import('@/loaders/command')).default.loadCommands(this, !!options.registerCommands);
                 await (await import('@/loaders/event')).default(this);
@@ -55,7 +55,6 @@ export default class extends DiscordClient {
     }
 
     create() {
-        global.client = this;
         this.commands = [];
 
         process.on('unhandledRejection', (error) => logger.error(error));

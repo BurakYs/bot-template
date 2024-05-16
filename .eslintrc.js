@@ -4,8 +4,7 @@ module.exports = {
         'es2021': true
     },
     'globals': {
-        'logger': 'readonly',
-        'client': 'readonly'
+        'logger': 'readonly'
     },
     'extends': [
         'eslint:recommended',

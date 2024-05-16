@@ -1,4 +1,6 @@
-export default function () {
+import Client from '@/loaders/base';
+
+export default function (client: Client) {
     Object.defineProperties(String.prototype, {
         'title': {
             value: function (language = 'en') {
