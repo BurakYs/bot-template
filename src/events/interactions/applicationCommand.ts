@@ -21,13 +21,13 @@ export default {
         if (commandData.guildOnly === true && !interaction.guild) return interaction.error({ description: translations.commandGuildOnly });
         if (commandData.disabled && !config.bot.admins.includes(interaction.user.id)) return interaction.error({ description: translations.commandDisabled });
         if (commandData.supportServerOnly && ![config.guilds.supportServer.id, config.guilds.test].includes(interaction.guild?.id || '')) return interaction.error({ description: translations.commandSupportServerOnly.change({ support: config.guilds.supportServer.invite }) });
-        // @ts-ignore
-        if (interaction.inGuild() && commandData.memberPermission && !interaction.member?.permissions?.has(commandData.memberPermission)) {
+
+        if (interaction.inCachedGuild() && commandData.memberPermission && !interaction.member.permissions.has(commandData.memberPermission)) {
             const permission = permissions[commandData.memberPermission] || commandData.memberPermission;
 
             return interaction.error({ description: translations.commandUserMissingPerms.change({ permissions: `\`${permission}\`` }) });
         }
-        if (interaction.inGuild() && commandData.botPermission && !interaction.guild?.members?.me?.permissions.has(commandData.botPermission)) {
+        if (interaction.inCachedGuild() && commandData.botPermission && !interaction.guild.members.me?.permissions.has(commandData.botPermission)) {
             const permission = permissions[commandData.botPermission] || commandData.botPermission;
 
             return interaction.error({ description: translations.commandBotMissingPerms.change({ permissions: `\`${permission}\`` }) });
