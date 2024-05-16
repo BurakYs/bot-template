@@ -28,7 +28,10 @@ export default class Client extends DiscordClient {
     }
 
     async start(options: Partial<StartOptions>) {
-        if (!process.env.TOKEN) return logger.fatal('Don\'t forget to set the TOKEN in the .env file.');
+        if (!process.env.TOKEN) {
+            logger.fatal('Don\'t forget to set the TOKEN in the .env file.');
+            process.exit(1);
+        }
 
         this.create();
 
