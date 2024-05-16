@@ -1,4 +1,4 @@
 /* eslint-disable semi */
-import { CommandBuilder } from '@/helpers/classes';
+import { SlashCommandBuilder } from 'discord.js';
 
-export default interface CommandData extends Record<keyof CommandBuilder, any> {}
+export default interface CommandData extends Record<keyof SlashCommandBuilder, any> {}

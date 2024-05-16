@@ -1,8 +1,7 @@
-import { CommandBuilder } from '@/helpers/classes';
-import { EmbedBuilder } from 'discord.js';
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
 import config from '@/config';
 
-export default new CommandBuilder()
+export default new SlashCommandBuilder()
     .setName('help')
     .setDescription('View information about the bot and its commands')
     .setCategory('Bot')
@@ -45,7 +44,7 @@ ${translations.category}: ${command?.category}
                     }
                 )
                 .setThumbnail(interaction.client.user.displayAvatarURL())
-                .setAuthor({ name: interaction.client.user.username, iconURL: client.user!.displayAvatarURL() })
+                .setAuthor({ name: interaction.client.user.username, iconURL: interaction.client.user.displayAvatarURL() })
                 .setColor(config.embedColors.default);
         }
 
