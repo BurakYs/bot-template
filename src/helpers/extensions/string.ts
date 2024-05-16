@@ -8,16 +8,16 @@ export default function () {
             }
         },
         'change': {
-            value: function (replacements: { [key: string]: any } = {}) {
+            value: function (replacements: { [key: string]: unknown } = {}) {
                 return this.replace(/\{([^}]+?)}/g, (match: unknown, key: string) => {
-                    const split = key.split(':');
-                    const key2 = split.length > 1 ? split[1] : split[0];
+                    if (key.startsWith('cmd:')) {
+                        const commandName = key.slice(4);
+                        return client.commandMentions[commandName] || '/' + commandName;
+                    }
 
-                    return replacements[key2] || client.commandMentions[key2] || match;
+                    return replacements[key] || match;
                 });
             }
         }
     });
-
-    return true;
 }

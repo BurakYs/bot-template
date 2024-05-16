@@ -8,6 +8,6 @@ declare global {
 
     interface String {
         title(language?: string): string;
-        change(replacements: { [key: string]: any }): string;
+        change(replacements: { [key: string]: unknown }): string;
     }
 }

@@ -1,6 +1,6 @@
 import { glob } from 'glob';
 import { CommandData } from '@/interfaces';
-import { Snowflake } from 'discord.js';
+import { ApplicationCommand, Collection, Snowflake } from 'discord.js';
 import config from '@/config';
 import Client from '@/loaders/base';
 
@@ -40,7 +40,7 @@ export default class CommandLoader {
         if (register) {
             const userCommands = await client.application!.commands.set(commands);
             logger.info('Loaded global slash commands');
-            this.setCommandMentions(userCommands.map((x: any) => x));
+            this.setCommandMentions(userCommands);
 
             if (config.guilds.test && ownerCommands.length) {
                 await client.application!.commands.set(ownerCommands, config.guilds.test);
@@ -48,16 +48,16 @@ export default class CommandLoader {
             }
 
         } else {
-            this.setCommandMentions((await client.application!.commands.fetch()).map((x: any) => x));
+            this.setCommandMentions(await client.application!.commands.fetch());
         }
     }
 
-    static setCommandMentions(commands: (CommandData & { id: Snowflake })[]) {
+    static setCommandMentions(commands: Collection<Snowflake, ApplicationCommand>) {
         client.commandMentions = {};
 
         commands.forEach(x => {
             client.commandMentions[x.name] = `</${x.name}:${x.id}>`;
-            x.options?.filter((x: { type: number; }) => x.type === 1).forEach((y: { name: any; }) => {
+            x.options?.filter((x: { type: number; }) => x.type === 1).forEach((y: { name: string; }) => {
                 client.commandMentions[`${x.name} ${y.name}`] = `</${x.name} ${y.name}:${x.id}>`;
             });
         });

@@ -1,5 +1,5 @@
 import { EmbedBuilder, resolveColor } from 'discord.js';
-import { getTranslations } from '@/helpers/functions';
+import utils from '@/helpers';
 import { Interaction } from '@/interfaces';
 import Client from '@/loaders/base';
 import config from '@/config';
@@ -11,8 +11,8 @@ export default {
         const cmd = client.commands.find(x => x.name === interaction.commandName);
         if (!cmd) return;
 
-        const translations = getTranslations(interaction, 'standard');
-        const permissions = getTranslations(interaction, 'permissions');
+        const translations = utils.getTranslations(interaction, 'standard');
+        const permissions = utils.getTranslations(interaction, 'permissions');
 
         const commandData = cmd.match(interaction);
 
@@ -34,7 +34,7 @@ export default {
         }
 
         try {
-            const commandTranslations = getTranslations(interaction, `commands.${interaction.commandName}`);
+            const commandTranslations = utils.getTranslations(interaction, `commands.${interaction.commandName}`);
             await cmd.run({ client, interaction, translations: commandTranslations });
         } catch (error) {
             if (error) {

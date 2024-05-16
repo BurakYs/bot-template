@@ -7,8 +7,8 @@ interface DatabaseOptions {
 
 export default class Database {
     path: string;
-    cache: Record<string, any> | null;
-    fileRead: boolean;
+    private cache: Record<string, unknown> | null;
+    private fileRead: boolean;
 
     constructor(options: DatabaseOptions) {
         this.path = options.path;
@@ -17,7 +17,7 @@ export default class Database {
     }
 
     all() {
-        if (this.cache && (this.fileRead || !this.path)) return this.cache;
+        if (this.cache && this.fileRead) return this.cache;
         if (this.cache && !this.fileRead && this.path) {
             this.fileRead = true;
             const data = fs.readFileSync(this.path, 'utf8');

@@ -5,7 +5,11 @@ import yargs from 'yargs';
 import Client from '@/loaders/base';
 import { Logger } from '@/helpers/classes';
 
-const argv: any = yargs;
+const argv = yargs as unknown as Partial<{
+    redeployCommands: boolean;
+    redeploy: boolean;
+    env: string;
+}>;
 new Logger();
 
 const redeployCommands = argv.redeployCommands || argv.redeploy;

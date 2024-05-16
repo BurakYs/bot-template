@@ -34,7 +34,7 @@ export default class extends DiscordClient {
             this.create();
 
             for (const extension of ['string', 'message']) {
-                (await import(`@/helpers/extensions/${extension}`)).default();
+                (await import(`@/helpers/extensions/${extension}`)).default(this);
             }
 
             await this.login(process.env.TOKEN);
@@ -42,8 +42,8 @@ export default class extends DiscordClient {
             this.once('ready', async () => {
                 logger.info(`Logged in as ${client.user!.tag}`);
 
-                await (await import('./command')).default.loadCommands(this, !!options.registerCommands);
-                await (await import('./event')).default(this);
+                await (await import('@/loaders/command')).default.loadCommands(this, !!options.registerCommands);
+                await (await import('@/loaders/event')).default(this);
 
                 setInterval(() => {
                     this.setPresence();

@@ -6,7 +6,7 @@ import Client from '@/loaders/base';
 
 type RunFunction = (args: { client: Client, interaction: Interaction, translations: Record<string, any> }) => Promise<any>;
 
-class CommandBuilder extends SlashCommandBuilder {
+export default class CommandBuilder extends SlashCommandBuilder {
     category?: string;
     tags?: string[];
     guildOnly?: boolean;
@@ -72,7 +72,7 @@ class CommandBuilder extends SlashCommandBuilder {
         const interactionSubcommandGroup = interaction.options.getSubcommandGroup(false);
         const interactionSubcommand = interaction.options.getSubcommand(false);
 
-        const findOption = (options: any[], name: string | null) => options.find(option => option.name === name);
+        const findOption = (options: any[], name: string | null) => options.find(option => option.data.name === name);
         const command = interactionSubcommandGroup
             ? findOption(findOption(this.options, interactionSubcommandGroup)?.options || [], interactionSubcommand)
             : findOption(this.options, interactionSubcommand) || this;
@@ -136,5 +136,3 @@ class CommandBuilder extends SlashCommandBuilder {
         return this;
     }
 }
-
-export default CommandBuilder;

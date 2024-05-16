@@ -3,8 +3,8 @@ import { ColorResolvable } from 'discord.js';
 
 export default interface SendMessageOptions {
     title: string | null;
-    thumbnail: string;
-    image: string;
+    thumbnail: string | { url: string };
+    image: string | { url: string };
     noEmbed: boolean;
     content: string | null;
     author: { name: string; iconURL?: string } | null;
