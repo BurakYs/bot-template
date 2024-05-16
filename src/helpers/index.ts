@@ -13,7 +13,7 @@ languages['en'] = languages['en-US'];
 
 
 export default class Utils {
-    static createTitle(title: string | null | undefined, defaultTitle: string, emoji: string) {
+    static createTitle(title: string | null | undefined, defaultTitle: unknown, emoji: string) {
         if (title?.includes(':')) return title;
 
         if (Math.random() < 0.9) {
@@ -34,6 +34,10 @@ export default class Utils {
         return translations || defaultTranslations;
     }
 
+    static randomArray<T>(array: T[]) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
     static async sendError(interaction: Interaction, options: Partial<SendMessageOptions>) {
         return await this.sendEmbed(interaction, { ...options, embedType: 'error' });
     }
@@ -44,7 +48,7 @@ export default class Utils {
 
     private static async sendEmbed(interaction: Interaction, options: Partial<SendMessageOptions> & { embedType : 'error' | 'success' }) {
         const action = interaction.deferred || interaction.replied ? 'editReply' : options.type || 'reply';
-        const randomTitle = Utils.getTranslations(interaction, options.embedType === 'error' ? 'embeds.errorTitles' : 'embeds.successTitles').random();
+        const randomTitle = Utils.randomArray<string>(Utils.getTranslations(interaction, options.embedType === 'error' ? 'embeds.errorTitles' : 'embeds.successTitles'));
 
         options.title = Utils.createTitle(options.title, randomTitle, options.embedType === 'error' ? ':x:' : ':white_check_mark:');
         options.thumbnail = typeof options.thumbnail === 'object' ? options.thumbnail?.url : options.thumbnail;
