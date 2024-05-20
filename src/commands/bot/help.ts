@@ -42,7 +42,8 @@ ${translations.category}: ${command.config.category}
                 .setDescription(translations.embed.description.change({ name: interaction.client.user.username }))
                 .setFields([
                     {
-                        name: '> ' + translations.links, value: `
+                        name: '> ' + translations.links,
+                        value: `
 🛠️ [${translations.supportServer}](${config.guilds.supportServer.invite})
 🔗 [${translations.inviteLink}](${config.bot.invite})
 `

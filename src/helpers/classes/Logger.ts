@@ -18,8 +18,7 @@ export default class extends Logger<ILogObj> {
                     INFO: ['bold', 'blue'],
                     WARN: ['bold', 'yellow'],
                     ERROR: ['bold', 'red'],
-                    FATAL: ['bold', 'redBright'],
-                    REQUEST: ['bold', 'white']
+                    FATAL: ['bold', 'redBright']
                 },
                 dateIsoStr: 'yellow',
                 filePathWithLine: 'white',
