@@ -26,7 +26,7 @@
     "ManageThreads": "Alt Başlıkları Yönet",
     "ModerateMembers": "Üyelere Zaman Aşımı Uygula"
   },
-  "standard": {
+  "general": {
     "commandDMOnly": "Bu komut sadece DM'lerde kullanılabilir.",
     "commandGuildOnly": "Bu komut sadece sunucularda kullanılabilir.",
     "commandDisabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",

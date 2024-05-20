@@ -7,7 +7,6 @@ declare global {
     var client: Client;
 
     interface String {
-        title(language?: string): string;
         change(replacements: { [key: string]: unknown }): string;
     }
 }

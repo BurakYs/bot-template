@@ -26,7 +26,7 @@
     "ManageThreads": "Manage Threads",
     "ModerateMembers": "Timeout Members"
   },
-  "standard": {
+  "general": {
     "commandDMOnly": "This command can only be used in DMs.",
     "commandGuildOnly": "This command can only be used in servers.",
     "commandDisabled": "This command is disabled temporarily.",

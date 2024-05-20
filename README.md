@@ -22,15 +22,10 @@ A template for creating Discord bots with Discord.js using TypeScript
 - Uses latest Discord.js version
 - Easy to understand and modify
 - Multiple language support both for messages and commands
-- A custom command builder
 
 ## 📚 To-Do
 
-- [x] Organize the project structure
-- [x] Rewrite in TypeScript
-- [x] Use a better way to handle helpers
 - [ ] Use better types instead of `any`
-- [ ] Change the way of handling command builders
 
 > I'm not that experienced with TypeScript, so I'm open to any suggestions.
 

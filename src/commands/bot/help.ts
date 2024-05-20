@@ -1,40 +1,44 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
+import { CommandConfig } from '@/interfaces/CommandData';
+import { RunFunctionOptions } from '@/types';
 import config from '@/config';
 
-export default new SlashCommandBuilder()
-    .setName('help')
-    .setDescription('View information about the bot and its commands')
-    .setCategory('Bot')
-    .addStringOption(option =>
-        option.setName('command')
+export default {
+    data: new SlashCommandBuilder()
+        .setName('help')
+        .setDescription('View information about the bot and its commands')
+        .addStringOption(o => o
+            .setName('command')
             .setDescription('The command you want to get information about')
-            .setRequired(false))
-    .setRun(async ({ client, interaction, translations }) => {
+            .setRequired(false)),
+    config: {
+        category: 'Bot'
+    } as CommandConfig,
+    run: async ({ client, interaction, translations }: RunFunctionOptions) => {
         const commandName = interaction.options.getString('command')?.split(' ')[0];
-        const command = commandName ? client.commands.find(x => x.name.toLowerCase() === commandName.toLowerCase()) || client.commands.filter(x => !x.ownerOnly && x.name_localizations).find(x => Object.values(x.name_localizations || {}).includes(commandName)) : null;
+        const command = commandName ? client.commands.find(x => x.data.name.toLowerCase() === commandName.toLowerCase()) : null;
 
         const embed = new EmbedBuilder()
+            .setTitle(translations.embed.title)
             .setColor(config.embedColors.default)
             .setThumbnail(interaction.client.user.displayAvatarURL());
 
         if (commandName) {
-            if (!command || command.ownerOnly) return interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
+            if (!command || command.config.ownerOnly) return interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
 
             embed
-                .setTitle(commandName.title())
-                .setDescription(command.description)
+                .setDescription(command.data.description)
                 .setFields([
                     {
                         name: '> ' + translations.info,
                         value: `
-${translations.command}: ${client.commandMentions[command.name] || command.name}
-${translations.category}: ${command?.category}
+${translations.command}: ${client.commandMentions[command.data.name] || command.data.name}
+${translations.category}: ${command.config.category}
 `
                     }
                 ]);
         } else {
             embed
-                .setTitle(translations.embed.title)
                 .setDescription(translations.embed.description.change({ name: interaction.client.user.username }))
                 .setFields([
                     {
@@ -51,4 +55,4 @@ ${translations.category}: ${command?.category}
             embeds: [embed]
         });
     }
-    );
+};

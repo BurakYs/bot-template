@@ -44,11 +44,11 @@ export default class Utils {
         return await this.sendEmbed(interaction, { ...options, embedType: 'success' });
     }
 
-    private static async sendEmbed(interaction: Interaction, options: Partial<SendMessageOptions> & { embedType : 'error' | 'success' }) {
+    private static async sendEmbed(interaction: Interaction, options: Partial<SendMessageOptions> & { embedType: 'error' | 'success' }) {
         const action = interaction.deferred || interaction.replied ? 'editReply' : options.type || 'reply';
         const randomTitle = Utils.getTranslations(interaction, options.embedType === 'error' ? 'embeds.errorTitles' : 'embeds.successTitles');
 
-        options.title = Utils.createTitle(options.title, Utils.randomArray<string>(randomTitle), options.embedType === 'error' ? ':x:' : ':white_check_mark:');
+        options.title = Utils.createTitle(options.title, Utils.randomArray(randomTitle), options.embedType === 'error' ? ':x:' : ':white_check_mark:');
         options.thumbnail = typeof options.thumbnail === 'object' ? options.thumbnail.url : options.thumbnail;
         options.image = typeof options.image === 'object' ? options.image.url : options.image;
 
@@ -65,7 +65,7 @@ export default class Utils {
                 .setAuthor(options.author || null)
                 .setThumbnail(options.thumbnail || null)
                 .setImage(options.image || null)
-                .setTitle(options.title || randomTitle)
+                .setTitle(options.title || null)
                 .setColor(options.color || (options.embedType === 'error' ? config.embedColors.error : config.embedColors.success))
                 .setDescription(options.description || null)
                 .setFooter(options.footer || null)
