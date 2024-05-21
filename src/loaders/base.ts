@@ -29,8 +29,13 @@ export default class Client extends DiscordClient {
 
     async start(options: Partial<StartOptions>) {
         if (!process.env.TOKEN) {
-            logger.fatal('Don\'t forget to set the TOKEN in the .env file.');
+            logger.fatal('You must set the TOKEN in the .env file.');
             process.exit(1);
+        }
+
+        if (options.registerCommands) {
+            await (await import('@/loaders/command')).default.loadCommands({ register: true });
+            process.exit(0);
         }
 
         this.create();
@@ -44,7 +49,7 @@ export default class Client extends DiscordClient {
         this.once('ready', async (client) => {
             logger.info(`Logged in as ${client.user.tag}`);
 
-            await (await import('@/loaders/command')).default.loadCommands(this, !!options.registerCommands);
+            await (await import('@/loaders/command')).default.loadCommands({ client: this });
             await (await import('@/loaders/event')).default(this);
 
             setInterval(() => {

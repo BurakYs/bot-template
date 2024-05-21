@@ -1,6 +1,6 @@
+import { ApplicationCommand, Collection, SlashCommandBuilder, Snowflake, REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import { CommandData } from '@/interfaces';
-import { ApplicationCommand, Collection, SlashCommandBuilder, Snowflake } from 'discord.js';
 import { Locale } from 'discord-api-types/v10';
 import config from '@/config';
 import Client from '@/loaders/base';
@@ -12,8 +12,12 @@ interface CommandLocalization {
     options?: CommandLocalization[];
 }
 
+type LoadOptions =
+    | { client: Client; register?: false }
+    | { client?: null; register: true };
+
 export default class CommandLoader {
-    static async loadCommands(client: Client, register: boolean) {
+    static async loadCommands(options: LoadOptions) {
         const localizations: Partial<Record<Locale, CommandLocalization[]>> = {
             'en-US': (await import('@/localizations/commandData/en.json')).default,
             'en-GB': (await import('@/localizations/commandData/en.json')).default,
@@ -33,22 +37,25 @@ export default class CommandLoader {
             }
 
             const commandList = file.ownerOnly ? ownerCommands : commands;
-            commandList.push(file);
+            commandList.push(file.data);
 
-            client.commands.push(file);
+            if (!options.register) options.client.commands.push(file);
         }));
 
-        if (register) {
-            const userCommands = await client.application!.commands.set(commands);
-            logger.info('Loaded global slash commands');
-            this.setCommandMentions(client, userCommands);
+        if (options.register) {
+            const token = process.env.TOKEN!;
+            const rest = new REST({ version: '10' }).setToken(token);
+            const botId = Buffer.from(token.split('.')[0], 'base64').toString();
+
+            await rest.put(Routes.applicationCommands(botId), { body: commands });
+            global.logger.info('Loaded global slash commands');
 
             if (config.guilds.test && ownerCommands.length) {
-                await client.application!.commands.set(ownerCommands, config.guilds.test);
-                logger.info('Loaded test guild slash commands');
+                await rest.put(Routes.applicationGuildCommands(botId, config.guilds.test), { body: ownerCommands });
+                global.logger.info('Loaded test guild slash commands');
             }
         } else {
-            this.setCommandMentions(client, await client.application!.commands.fetch());
+            this.setCommandMentions(options.client, await options.client.application!.commands.fetch());
         }
     }
 
