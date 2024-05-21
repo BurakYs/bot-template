@@ -89,7 +89,7 @@ function matchCommandData(command: CommandData, interaction: Interaction): Parse
         if (!variableFields.includes(key as keyof CommandConfig)) continue;
 
         if (!Array.isArray(value) && typeof value === 'object') {
-            if (value[optionsText]) {
+            if (value[optionsText] != null) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 matchedCommand[key] = value[optionsText];
