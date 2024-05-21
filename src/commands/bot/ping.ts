@@ -1,6 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { CommandConfig } from '@/interfaces/CommandData';
-import { RunFunctionOptions } from '@/types';
+import { CommandData } from '@/interfaces';
 
 export default {
     data: new SlashCommandBuilder()
@@ -8,8 +7,8 @@ export default {
         .setDescription('Check the bot\'s latency and response time'),
     config: {
         category: 'Bot'
-    } as CommandConfig,
-    run: async ({ client, interaction }: RunFunctionOptions) => {
+    },
+    run: async ({ client, interaction }) => {
         const dateBefore = Date.now();
         await interaction.reply({ content: 'Ping' });
 
@@ -20,4 +19,4 @@ Discord API: ${Date.now() - dateBefore}ms
 Discord Gateway: ${client.ws.ping}ms`
         });
     }
-};
+} as CommandData;

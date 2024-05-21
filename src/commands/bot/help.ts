@@ -1,6 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
-import { CommandConfig } from '@/interfaces/CommandData';
-import { RunFunctionOptions } from '@/types';
+import { CommandData } from '@/interfaces';
 import config from '@/config';
 
 export default {
@@ -13,8 +12,8 @@ export default {
             .setRequired(false)),
     config: {
         category: 'Bot'
-    } as CommandConfig,
-    run: async ({ client, interaction, translations }: RunFunctionOptions) => {
+    },
+    run: async ({ client, interaction, translations }) => {
         const commandName = interaction.options.getString('command')?.split(' ')[0];
         const command = commandName ? client.commands.find(x => x.data.name.toLowerCase() === commandName.toLowerCase()) : null;
 
@@ -56,4 +55,4 @@ ${translations.category}: ${command.config.category}
             embeds: [embed]
         });
     }
-};
+} as CommandData;
