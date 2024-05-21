@@ -23,10 +23,6 @@ A template for creating Discord bots with Discord.js using TypeScript
 - Easy to understand and modify
 - Multiple language support both for messages and commands
 
-## 📚 To-Do
-
-- [ ] Use better types instead of `any`
-
 > I'm not that experienced with TypeScript, so I'm open to any suggestions.
 
 ## 📝 License

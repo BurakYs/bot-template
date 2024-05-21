@@ -6,7 +6,6 @@ export default {
     },
     bot: {
         developers: ['269677849810698249'],
-        invite: '',
         supportedLanguages: {
             'en-US': 'en',
             'en-GB': 'en',

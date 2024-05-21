@@ -1,4 +1,4 @@
-import { ActivityType, Client as DiscordClient, ClientPresenceStatus, GatewayIntentBits, Partials } from 'discord.js';
+import { ActivityType, Client as DiscordClient, ClientPresenceStatus, GatewayIntentBits, OAuth2Scopes, Partials, PermissionsBitField } from 'discord.js';
 import { CommandData } from '@/interfaces';
 import config from '@/config';
 
@@ -6,7 +6,7 @@ interface StartOptions {
     registerCommands: boolean;
 }
 
-export default class Client extends DiscordClient {
+export default class Client extends DiscordClient<true> {
     commands: CommandData[] = [];
     commandMentions: Record<string, string> = {};
 
@@ -74,13 +74,26 @@ export default class Client extends DiscordClient {
             .replace(/{u}/g, this.guilds.cache.reduce((a, g) => a + g.memberCount, 0).toLocaleString())
             .replace(/{s}/g, this.guilds.cache.size.toString());
 
-        return this.user!.setPresence({
+        return this.user.setPresence({
             status: config.presence.status as ClientPresenceStatus,
             activities: [{
                 name: activityName,
                 type: ActivityType.Custom,
                 state: activityName
             }]
+        });
+    }
+
+    getInviteURL() {
+        return this.generateInvite({
+            permissions: [
+                PermissionsBitField.Flags.SendMessages,
+                PermissionsBitField.Flags.SendMessagesInThreads,
+                PermissionsBitField.Flags.EmbedLinks,
+                PermissionsBitField.Flags.AttachFiles,
+                PermissionsBitField.Flags.UseExternalEmojis
+            ],
+            scopes: [OAuth2Scopes.Bot, OAuth2Scopes.ApplicationsCommands]
         });
     }
 }

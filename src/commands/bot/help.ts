@@ -20,7 +20,7 @@ export default {
         const embed = new EmbedBuilder()
             .setTitle(translations.embed.title)
             .setColor(config.embedColors.default)
-            .setThumbnail(interaction.client.user.displayAvatarURL());
+            .setThumbnail(client.user.displayAvatarURL());
 
         if (commandName) {
             if (!command || command.config.ownerOnly) return interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
@@ -38,17 +38,17 @@ ${translations.category}: ${command.config.category}
                 ]);
         } else {
             embed
-                .setDescription(translations.embed.description.change({ name: interaction.client.user.username }))
+                .setDescription(translations.embed.description.change({ name: client.user.username }))
                 .setFields([
                     {
                         name: '> ' + translations.links,
                         value: `
 🛠️ [${translations.supportServer}](${config.guilds.supportServer.invite})
-🔗 [${translations.inviteLink}](${config.bot.invite})
+🔗 [${translations.inviteLink}](${client.getInviteURL()})
 `
                     }
                 ])
-                .setAuthor({ name: interaction.client.user.username, iconURL: interaction.client.user.displayAvatarURL() });
+                .setAuthor({ name: client.user.username, iconURL: client.user.displayAvatarURL() });
         }
 
         await interaction.reply({

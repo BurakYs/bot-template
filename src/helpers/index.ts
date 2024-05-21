@@ -66,7 +66,7 @@ export default class Utils {
                 .setThumbnail(options.thumbnail || null)
                 .setImage(options.image || null)
                 .setTitle(options.title || null)
-                .setColor(options.color || (options.embedType === 'error' ? config.embedColors.error : config.embedColors.success))
+                .setColor(options.color || config.embedColors[options.embedType])
                 .setDescription(options.description || null)
                 .setFooter(options.footer || null)
                 .setFields(options.fields || [])

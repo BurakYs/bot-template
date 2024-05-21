@@ -55,7 +55,7 @@ export default class CommandLoader {
                 global.logger.info('Loaded test guild slash commands');
             }
         } else {
-            this.setCommandMentions(options.client, await options.client.application!.commands.fetch());
+            this.setCommandMentions(options.client, await options.client.application.commands.fetch());
         }
     }
 
