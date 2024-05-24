@@ -88,13 +88,12 @@ function matchCommandData(command: CommandData, interaction: Interaction): Parse
     for (const [key, value] of Object.entries(command.config)) {
         if (!variableFields.includes(key as keyof CommandConfig)) continue;
 
-        /* eslint-disable @typescript-eslint/ban-ts-comment */
         if (!Array.isArray(value) && typeof value === 'object') {
             if (value[optionsText] != null) {
-                // @ts-ignore
+                // @ts-expect-error - This is fine
                 matchedCommand[key] = value[optionsText];
             } else {
-                // @ts-ignore
+                // @ts-expect-error - This is fine
                 matchedCommand[key] = null;
             }
         }
