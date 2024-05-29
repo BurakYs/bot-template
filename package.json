@@ -21,13 +21,13 @@
     "tslog": "^4.9.2",
     "yargs": "^17.7.2"
   },
-  "_moduleAliases": {
-    "@": "./dist"
-  },
   "devDependencies": {
     "@types/module-alias": "^2.0.4",
     "@types/yargs": "^17.0.32",
     "@typescript-eslint/eslint-plugin": "^7.9.0",
     "@typescript-eslint/parser": "^7.9.0"
+  },
+  "_moduleAliases": {
+    "@": "./dist"
   }
 }
