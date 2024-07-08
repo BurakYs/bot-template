@@ -27,11 +27,11 @@ export default class Database {
         try {
             const data = fs.readFileSync(this.path, 'utf8');
             return JSON.parse(data);
-        } catch (error) {
+        } catch (_error) {
             try {
                 fs.writeFileSync(this.path, '{}');
                 return {};
-            } catch (e) {
+            } catch (_e) {
                 const folderPath = this.path.substring(0, this.path.lastIndexOf('/'));
                 fs.mkdirSync(folderPath, { recursive: true });
                 fs.writeFileSync(this.path, '{}');

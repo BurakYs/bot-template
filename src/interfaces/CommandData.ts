@@ -2,7 +2,7 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { RunFunction } from '@/types';
 
-type PrimitiveOrDictionary<T> = T | { [key: string]: T };
+type PrimitiveOrDictionary<T> = T | Record<string, T>
 
 interface BaseCommandConfig {
     category: string;

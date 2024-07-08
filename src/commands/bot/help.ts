@@ -15,7 +15,7 @@ export default {
     },
     run: async ({ client, interaction, translations }) => {
         const commandName = interaction.options.getString('command')?.split(' ')[0];
-        const command = commandName ? client.commands.find(x => x.data.name.toLowerCase() === commandName.toLowerCase()) : null;
+        const command = commandName && client.commands.find(x => x.data.name.toLowerCase() === commandName.toLowerCase());
 
         const embed = new EmbedBuilder()
             .setTitle(translations.embed.title)
