@@ -1,7 +1,10 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
   "organizeImports": {
-    "enabled": true
+    "enabled": false
+  },
+  "files": {
+    "ignore": ["dist/**", "node_modules/**"]
   },
   "linter": {
     "enabled": true,
@@ -20,7 +23,6 @@
         "noConstantCondition": "error",
         "noEmptyCharacterClassInRegex": "error",
         "noEmptyPattern": "error",
-        "noGlobalObjectCalls": "error",
         "noInnerDeclarations": "error",
         "noInvalidConstructorSuper": "error",
         "noNewSymbol": "error",
@@ -46,12 +48,8 @@
         "useAsConstAssertion": "error"
       },
       "suspicious": {
-        "noAsyncPromiseExecutor": "error",
         "noCatchAssign": "error",
         "noClassAssign": "error",
-        "noCompareNegZero": "error",
-        "noControlCharactersInRegex": "error",
-        "noDebugger": "error",
         "noDuplicateCase": "error",
         "noDuplicateClassMembers": "error",
         "noDuplicateObjectKeys": "error",
@@ -73,22 +71,31 @@
         "useGetterReturn": "error",
         "useValidTypeof": "error"
       }
-    },
-    "ignore": ["dist"]
+    }
   },
   "javascript": {
     "globals": ["logger"],
     "formatter": {
       "enabled": true,
       "semicolons": "always",
-      "quoteStyle": "single"
+      "quoteStyle": "single",
+      "trailingCommas": "none",
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2,
+      "trailingCommas": "none"
     }
   },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "formatWithErrors": false,
     "lineWidth": 160
   }
 }

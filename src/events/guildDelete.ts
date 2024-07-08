@@ -1,5 +1,5 @@
 import { Colors, EmbedBuilder, Events, Guild } from 'discord.js';
-import Client from '@/loaders/base';
+import type Client from '@/loaders/base';
 import config from '@/config';
 
 export default {

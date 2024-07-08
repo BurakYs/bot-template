@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
-import { CommandData } from '@/interfaces';
+import type { CommandData } from '@/interfaces';
 import config from '@/config';
 
 export default {

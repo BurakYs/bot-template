@@ -1,4 +1,4 @@
-import Client from '@/loaders/base';
+import type Client from '@/loaders/base';
 
 export default function (client: Client) {
   Object.defineProperties(String.prototype, {

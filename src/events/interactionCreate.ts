@@ -1,6 +1,6 @@
 import { Events } from 'discord.js';
-import { Interaction } from '@/interfaces';
-import Client from '@/loaders/base';
+import type { Interaction } from '@/interfaces';
+import type Client from '@/loaders/base';
 import config from '@/config';
 
 export default {

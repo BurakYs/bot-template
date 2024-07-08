@@ -1,5 +1,5 @@
 import { glob } from 'glob';
-import Client from '@/loaders/base';
+import type Client from '@/loaders/base';
 
 export default async (client: Client) => {
   const eventFiles = await glob('./dist/events/**/*.js');

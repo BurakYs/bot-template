@@ -1,10 +1,8 @@
+import type { CommandData } from '@/interfaces';
 import { SlashCommandBuilder } from 'discord.js';
-import { CommandData } from '@/interfaces';
 
 export default {
-  data: new SlashCommandBuilder()
-    .setName('ping')
-    .setDescription('Check the bot\'s latency and response time'),
+  data: new SlashCommandBuilder().setName('ping').setDescription("Check the bot's latency and response time"),
   config: {
     category: 'Bot'
   },

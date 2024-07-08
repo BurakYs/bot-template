@@ -1,6 +1,6 @@
 import { EmbedBuilder } from 'discord.js';
 import { Database } from '@/helpers/classes';
-import { Interaction, SendMessageOptions } from '@/interfaces';
+import type { Interaction, SendMessageOptions } from '@/interfaces';
 import config from '@/config';
 
 const languages: Record<string, Database> = {

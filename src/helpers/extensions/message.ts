@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, Message, MessageComponentInteraction } from 'discord.js';
-import { Interaction, SendMessageOptions } from '@/interfaces';
+import type { Interaction, SendMessageOptions } from '@/interfaces';
 import utils from '@/helpers';
 
 export default function () {

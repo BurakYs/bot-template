@@ -1,5 +1,5 @@
 import { ActivityType, Client as DiscordClient, ClientPresenceStatus, GatewayIntentBits, OAuth2Scopes, Partials, PermissionsBitField } from 'discord.js';
-import { CommandData } from '@/interfaces';
+import type { CommandData } from '@/interfaces';
 import config from '@/config';
 
 interface StartOptions {
