@@ -88,7 +88,7 @@
     "enabled": true,
     "indentStyle": "space",
     "indentWidth": 2,
-    "formatWithErrors": true,
+    "formatWithErrors": false,
     "lineWidth": 160
   }
 }

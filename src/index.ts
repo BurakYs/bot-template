@@ -6,9 +6,9 @@ import { Logger } from '@/helpers/classes';
 import yargs from 'yargs';
 
 interface StartOptions {
-    redeployCommands: boolean;
-    redeploy: boolean;
-    env: string;
+  redeployCommands: boolean;
+  redeploy: boolean;
+  env: string;
 }
 
 const argv = yargs.argv as Partial<StartOptions>;
@@ -17,5 +17,5 @@ process.env.NODE_ENV = argv.env || process.env.NODE_ENV || 'development';
 
 new Logger();
 new Client().start({
-    registerCommands: !!redeployCommands
+  registerCommands: !!redeployCommands
 });
