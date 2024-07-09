@@ -30,7 +30,7 @@ export default class Client extends DiscordClient<true> {
 
   async start(options: Partial<StartOptions>) {
     if (!process.env.TOKEN) {
-      logger.fatal('You must set the TOKEN in the .env file.');
+      global.logger.fatal('You must set the TOKEN in the .env file.');
       process.exit(1);
     }
 
@@ -48,7 +48,7 @@ export default class Client extends DiscordClient<true> {
     await this.login(process.env.TOKEN);
 
     this.once('ready', async (client) => {
-      logger.info(`Logged in as ${client.user.tag}`);
+      global.logger.info(`Logged in as ${client.user.tag}`);
 
       await (await import('@/loaders/command')).default.loadCommands({ client: this });
       await (await import('@/loaders/event')).default(this);
@@ -64,8 +64,8 @@ export default class Client extends DiscordClient<true> {
   create() {
     this.commands = [];
 
-    process.on('unhandledRejection', (error) => logger.error(error));
-    process.on('uncaughtException', (error) => logger.error(error));
+    process.on('unhandledRejection', (error) => global.logger.error(error));
+    process.on('uncaughtException', (error) => global.logger.error(error));
 
     return this;
   }

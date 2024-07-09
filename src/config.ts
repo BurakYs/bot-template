@@ -1,9 +1,6 @@
 import { resolveColor } from 'discord.js';
 
 export default {
-  project: {
-    timezone: 'Europe/Istanbul'
-  },
   bot: {
     developers: ['269677849810698249'],
     supportedLanguages: {
