@@ -15,24 +15,25 @@
   },
   "dependencies": {
     "discord-api-types": "^0.37.92",
-    "discord.js": "^14.15.2",
+    "discord.js": "^14.15.3",
     "dotenv": "^16.4.5",
-    "glob": "^10.2.6",
+    "glob": "^11.0.0",
     "module-alias": "^2.2.3",
-    "tslog": "^4.9.2",
+    "tslog": "^4.9.3",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
     "@types/module-alias": "^2.0.4",
+    "@types/node": "^20.14.10",
     "@types/yargs": "^17.0.32",
     "eslint": "9.x",
     "globals": "^15.8.0",
     "typescript-eslint": "^7.16.0"
   },
   "engines": {
-    "node": ">=20.13.1",
-    "pnpm": ">=9.5.0"
+    "node": ">=20",
+    "pnpm": ">=9"
   },
   "_moduleAliases": {
     "@": "./dist"

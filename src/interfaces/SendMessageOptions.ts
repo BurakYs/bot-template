@@ -12,5 +12,5 @@ export default interface SendMessageOptions {
   footer: { text: string; iconURL?: string };
   fields: { name: string; value: string; inline?: boolean }[];
   ephemeral: boolean;
-  type: 'reply' | 'editReply';
+  type: 'reply' | 'editReply' | 'followUp';
 }
