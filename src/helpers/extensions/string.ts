@@ -3,7 +3,7 @@ import type Client from '@/loaders/base';
 export default function (client: Client) {
   Object.defineProperties(String.prototype, {
     'change': {
-      value: function (replacements: { [key: string]: unknown } = {}) {
+      value: function (replacements: Record<string, unknown> = {}) {
         return this.replace(/\{([^}]+?)}/g, (match: RegExpMatchArray, key: string) => {
           if (key.startsWith('cmd:')) {
             const commandName = key.slice(4);

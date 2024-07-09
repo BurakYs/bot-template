@@ -1,12 +1,14 @@
 import { EmbedBuilder } from 'discord.js';
 import { Database } from '@/helpers/classes';
-import type { Interaction, SendMessageOptions } from '@/interfaces';
 import config from '@/config';
+
+import type { Interaction, SendMessageOptions } from '@/interfaces';
 
 const languages: Record<string, Database> = {
   'tr': new Database({ path: './src/localizations/tr.json', cache: true }),
   'en-US': new Database({ path: './src/localizations/en.json', cache: true })
 };
+
 languages['en-GB'] = languages['en-US'];
 languages['en'] = languages['en-US'];
 

@@ -1,9 +1,10 @@
-import type { CommandConfig } from '@/interfaces/CommandData';
-import type { CommandData, Interaction, ParsedCommandData } from '@/interfaces';
 import { Colors, EmbedBuilder, PermissionResolvable } from 'discord.js';
-import Client from '@/loaders/base';
 import utils from '@/helpers';
 import config from '@/config';
+
+import type { CommandConfig } from '@/interfaces/CommandData';
+import type { CommandData, Interaction, ParsedCommandData } from '@/interfaces';
+import type Client from '@/loaders/base';
 
 export default {
   name: 'applicationCommand',
@@ -26,20 +27,12 @@ export default {
     if (commandData.supportServerOnly && !isSupportServer)
       return interaction.error({ description: translations.commandSupportServerOnly.change({ support: config.guilds.supportServer.invite }) });
 
-    if (
-      interaction.inCachedGuild() &&
-      commandData.memberPermission &&
-      !interaction.member.permissions.has(commandData.memberPermission as PermissionResolvable)
-    ) {
+    if (interaction.inCachedGuild() && commandData.memberPermission && !interaction.member.permissions.has(commandData.memberPermission as PermissionResolvable)) {
       const permission = permissions[commandData.memberPermission as string] || commandData.memberPermission;
 
       return interaction.error({ description: translations.commandUserMissingPerms.change({ permissions: `\`${permission}\`` }) });
     }
-    if (
-      interaction.inCachedGuild() &&
-      commandData.botPermission &&
-      !interaction.guild.members.me?.permissions.has(commandData.botPermission as PermissionResolvable)
-    ) {
+    if (interaction.inCachedGuild() && commandData.botPermission && !interaction.guild.members.me?.permissions.has(commandData.botPermission as PermissionResolvable)) {
       const permission = permissions[commandData.botPermission as string] || commandData.botPermission;
 
       return interaction.error({ description: translations.commandBotMissingPerms.change({ permissions: `\`${permission}\`` }) });
@@ -100,6 +93,7 @@ function matchCommandData(command: CommandData, interaction: Interaction): Parse
     'disabled',
     'supportServerOnly'
   ];
+
   const subcommandGroup = interaction.options.getSubcommandGroup(false);
   const subcommand = interaction.options.getSubcommand(false);
   const optionsText = [subcommandGroup, subcommand].filter(Boolean).join(' ');

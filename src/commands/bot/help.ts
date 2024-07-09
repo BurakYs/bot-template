@@ -1,6 +1,7 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
-import type { CommandData } from '@/interfaces';
 import config from '@/config';
+
+import type { CommandData } from '@/interfaces';
 
 export default {
   data: new SlashCommandBuilder()

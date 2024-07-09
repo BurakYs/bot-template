@@ -1,6 +1,7 @@
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, EmbedBuilder, Events, Guild } from 'discord.js';
-import type Client from '@/loaders/base';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, Colors, EmbedBuilder, Events, type Guild } from 'discord.js';
 import config from '@/config';
+
+import type Client from '@/loaders/base';
 
 export default {
   name: Events.GuildCreate,

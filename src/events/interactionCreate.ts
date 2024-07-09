@@ -1,7 +1,8 @@
 import { Events } from 'discord.js';
+import config from '@/config';
+
 import type { Interaction } from '@/interfaces';
 import type Client from '@/loaders/base';
-import config from '@/config';
 
 export default {
   name: Events.InteractionCreate,

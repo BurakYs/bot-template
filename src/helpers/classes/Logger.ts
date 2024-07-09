@@ -1,4 +1,4 @@
-import { ILogObj, Logger } from 'tslog';
+import { type ILogObj, Logger } from 'tslog';
 
 export default class extends Logger<ILogObj> {
   constructor() {

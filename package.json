@@ -10,10 +10,11 @@
     "start": "node . --env=production",
     "dev": "node . --env=development",
     "commands": "node . --redeployCommands",
-    "lint": "biome lint",
-    "lint:fix": "biome lint --write"
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
+    "discord-api-types": "^0.37.92",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
     "glob": "^10.2.6",
@@ -22,9 +23,16 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@eslint/js": "^9.6.0",
     "@types/module-alias": "^2.0.4",
-    "@types/yargs": "^17.0.32"
+    "@types/yargs": "^17.0.32",
+    "eslint": "9.x",
+    "globals": "^15.8.0",
+    "typescript-eslint": "^7.16.0"
+  },
+  "engines": {
+    "node": ">=20.13.1",
+    "pnpm": ">=9.5.0"
   },
   "_moduleAliases": {
     "@": "./dist"

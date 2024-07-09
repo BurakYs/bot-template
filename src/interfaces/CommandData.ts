@@ -1,5 +1,6 @@
-import { RunFunction } from '@/types';
-import { SlashCommandBuilder } from 'discord.js';
+import type { SlashCommandBuilder } from 'discord.js';
+
+import type { RunFunction } from '@/types';
 
 type PrimitiveOrDictionary<T> = T | Record<string, T>;
 

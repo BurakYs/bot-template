@@ -1,9 +1,10 @@
-import { ApplicationCommand, Collection, SlashCommandBuilder, Snowflake, REST, Routes } from 'discord.js';
+import type { ApplicationCommand, Collection, SlashCommandBuilder, Snowflake } from 'discord.js';
+import { REST, Routes } from 'discord.js';
+import { glob } from 'glob';
+import config from '@/config';
 import type { CommandData } from '@/interfaces';
 import type { Locale } from 'discord-api-types/v10';
 import type Client from '@/loaders/base';
-import { glob } from 'glob';
-import config from '@/config';
 
 interface CommandLocalization {
   name: string;
