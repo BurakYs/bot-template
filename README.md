@@ -10,7 +10,7 @@ A template for creating Discord bots with Discord.js using TypeScript
     cd bot-template
     npm install
     cp .env.template .env
-    tsc
+    npm run build
     ```
 2. Fill in the `.env` file with your bot token and other necessary information.
 3. Run `npm run commands` to register the commands and to start the bot.
