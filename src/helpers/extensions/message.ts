@@ -1,7 +1,7 @@
 import { ChatInputCommandInteraction, Message, MessageComponentInteraction } from 'discord.js';
 import utils from '@/helpers';
 
-import type { Interaction, SendMessageOptions } from '@/interfaces';
+import type { Interaction, SendMessageOptions } from '@/types';
 
 export default function () {
   const embedMessages = {

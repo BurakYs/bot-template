@@ -28,11 +28,5 @@ export default [
       'semi': ['error', 'always'],
       'comma-dangle': ['error', 'never']
     }
-  },
-  {
-    files: ['src/interfaces/**/*.{js,mjs,cjs,ts}'],
-    rules: {
-      'semi': 'off'
-    }
   }
 ];

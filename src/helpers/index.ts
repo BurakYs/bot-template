@@ -2,7 +2,7 @@ import { EmbedBuilder } from 'discord.js';
 import { Database } from '@/helpers/classes';
 import config from '@/config';
 
-import type { Interaction, SendMessageOptions } from '@/interfaces';
+import type { Interaction, SendMessageOptions } from '@/types';
 
 const languages: Record<string, Database> = {
   'tr': new Database({ path: './src/localizations/tr.json', cache: true }),

@@ -1,7 +1,7 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import config from '@/config';
 
-import type { CommandData } from '@/interfaces';
+import type { CommandData } from '@/types';
 
 export default {
   data: new SlashCommandBuilder()
@@ -56,4 +56,4 @@ ${translations.category}: ${command.config.category}
       embeds: [embed]
     });
   }
-} as CommandData;
+} satisfies CommandData;

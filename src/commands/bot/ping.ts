@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
-import type { CommandData } from '@/interfaces';
+
+import type { CommandData } from '@/types';
 
 export default {
   data: new SlashCommandBuilder()
@@ -19,4 +20,4 @@ Discord API: ${Date.now() - dateBefore}ms
 Discord Gateway: ${client.ws.ping}ms`
     });
   }
-} as CommandData;
+} satisfies CommandData;

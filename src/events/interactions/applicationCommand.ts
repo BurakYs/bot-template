@@ -2,8 +2,7 @@ import { Colors, EmbedBuilder, PermissionResolvable } from 'discord.js';
 import utils from '@/helpers';
 import config from '@/config';
 
-import type { CommandConfig } from '@/interfaces/CommandData';
-import type { CommandData, Interaction, ParsedCommandData } from '@/interfaces';
+import type { CommandConfig, CommandData, Interaction, ParsedCommandData } from '@/types';
 import type Client from '@/loaders/base';
 
 export default {

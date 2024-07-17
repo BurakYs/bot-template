@@ -2,7 +2,7 @@ import type { ApplicationCommand, Collection, SlashCommandBuilder, Snowflake } f
 import { REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
-import type { CommandData } from '@/interfaces';
+import type { CommandData } from '@/types';
 import type { Locale } from 'discord-api-types/v10';
 import type Client from '@/loaders/base';
 
