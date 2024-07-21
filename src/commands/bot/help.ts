@@ -24,7 +24,7 @@ export default {
       .setThumbnail(client.user.displayAvatarURL());
 
     if (commandName) {
-      if (!command || command.config.ownerOnly) return await interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
+      if (!command || command.config.botAdminOnly) return await interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
 
       embed
         .setDescription(command.data.description)
