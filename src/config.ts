@@ -2,7 +2,7 @@ import { resolveColor } from 'discord.js';
 
 export default {
   bot: {
-    developers: ['269677849810698249'],
+    admins: ['269677849810698249'],
     supportedLanguages: {
       'en-US': 'en',
       'en-GB': 'en',

@@ -18,7 +18,7 @@ export type CommandConfig = {
   category: string;
   tags?: PrimitiveOrDictionary<string[]>;
   guildOnly?: PrimitiveOrDictionary<boolean>;
-  ownerOnly?: PrimitiveOrDictionary<boolean>;
+  botAdminOnly?: PrimitiveOrDictionary<boolean>;
   dmOnly?: PrimitiveOrDictionary<boolean>;
   memberPermission?: PrimitiveOrDictionary<string>;
   botPermission?: PrimitiveOrDictionary<string>;

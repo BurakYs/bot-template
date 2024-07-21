@@ -16,12 +16,12 @@ export default {
     const translations = utils.getTranslations(interaction, 'general');
     const permissions = utils.getTranslations(interaction, 'permissions');
     const isSupportServer = [config.guilds.supportServer.id, config.guilds.test].includes(interaction.guild?.id || '');
-    const isDeveloper = config.bot.developers.includes(interaction.user.id);
+    const isAdmin = config.bot.admins.includes(interaction.user.id);
 
-    if (commandData.ownerOnly && !isDeveloper) return;
+    if (commandData.botAdminOnly && !isAdmin) return await interaction.error({ description: translations.commandBotAdminOnly });
     if (commandData.dmOnly && interaction.guild) return await interaction.error({ description: translations.commandDMOnly });
     if (commandData.guildOnly && !interaction.guild) return await interaction.error({ description: translations.commandGuildOnly });
-    if (commandData.disabled && !isDeveloper) return await interaction.error({ description: translations.commandDisabled });
+    if (commandData.disabled && !isAdmin) return await interaction.error({ description: translations.commandDisabled });
     if (commandData.supportServerOnly && !isSupportServer)
       return await interaction.error({ description: translations.commandSupportServerOnly.change({ support: config.guilds.supportServer.invite }) });
 
@@ -59,7 +59,7 @@ function matchCommandData(command: CommandData, interaction: Interaction): Parse
   const variableFields: (keyof CommandConfig)[] = [
     'tags',
     'guildOnly',
-    'ownerOnly',
+    'botAdminOnly',
     'dmOnly',
     'memberPermission',
     'botPermission',
