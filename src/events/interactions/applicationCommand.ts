@@ -12,6 +12,7 @@ export default {
     if (!cmd) return;
 
     const commandData = matchCommandData(cmd, interaction);
+    console.log(commandData);
 
     const translations = utils.getTranslations(interaction, 'general');
     const permissions = utils.getTranslations(interaction, 'permissions');
@@ -74,8 +75,10 @@ function matchCommandData(command: CommandData, interaction: Interaction): Parse
   for (const [key, value] of Object.entries(command.config) as [keyof CommandConfig, Record<string, any>][]) {
     if (!variableFields.includes(key)) continue;
 
+    const defaultValue = value['*'] ?? null;
+
     if (!Array.isArray(value) && typeof value === 'object') {
-      matchedCommand[key] = value[optionsText] || null;
+      matchedCommand[key] = value[optionsText] ?? defaultValue;
     }
   }
 
