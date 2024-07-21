@@ -12,7 +12,6 @@ export default {
     if (!cmd) return;
 
     const commandData = matchCommandData(cmd, interaction);
-    console.log(commandData);
 
     const translations = utils.getTranslations(interaction, 'general');
     const permissions = utils.getTranslations(interaction, 'permissions');
