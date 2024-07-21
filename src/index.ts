@@ -5,7 +5,7 @@ import Client from '@/loaders/base';
 import { Logger } from '@/helpers/classes';
 import yargs from 'yargs';
 
-interface StartOptions {
+type StartOptions = {
   redeployCommands: boolean;
   redeploy: boolean;
   env: string;

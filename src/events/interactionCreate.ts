@@ -1,15 +1,12 @@
 import { Events } from 'discord.js';
 import config from '@/config';
 
-import type { Interaction } from '@/types';
-import type Client from '@/loaders/base';
+import type { Client, EventData, Interaction } from '@/types';
 
 export default {
   name: Events.InteractionCreate,
-  load: true,
   run: async (client: Client, interaction: Interaction) => {
     const interactionTypes = {
-      //1: 'ping',
       2: 'applicationCommand'
       //3: 'button',
       //4: 'autoComplete',
@@ -27,4 +24,4 @@ export default {
 
     return await handler.run(client, interaction);
   }
-};
+} satisfies EventData;

@@ -3,7 +3,7 @@ import config from '@/config';
 
 import type { CommandData } from '@/types';
 
-interface StartOptions {
+type StartOptions = {
   registerCommands: boolean;
 }
 
@@ -58,7 +58,6 @@ export default class Client extends DiscordClient<true> {
       }, 60000);
     });
 
-    return this;
   }
 
   create() {

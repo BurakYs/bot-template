@@ -2,11 +2,10 @@ import type { ApplicationCommand, Collection, SlashCommandBuilder, Snowflake } f
 import { REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
-import type { CommandData } from '@/types';
+import type { Client, CommandData } from '@/types';
 import type { Locale } from 'discord-api-types/v10';
-import type Client from '@/loaders/base';
 
-interface CommandLocalization {
+type CommandLocalization = {
   name: string;
   localizedName: string;
   localizedDescription: string;
@@ -33,7 +32,7 @@ export default class CommandLoader {
       const file = (await import(`../../${value.replace(/\\/g, '/')}`)).default;
 
       for (const lang in localizations) {
-        const commandData = localizations[lang as Locale]?.find((x: CommandLocalization) => x.name === file.data.name);
+        const commandData = localizations[lang as Locale]!.find((x: CommandLocalization) => x.name === file.data.name);
         this.setLocalizations(lang as Locale, file.data, commandData);
       }
 
@@ -45,8 +44,8 @@ export default class CommandLoader {
 
     if (options.register) {
       const token = process.env.TOKEN!;
-      const rest = new REST({ version: '10' }).setToken(token);
       const botId = Buffer.from(token.split('.')[0], 'base64').toString();
+      const rest = new REST({ version: '10' }).setToken(token);
 
       await rest.put(Routes.applicationCommands(botId), { body: commands });
       global.logger.info('Loaded global slash commands');
@@ -65,20 +64,25 @@ export default class CommandLoader {
 
     commands.forEach(x => {
       client.commandMentions[x.name] = `</${x.name}:${x.id}>`;
-      x.options?.filter((x: { type: number; }) => x.type === 1).forEach((y: { name: string; }) => {
-        client.commandMentions[`${x.name} ${y.name}`] = `</${x.name} ${y.name}:${x.id}>`;
-      });
+
+      x.options
+        ?.filter(x => x.type === 1)
+        .forEach(y => {
+          client.commandMentions[`${x.name} ${y.name}`] = `</${x.name} ${y.name}:${x.id}>`;
+        });
     });
   }
 
-  static setLocalizations(lang: Locale, obj: SlashCommandBuilder, commandData: CommandLocalization | undefined) {
+  static setLocalizations(lang: Locale, command: SlashCommandBuilder, commandData: CommandLocalization | undefined) {
     if (!commandData) return;
 
-    obj.setNameLocalization(lang, commandData.localizedName);
-    obj.setDescriptionLocalization(lang, commandData.localizedDescription);
+    command.setNameLocalization(lang, commandData.localizedName);
+    command.setDescriptionLocalization(lang, commandData.localizedDescription);
 
-    if (obj.options?.length) obj.options.forEach((option: any) =>
-      this.setLocalizations(lang, option, commandData.options?.find((x: CommandLocalization) => x.name === option.name))
-    );
+    if (command.options?.length)
+      command.options.forEach((opt: unknown) => {
+        const option = opt as SlashCommandBuilder;
+        this.setLocalizations(lang, option, commandData.options?.find(x => x.name === option.name));
+      });
   }
 }

@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-interface DatabaseOptions {
+type DatabaseOptions = {
   path: string;
   cache?: boolean;
 }

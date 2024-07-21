@@ -6,8 +6,9 @@ import type {
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder
 } from 'discord.js';
-import type Client from '@/loaders/base';
+import type BClient from '@/loaders/base';
 
+export type Client = BClient;
 export type RunFunctionOptions = { client: Client, interaction: Interaction, translations: Record<string, any> }
 export type RunFunction = (options: RunFunctionOptions) => Promise<unknown>;
 
@@ -57,4 +58,13 @@ export type SendMessageOptions = {
   fields: { name: string; value: string; inline?: boolean }[];
   ephemeral: boolean;
   type: 'reply' | 'editReply' | 'followUp';
+}
+
+export type EventRunFunction = (client: Client, ...args: any[]) => Promise<unknown>;
+
+export type EventData = {
+  name: string;
+  once?: boolean;
+  dontLoad?: boolean;
+  run: EventRunFunction;
 }

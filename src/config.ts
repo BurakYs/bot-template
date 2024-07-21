@@ -21,13 +21,6 @@ export default {
       invite: ''
     }
   },
-  roles: {
-    errorPings: ''
-  },
-  channels: {
-    botLog: '',
-    errorLog: ''
-  },
   embedColors: {
     default: resolveColor('#5865F2'),
     error: resolveColor('#F04A47'),
