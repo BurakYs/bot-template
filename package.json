@@ -5,7 +5,6 @@
   "main": "dist/index",
   "author": "BurakYs",
   "license": "MIT",
-  "packageManager": "pnpm@9.5.0",
   "scripts": {
     "start": "node . --env=production",
     "dev": "node . --env=development",
@@ -31,10 +30,6 @@
     "eslint": "9.x",
     "globals": "^15.8.0",
     "typescript-eslint": "^7.16.0"
-  },
-  "engines": {
-    "node": ">=20",
-    "pnpm": ">=9"
   },
   "_moduleAliases": {
     "@": "./dist"
