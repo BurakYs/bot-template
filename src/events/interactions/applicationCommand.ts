@@ -1,5 +1,5 @@
 import { PermissionResolvable } from 'discord.js';
-import utils from '@/helpers';
+import utils from 'utils';
 import config from '@/config';
 
 import type { Client, CommandConfig, CommandData, EventData, Interaction, ParsedCommandData } from '@/types';

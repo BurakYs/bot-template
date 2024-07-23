@@ -1,5 +1,5 @@
 import { EmbedBuilder } from 'discord.js';
-import { Database } from '@/helpers/classes';
+import { Database } from '@/utils/classes';
 import config from '@/config';
 
 import type { Interaction, SendMessageOptions } from '@/types';

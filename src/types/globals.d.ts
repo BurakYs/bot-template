@@ -1,5 +1,5 @@
 /* eslint-disable no-var */
-import type { Logger } from '@/helpers/classes';
+import type { Logger } from '@/utils/classes';
 
 declare global {
   var logger: Logger;

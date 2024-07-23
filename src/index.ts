@@ -2,7 +2,7 @@ import 'dotenv/config';
 import 'module-alias/register';
 
 import Client from '@/loaders/base';
-import { Logger } from '@/helpers/classes';
+import { Logger } from '@/utils/classes';
 import yargs from 'yargs';
 
 type StartOptions = {

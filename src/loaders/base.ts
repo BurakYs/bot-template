@@ -42,7 +42,7 @@ export default class Client extends DiscordClient<true> {
     this.create();
 
     for (const extension of ['string', 'message']) {
-      (await import(`@/helpers/extensions/${extension}`)).default(this);
+      (await import(`@/utils/extensions/${extension}`)).default(this);
     }
 
     await this.login(process.env.TOKEN);
