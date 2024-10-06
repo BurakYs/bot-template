@@ -1,6 +1,6 @@
-import { type ILogObj, Logger } from 'tslog';
+import { type ILogObj, Logger as TSLog } from 'tslog';
 
-export default class extends Logger<ILogObj> {
+class Logger extends TSLog<ILogObj> {
   constructor() {
     super({
       type: 'pretty',
@@ -31,3 +31,6 @@ export default class extends Logger<ILogObj> {
     });
   }
 }
+
+const logger = new Logger();
+global.logger = logger;
