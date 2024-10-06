@@ -5,7 +5,6 @@ import config from '@/config';
 
 import type { Client, CommandConfig, CommandData, EventData, Interaction, ParsedCommandData } from '@/types';
 
-
 export default {
   name: 'applicationCommand',
   dontLoad: true,
