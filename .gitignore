@@ -1,8 +1,5 @@
 /node_modules
-package-lock.json
-pnpm-lock.yaml
 /.idea
-.git
-.env
-/logs
+
 /dist
+.env
