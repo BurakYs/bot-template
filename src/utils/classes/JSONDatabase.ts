@@ -1,43 +1,35 @@
 import fs from 'fs';
 
-type DatabaseOptions = {
+type JSONDatabaseOptions = {
   path: string;
   cache?: boolean;
 }
 
-export default class Database {
+export default class JSONDatabase {
   path: string;
-  private cache: Record<string, unknown> | null;
-  private fileRead: boolean;
+  private cache?: Record<string, unknown>;
 
-  constructor(options: DatabaseOptions) {
+  constructor(options: JSONDatabaseOptions) {
     this.path = options.path;
-    this.cache = options.cache ? {} : null;
-    this.fileRead = false;
+    this.cache = options.cache ? {} : undefined;
+
+    const fileExists = fs.existsSync(this.path);
+    if (!fileExists) {
+      const folderPath = this.path.substring(0, this.path.lastIndexOf('/'));
+      fs.mkdirSync(folderPath, { recursive: true });
+      fs.writeFileSync(this.path, '{}');
+
+      if (this.cache) this.cache = {};
+    } else {
+      if (this.cache) {
+        const data = fs.readFileSync(this.path, 'utf8');
+        this.cache = JSON.parse(data);
+      }
+    }
   }
 
   all() {
-    if (this.cache && this.fileRead) return this.cache;
-    if (this.cache && !this.fileRead && this.path) {
-      this.fileRead = true;
-      const data = fs.readFileSync(this.path, 'utf8');
-      return this.cache = JSON.parse(data);
-    }
-
-    try {
-      const data = fs.readFileSync(this.path, 'utf8');
-      return JSON.parse(data);
-    } catch (_error) {
-      try {
-        fs.writeFileSync(this.path, '{}');
-        return {};
-      } catch (_e) {
-        const folderPath = this.path.substring(0, this.path.lastIndexOf('/'));
-        fs.mkdirSync(folderPath, { recursive: true });
-        fs.writeFileSync(this.path, '{}');
-        return {};
-      }
-    }
+    return this.cache || JSON.parse(fs.readFileSync(this.path, 'utf8'));
   }
 
   set<T>(key: string, value: T): T {
@@ -90,8 +82,8 @@ export default class Database {
     this.set(key, undefined);
   }
 
-  add(key: string, value: number): number {
-    if (isNaN(value)) throw new Error('Value must be a number');
+  add<T extends number>(key: string, value: T): T {
+    if (Number.isNaN(value)) throw new Error('Value must be a number');
 
     const currentValue = this.get(key);
     this.set(key, currentValue + value);
@@ -99,13 +91,8 @@ export default class Database {
     return value;
   }
 
-  subtract(key: string, value: number): number {
-    if (isNaN(value)) throw new Error('Value must be a number');
-
-    const currentValue = this.get(key);
-    this.set(key, currentValue - value);
-
-    return value;
+  subtract<T extends number>(key: string, value: T): T {
+    return this.add(key, -value as T);
   }
 
   destroy() {

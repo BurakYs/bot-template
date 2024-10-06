@@ -1,4 +1,4 @@
-import { resolveColor } from 'discord.js';
+import { ActivityType, type PresenceData, resolveColor } from 'discord.js';
 
 export default {
   bot: {
@@ -11,9 +11,13 @@ export default {
     defaultLanguage: 'en-US'
   },
   presence: {
-    activity: '/help | {u} users | {s} servers',
+    activities: [{
+      type: ActivityType.Custom,
+      name: 'status',
+      state: '/help | {u} users | {s} servers'
+    }],
     status: 'online'
-  },
+  } satisfies PresenceData,
   guilds: {
     test: '',
     supportServer: {

@@ -1,10 +1,6 @@
-/* eslint-disable no-var */
 import type { Logger } from '@/utils/classes';
 
+/* eslint-disable no-var */
 declare global {
   var logger: Logger;
-
-  interface String {
-    change(replacements: Record<string, unknown>): string;
-  }
 }

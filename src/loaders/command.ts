@@ -3,7 +3,7 @@ import { REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
 import type { Client, CommandData } from '@/types';
-import type { Locale } from 'discord-api-types/v10';
+import { APIApplicationCommandSubcommandGroupOption, ApplicationCommandOptionType, type Locale } from 'discord-api-types/v10';
 
 type CommandLocalization = {
   name: string;
@@ -24,7 +24,7 @@ export default class CommandLoader {
       'tr': (await import('@/localizations/commandData/tr.json')).default
     };
 
-    const folder = await glob('./dist/commands/*/*.js');
+    const folder = await glob('./dist/commands/**/*.js');
     const commands: CommandData['data'][] = [];
     const ownerCommands: CommandData['data'][] = [];
 
@@ -65,10 +65,18 @@ export default class CommandLoader {
     commands.forEach(x => {
       client.commandMentions[x.name] = `</${x.name}:${x.id}>`;
 
-      x.options
-        ?.filter(x => x.type === 1)
+      x.options?.filter(x => x.type === ApplicationCommandOptionType.Subcommand)
         .forEach(y => {
           client.commandMentions[`${x.name} ${y.name}`] = `</${x.name} ${y.name}:${x.id}>`;
+        });
+
+      x.options?.filter(x => x.type === ApplicationCommandOptionType.SubcommandGroup)
+        .forEach((y: unknown) => {
+          const subcommandGroup = y as APIApplicationCommandSubcommandGroupOption;
+          subcommandGroup.options?.filter(x => x.type === ApplicationCommandOptionType.Subcommand)
+            .forEach(z => {
+              client.commandMentions[`${x.name} ${subcommandGroup.name} ${z.name}`] = `</${x.name} ${subcommandGroup.name} ${z.name}:${x.id}>`;
+            });
         });
     });
   }

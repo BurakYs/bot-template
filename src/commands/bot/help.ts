@@ -1,5 +1,6 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import config from '@/config';
+import changeVariables from '@/utils/changeVariables';
 
 import type { CommandData } from '@/types';
 
@@ -24,7 +25,7 @@ export default {
       .setThumbnail(client.user.displayAvatarURL());
 
     if (commandName) {
-      if (!command || command.config.botAdminOnly) return await interaction.error({ description: translations.commandNotFound.change({ name: `\`${commandName}\`` }) });
+      if (!command || command.config.botAdminOnly) return await interaction.error({ description: changeVariables(translations.commandNotFound, { name: `\`${commandName}\`` }) });
 
       embed
         .setDescription(command.data.description)
@@ -39,7 +40,7 @@ ${translations.category}: ${command.config.category}
         ]);
     } else {
       embed
-        .setDescription(translations.embed.description.change({ name: client.user.username }))
+        .setDescription(changeVariables(translations.embed.description, { name: client.user.username }))
         .setFields([
           {
             name: '> ' + translations.links,

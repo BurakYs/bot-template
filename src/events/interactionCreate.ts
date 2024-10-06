@@ -2,11 +2,12 @@ import { Events } from 'discord.js';
 import config from '@/config';
 
 import type { Client, EventData, Interaction } from '@/types';
+import type { InteractionType } from 'discord.js';
 
 export default {
   name: Events.InteractionCreate,
   run: async (client: Client, interaction: Interaction) => {
-    const interactionTypes = {
+    const interactionTypes: Partial<Record<InteractionType, string>> = {
       2: 'applicationCommand'
       //3: 'button',
       //4: 'autoComplete',

@@ -29,7 +29,5 @@ export default class extends Logger<ILogObj> {
         fileName: ['yellow']
       }
     });
-
-    global.logger = this;
   }
 }

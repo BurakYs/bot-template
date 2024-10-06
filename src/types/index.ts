@@ -6,10 +6,11 @@ import type {
   SlashCommandOptionsOnlyBuilder,
   SlashCommandSubcommandsOnlyBuilder
 } from 'discord.js';
-import type BClient from '@/loaders/base';
+import type ClientInstance from '@/loaders/client';
 
-export type Client = BClient;
-export type RunFunctionOptions = { client: Client, interaction: Interaction, translations: Record<string, any> }
+export type Client = typeof ClientInstance;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- We don't know what the translations will be
+export type RunFunctionOptions = { client: Client, interaction: Interaction, translations: any }
 export type RunFunction = (options: RunFunctionOptions) => Promise<unknown>;
 
 export type PrimitiveOrDictionary<T> = T | Record<string, T>;
@@ -39,27 +40,26 @@ export type Interaction = ChatInputCommandInteraction & {
 }
 
 export type PropertiesOnly<T> = {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  [K in keyof T as T[K] extends Function ? never : K]: T[K];
+  [K in keyof T as T[K] extends CallableFunction ? never : K]: T[K];
 };
 
 export type ParsedCommandData = CommandConfig & PropertiesOnly<SlashCommandBuilder> & { run: RunFunction };
 
 export type SendMessageOptions = {
-  title: string | null;
-  thumbnail: string | { url: string };
-  image: string | { url: string };
-  noEmbed: boolean;
-  content: string | null;
-  author: { name: string; iconURL?: string } | null;
-  color: ColorResolvable;
+  content: string;
+  title: string;
+  author: { name: string; iconURL?: string };
   description: string;
-  footer: { text: string; iconURL?: string };
   fields: { name: string; value: string; inline?: boolean }[];
+  color: ColorResolvable | string;
+  thumbnail: string;
+  image: string;
+  footer: { text: string; iconURL?: string };
   ephemeral: boolean;
-  type: 'reply' | 'editReply' | 'followUp';
+  action: 'reply' | 'editReply' | 'followUp';
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- We don't need a typeguard, and I don't know how to type it
 export type EventRunFunction = (client: Client, ...args: any[]) => Promise<unknown>;
 
 export type EventData = {

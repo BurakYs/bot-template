@@ -12,7 +12,6 @@ export default [
   },
   {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
       'indent': ['error', 2],
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
