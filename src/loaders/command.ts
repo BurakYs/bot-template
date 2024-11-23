@@ -1,4 +1,4 @@
-import type { ApplicationCommand, Collection, SlashCommandBuilder, Snowflake } from 'discord.js';
+import type { ApplicationCommand, Collection, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder, Snowflake } from 'discord.js';
 import { REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
@@ -26,17 +26,17 @@ export default class CommandLoader {
 
     const folder = await glob('./dist/commands/**/*.js');
     const commands: CommandData['data'][] = [];
-    const ownerCommands: CommandData['data'][] = [];
+    const adminCommands: CommandData['data'][] = [];
 
     await Promise.all(folder.map(async value => {
-      const file = (await import(`../../${value.replace(/\\/g, '/')}`)).default;
+      const file: CommandData = (await import(`../../${value.replace(/\\/g, '/')}`)).default;
 
       for (const lang in localizations) {
         const commandData = localizations[lang as Locale]!.find((x: CommandLocalization) => x.name === file.data.name);
         this.setLocalizations(lang as Locale, file.data, commandData);
       }
 
-      const commandList = file.ownerOnly ? ownerCommands : commands;
+      const commandList = file.config.botAdminOnly ? adminCommands : commands;
       commandList.push(file.data);
 
       if (!options.register) options.client.commands.push(file);
@@ -50,8 +50,8 @@ export default class CommandLoader {
       await rest.put(Routes.applicationCommands(botId), { body: commands });
       global.logger.info('Loaded global slash commands');
 
-      if (config.guilds.test && ownerCommands.length) {
-        await rest.put(Routes.applicationGuildCommands(botId, config.guilds.test), { body: ownerCommands });
+      if (config.guilds.test && adminCommands.length) {
+        await rest.put(Routes.applicationGuildCommands(botId, config.guilds.test), { body: adminCommands });
         global.logger.info('Loaded test guild slash commands');
       }
     } else {
@@ -81,7 +81,7 @@ export default class CommandLoader {
     });
   }
 
-  static setLocalizations(lang: Locale, command: SlashCommandBuilder, commandData: CommandLocalization | undefined) {
+  static setLocalizations(lang: Locale, command: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder, commandData: CommandLocalization | undefined) {
     if (!commandData) return;
 
     command.setNameLocalization(lang, commandData.localizedName);

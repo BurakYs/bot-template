@@ -33,7 +33,7 @@ export type CommandData = {
   run: RunFunction;
 }
 
-export type Interaction = ChatInputCommandInteraction & {
+export type Interaction<T = ChatInputCommandInteraction> = T & {
   language?: string;
   success: (options: Partial<SendMessageOptions>) => Promise<Message>;
   error: (options: Partial<SendMessageOptions>) => Promise<Message>;
@@ -59,12 +59,9 @@ export type SendMessageOptions = {
   action: 'reply' | 'editReply' | 'followUp';
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- We don't need a typeguard, and I don't know how to type it
-export type EventRunFunction = (client: Client, ...args: any[]) => Promise<unknown>;
-
 export type EventData = {
   name: string;
   once?: boolean;
   dontLoad?: boolean;
-  run: EventRunFunction;
+  run: CallableFunction;
 }
