@@ -1,5 +1,5 @@
 import type { Locale, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
-import { APIApplicationCommandSubcommandGroupOption, ApplicationCommandOptionType, REST, Routes } from 'discord.js';
+import { REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
 import client from '@/loaders/client';
@@ -30,7 +30,7 @@ export default class CommandLoader {
       for (const lang in localizations) {
         const language = lang as Locale;
         const commandData = localizations[language]!.find(x => x.name === file.data.name);
-        this.setLocalizations(language, file.data, commandData);
+        if (commandData) this.setLocalizations(language, file.data, commandData);
       }
 
       const commandList = file.config.botAdminOnly ? adminCommands : commands;
@@ -54,17 +54,14 @@ export default class CommandLoader {
     }
   }
 
-  static setLocalizations(lang: Locale, command: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder, commandData: CommandLocalization | undefined) {
+  static setLocalizations(lang: Locale, command: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder, commandData: CommandLocalization) {
     if (!commandData) return;
 
     command.setNameLocalization(lang, commandData.localizedName);
     command.setDescriptionLocalization(lang, commandData.localizedDescription);
 
     if (command.options?.length)
-      command.options.forEach((opt: unknown) => {
-        const option = opt as SlashCommandBuilder;
-        this.setLocalizations(lang, option, commandData.options?.find(x => x.name === option.name));
-      });
+      command.options.forEach((option, index) => this.setLocalizations(lang, option as unknown as SlashCommandBuilder, commandData.options![index]));
   }
 
   private static async importLanguageFile(lang: string) {
