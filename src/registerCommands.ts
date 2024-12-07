@@ -2,9 +2,9 @@ import 'dotenv/config';
 import 'module-alias/register';
 import '@/utils/classes/Logger';
 
-import Client from '@/loaders/client';
+import CommandLoader from '@/loaders/command';
 import checkEnvironmentVariables from '@/utils/checkEnvironmentVariables';
 
 checkEnvironmentVariables();
 
-Client.start();
+CommandLoader.loadCommands(true);

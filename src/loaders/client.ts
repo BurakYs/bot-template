@@ -6,10 +6,6 @@ import EventLoader from '@/loaders/event';
 
 import type { CommandData, SendMessageOptions } from '@/types';
 
-type StartOptions = {
-  registerCommands: boolean;
-}
-
 class Client extends DiscordClient<true> {
   commands: CommandData[] = [];
 
@@ -20,23 +16,13 @@ class Client extends DiscordClient<true> {
     });
   }
 
-  async start(options: Partial<StartOptions>) {
-    if (!process.env.TOKEN) {
-      global.logger.fatal('Please set the TOKEN in the .env file');
-      process.exit(1);
-    }
-
-    if (options.registerCommands) {
-      await CommandLoader.loadCommands(true);
-      process.exit(0);
-    }
-
+  async start() {
     process.on('unhandledRejection', (error) => global.logger.error(error));
     process.on('uncaughtException', (error) => global.logger.error(error));
 
     this.extendPrototypes();
 
-    await this.login(process.env.TOKEN).catch((error) => {
+    await this.login(process.env.BOT_TOKEN).catch((error) => {
       global.logger.error(error);
       process.exit(1);
     });

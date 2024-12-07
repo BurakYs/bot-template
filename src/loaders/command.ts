@@ -40,7 +40,7 @@ export default class CommandLoader {
     }));
 
     if (registerOnly) {
-      const token = process.env.TOKEN!;
+      const token = process.env.BOT_TOKEN!;
       const botId = Buffer.from(token.split('.')[0], 'base64').toString();
       const rest = new REST({ version: '10' }).setToken(token);
 
