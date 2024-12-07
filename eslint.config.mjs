@@ -15,7 +15,8 @@ export default [
       'indent': ['error', 2],
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
-      'comma-dangle': ['error', 'never']
+      'comma-dangle': ['error', 'never'],
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   }
 ];

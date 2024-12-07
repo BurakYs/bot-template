@@ -10,8 +10,7 @@ export default {
     .setDescription('View information about the bot and its commands')
     .addStringOption(o => o
       .setName('command')
-      .setDescription('The command you want to get information about')
-      .setRequired(false)),
+      .setDescription('The command you want to get information about')),
   config: {
     category: 'Bot'
   },
@@ -25,16 +24,17 @@ export default {
       .setThumbnail(client.user.displayAvatarURL());
 
     if (commandName) {
-      if (!command || command.config.botAdminOnly) return await interaction.error({ description: changeVariables(translations.commandNotFound, { name: `\`${commandName}\`` }) });
+      if (!command || command.config.botAdminOnly)
+        return await interaction.error({ description: changeVariables(translations.commandNotFound, { name: `\`${commandName}\`` }) });
 
       embed
         .setDescription(command.data.description)
         .setFields([
           {
-            name: '> ' + translations.info,
+            name: '> ' + translations.info.title,
             value: `
-${translations.command}: ${client.commandMentions[command.data.name] || command.data.name}
-${translations.category}: ${command.config.category}
+${translations.info.description}: ${command.data.description}
+${translations.info.category}: ${command.config.category}
 `
           }
         ]);
@@ -43,10 +43,10 @@ ${translations.category}: ${command.config.category}
         .setDescription(changeVariables(translations.embed.description, { name: client.user.username }))
         .setFields([
           {
-            name: '> ' + translations.links,
+            name: '> ' + translations.links.title,
             value: `
-🛠️ [${translations.supportServer}](${config.guilds.supportServer.invite})
-🔗 [${translations.inviteLink}](${client.getInviteURL()})
+🛠️ [${translations.links.supportServer}](${config.guilds.supportServer.invite})
+🔗 [${translations.links.inviteLink}](${client.getInviteURL()})
 `
           }
         ])

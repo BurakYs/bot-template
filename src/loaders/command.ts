@@ -1,9 +1,9 @@
-import type { ApplicationCommand, Collection, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder, Snowflake } from 'discord.js';
-import { REST, Routes } from 'discord.js';
+import type { ApplicationCommand, Collection, Locale, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder, Snowflake } from 'discord.js';
+import { APIApplicationCommandSubcommandGroupOption, ApplicationCommandOptionType, REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
+import client from '@/loaders/client';
 import type { Client, CommandData } from '@/types';
-import { APIApplicationCommandSubcommandGroupOption, ApplicationCommandOptionType, type Locale } from 'discord-api-types/v10';
 
 type CommandLocalization = {
   name: string;
@@ -12,16 +12,12 @@ type CommandLocalization = {
   options?: CommandLocalization[];
 }
 
-type LoadOptions =
-  | { client: Client; register?: false }
-  | { client?: null; register: true };
-
 export default class CommandLoader {
-  static async loadCommands(options: LoadOptions) {
+  static async loadCommands(registerOnly = false) {
     const localizations: Partial<Record<Locale, CommandLocalization[]>> = {
-      'en-US': (await import('@/localizations/commandData/en.json')).default,
-      'en-GB': (await import('@/localizations/commandData/en.json')).default,
-      'tr': (await import('@/localizations/commandData/tr.json')).default
+      'en-US': await this.importLanguageFile('en'),
+      'en-GB': await this.importLanguageFile('en'),
+      'tr': await this.importLanguageFile('tr')
     };
 
     const folder = await glob('./dist/commands/**/*.js');
@@ -32,17 +28,18 @@ export default class CommandLoader {
       const file: CommandData = (await import(`../../${value.replace(/\\/g, '/')}`)).default;
 
       for (const lang in localizations) {
-        const commandData = localizations[lang as Locale]!.find((x: CommandLocalization) => x.name === file.data.name);
-        this.setLocalizations(lang as Locale, file.data, commandData);
+        const language = lang as Locale;
+        const commandData = localizations[language]!.find(x => x.name === file.data.name);
+        this.setLocalizations(language, file.data, commandData);
       }
 
       const commandList = file.config.botAdminOnly ? adminCommands : commands;
       commandList.push(file.data);
 
-      if (!options.register) options.client.commands.push(file);
+      if (!registerOnly) client.commands.push(file);
     }));
 
-    if (options.register) {
+    if (registerOnly) {
       const token = process.env.TOKEN!;
       const botId = Buffer.from(token.split('.')[0], 'base64').toString();
       const rest = new REST({ version: '10' }).setToken(token);
@@ -55,7 +52,7 @@ export default class CommandLoader {
         global.logger.info('Loaded test guild slash commands');
       }
     } else {
-      this.setCommandMentions(options.client, await options.client.application.commands.fetch());
+      this.setCommandMentions(client, await client.application.commands.fetch());
     }
   }
 
@@ -92,5 +89,9 @@ export default class CommandLoader {
         const option = opt as SlashCommandBuilder;
         this.setLocalizations(lang, option, commandData.options?.find(x => x.name === option.name));
       });
+  }
+
+  private static async importLanguageFile(lang: string) {
+    return (await import(`@/localizations/commandData/${lang}.json`)).default;
   }
 }

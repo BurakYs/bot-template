@@ -2,16 +2,20 @@
   "commands": {
     "help": {
       "commandNotFound": "{name} adında bir komut bulunamadı.",
-      "info": "Bilgiler",
-      "command": "Komut",
-      "category": "Kategori",
       "embed": {
         "title": "Yardım Menüsü",
         "description": "Çok havalı bir botum!"
       },
-      "links": "Linkler",
-      "supportServer": "Destek Sunucusu",
-      "inviteLink": "Davet Linki"
+      "info": {
+        "title": "Bilgiler",
+        "description": "Açıklama",
+        "category": "Kategori"
+      },
+      "links": {
+        "title": "Linkler",
+        "supportServer": "Destek Sunucusu",
+        "inviteLink": "Davet Linki"
+      }
     }
   },
   "permissions": {

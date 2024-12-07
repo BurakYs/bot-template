@@ -4,7 +4,7 @@ class Logger extends TSLog<ILogObj> {
   constructor() {
     super({
       type: 'pretty',
-      prettyLogTemplate: '{{dd}}-{{mm}}-{{yyyy}} {{hh}}:{{mm}}:{{ss}} {{logLevelName}} {{filePathWithLine}}{{name}}  ',
+      prettyLogTemplate: '{{dd}}-{{mm}}-{{yyyy}} {{hh}}:{{mm}}:{{ss}} {{logLevelName}} {{name}}',
       prettyErrorTemplate: '{{errorName}} {{errorMessage}}\n{{errorStack}}',
       prettyErrorStackTemplate: '  • {{fileName}} - {{method}} - {{filePathWithLine}}',
       prettyLogTimeZone: 'UTC',
@@ -34,3 +34,5 @@ class Logger extends TSLog<ILogObj> {
 
 const logger = new Logger();
 global.logger = logger;
+
+export default logger;

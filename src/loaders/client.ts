@@ -1,6 +1,8 @@
 import { ChatInputCommandInteraction, Client as DiscordClient, GatewayIntentBits, Message, MessageComponentInteraction, OAuth2Scopes, PermissionsBitField } from 'discord.js';
 import config from '@/config';
 import sendEmbed from '@/utils/sendEmbed';
+import CommandLoader from '@/loaders/command';
+import EventLoader from '@/loaders/event';
 
 import type { CommandData, SendMessageOptions } from '@/types';
 
@@ -14,22 +16,9 @@ class Client extends DiscordClient<true> {
 
   constructor() {
     super({
-      intents: [
-        GatewayIntentBits.Guilds
-      ],
-      presence: {
-        status: config.presence.status
-      }
+      intents: [GatewayIntentBits.Guilds],
+      presence: config.presence
     });
-  }
-
-  create() {
-    this.commands = [];
-
-    process.on('unhandledRejection', (error) => global.logger.error(error));
-    process.on('uncaughtException', (error) => global.logger.error(error));
-
-    return this;
   }
 
   async start(options: Partial<StartOptions>) {
@@ -39,11 +28,13 @@ class Client extends DiscordClient<true> {
     }
 
     if (options.registerCommands) {
-      await (await import('@/loaders/command')).default.loadCommands({ register: true });
+      await CommandLoader.loadCommands(true);
       process.exit(0);
     }
 
-    this.create();
+    process.on('unhandledRejection', (error) => global.logger.error(error));
+    process.on('uncaughtException', (error) => global.logger.error(error));
+
     this.extendPrototypes();
 
     await this.login(process.env.TOKEN).catch((error) => {
@@ -54,8 +45,8 @@ class Client extends DiscordClient<true> {
     this.once('ready', async (client) => {
       global.logger.info(`Logged in as ${client.user.tag}`);
 
-      await (await import('@/loaders/command')).default.loadCommands({ client: this });
-      await (await import('@/loaders/event')).default(this);
+      await CommandLoader.loadCommands();
+      await EventLoader(this);
 
       this.setPresence();
 
@@ -86,9 +77,9 @@ class Client extends DiscordClient<true> {
     });
   }
 
-  extendPrototypes() {
-    [Message.prototype, ChatInputCommandInteraction.prototype, MessageComponentInteraction.prototype].forEach((prototype) => {
-      Object.defineProperties(prototype, {
+  private extendPrototypes() {
+    [Message, ChatInputCommandInteraction, MessageComponentInteraction].forEach((classType) => {
+      Object.defineProperties(classType.prototype, {
         error: {
           value(options: Partial<SendMessageOptions>) {
             return sendEmbed(this, { ...options, embedType: 'error' });

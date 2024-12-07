@@ -1,4 +1,4 @@
-import type { Logger } from '@/utils/classes';
+import Logger from '@/utils/classes/Logger';
 
 /* eslint-disable no-var */
 declare global {

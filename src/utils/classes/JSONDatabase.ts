@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 type JSONDatabaseOptions = {
   path: string;
@@ -14,7 +14,7 @@ export default class JSONDatabase {
     this.cache = options.cache ? {} : undefined;
 
     const fileExists = fs.existsSync(this.path);
-    if (!fileExists) {
+    if (!fileExists && !this.cache) {
       const folderPath = this.path.substring(0, this.path.lastIndexOf('/'));
       fs.mkdirSync(folderPath, { recursive: true });
       fs.writeFileSync(this.path, '{}');
@@ -22,8 +22,7 @@ export default class JSONDatabase {
       if (this.cache) this.cache = {};
     } else {
       if (this.cache) {
-        const data = fs.readFileSync(this.path, 'utf8');
-        this.cache = JSON.parse(data);
+        this.cache = this.path ? JSON.parse(fs.readFileSync(this.path, 'utf8')) : {};
       }
     }
   }
@@ -44,7 +43,7 @@ export default class JSONDatabase {
     current[keys[keys.length - 1]] = value;
 
     if (!this.cache) {
-      fs.writeFileSync(this.path, JSON.stringify(current, null, 4));
+      fs.writeFileSync(this.path, JSON.stringify(current, null, 2));
     } else {
       this.cache = current;
     }
@@ -52,7 +51,7 @@ export default class JSONDatabase {
     return value;
   }
 
-  get(key: string) {
+  get<T>(key: string): T | null {
     const keys = key.split('.') || [];
     let current = this.all();
 
@@ -68,7 +67,7 @@ export default class JSONDatabase {
   }
 
   push<T>(key: string, value: T): T {
-    let currentValue = this.get(key);
+    let currentValue = this.get<T[]>(key);
 
     if (!Array.isArray(currentValue)) currentValue = [];
 
@@ -83,9 +82,9 @@ export default class JSONDatabase {
   }
 
   add<T extends number>(key: string, value: T): T {
-    if (Number.isNaN(value)) throw new Error('Value must be a number');
+    if (isNaN(value)) throw new Error('Value must be a number');
 
-    const currentValue = this.get(key);
+    const currentValue = this.get<T>(key) || 0;
     this.set(key, currentValue + value);
 
     return value;

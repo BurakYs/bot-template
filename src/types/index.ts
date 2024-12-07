@@ -1,30 +1,24 @@
-import type {
-  ChatInputCommandInteraction,
-  ColorResolvable,
-  Message,
-  SlashCommandBuilder,
-  SlashCommandOptionsOnlyBuilder,
-  SlashCommandSubcommandsOnlyBuilder
-} from 'discord.js';
+import type { ChatInputCommandInteraction, ColorResolvable, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 import type ClientInstance from '@/loaders/client';
 
+type PrimitiveOrDictionary<T> = T | Record<string, T>;
+type PropertiesOnly<T> = { [K in keyof T as T[K] extends CallableFunction ? never : K]: T[K]; };
+
 export type Client = typeof ClientInstance;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- We don't know what the translations will be
-export type RunFunctionOptions = { client: Client, interaction: Interaction, translations: any }
+
+export type RunFunctionOptions = { client: Client, interaction: ChatInputCommandInteraction, translations: any }
 export type RunFunction = (options: RunFunctionOptions) => Promise<unknown>;
 
-export type PrimitiveOrDictionary<T> = T | Record<string, T>;
-
 export type CommandConfig = {
-  category: string;
+  category: PrimitiveOrDictionary<string>;
   tags?: PrimitiveOrDictionary<string[]>;
   guildOnly?: PrimitiveOrDictionary<boolean>;
-  botAdminOnly?: PrimitiveOrDictionary<boolean>;
   dmOnly?: PrimitiveOrDictionary<boolean>;
+  supportServerOnly?: PrimitiveOrDictionary<boolean>;
   memberPermission?: PrimitiveOrDictionary<string>;
   botPermission?: PrimitiveOrDictionary<string>;
+  botAdminOnly?: PrimitiveOrDictionary<boolean>;
   disabled?: PrimitiveOrDictionary<boolean>;
-  supportServerOnly?: PrimitiveOrDictionary<boolean>;
 }
 
 export type CommandData = {
@@ -33,17 +27,7 @@ export type CommandData = {
   run: RunFunction;
 }
 
-export type Interaction<T = ChatInputCommandInteraction> = T & {
-  language?: string;
-  success: (options: Partial<SendMessageOptions>) => Promise<Message>;
-  error: (options: Partial<SendMessageOptions>) => Promise<Message>;
-}
-
-export type PropertiesOnly<T> = {
-  [K in keyof T as T[K] extends CallableFunction ? never : K]: T[K];
-};
-
-export type ParsedCommandData = CommandConfig & PropertiesOnly<SlashCommandBuilder> & { run: RunFunction };
+export type ResolvedCommandData = CommandConfig & PropertiesOnly<SlashCommandBuilder> & { run: RunFunction };
 
 export type SendMessageOptions = {
   content: string;

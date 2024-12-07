@@ -1,14 +1,14 @@
-import { ActivityType, type PresenceData, resolveColor } from 'discord.js';
+import { ActivityType, Locale, type PresenceData, resolveColor } from 'discord.js';
 
 export default {
   bot: {
     admins: ['269677849810698249'],
     supportedLanguages: {
-      'en-US': 'en',
-      'en-GB': 'en',
-      'tr': 'tr'
-    } as Record<string, string>,
-    defaultLanguage: 'en-US'
+      [Locale.EnglishUS]: 'en',
+      [Locale.EnglishGB]: 'en',
+      [Locale.Turkish]: 'tr'
+    } as Record<Locale, string>,
+    defaultLanguage: Locale.EnglishUS
   },
   presence: {
     activities: [{

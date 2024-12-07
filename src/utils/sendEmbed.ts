@@ -1,9 +1,9 @@
-import { EmbedBuilder, type ColorResolvable } from 'discord.js';
+import { type ChatInputCommandInteraction, type ColorResolvable, EmbedBuilder } from 'discord.js';
 import config from '@/config';
 import randomArray from '@/utils/randomArray';
 import getTranslations from '@/utils/getTranslations';
 
-import type { Interaction, SendMessageOptions } from '@/types';
+import type { SendMessageOptions } from '@/types';
 
 function createTitle(titleTemplate: string, defaultTitle: string, emoji: string) {
   if (titleTemplate?.includes(':')) return titleTemplate;
@@ -19,7 +19,7 @@ function createTitle(titleTemplate: string, defaultTitle: string, emoji: string)
   return title;
 }
 
-export default function sendEmbed(interaction: Interaction, options: Partial<SendMessageOptions> & { embedType: 'error' | 'success' }) {
+export default function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<SendMessageOptions> & { embedType: 'error' | 'success' }) {
   const action = options.action || interaction.deferred || interaction.replied ? 'editReply' : 'reply';
   const randomTitle = getTranslations(interaction, `embeds.${options.embedType}Titles`);
 

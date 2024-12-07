@@ -1,14 +1,14 @@
-import { PermissionResolvable } from 'discord.js';
+import { type ChatInputCommandInteraction, PermissionResolvable } from 'discord.js';
 import changeVariables from '@/utils/changeVariables';
 import getTranslations from '@/utils/getTranslations';
 import config from '@/config';
 
-import type { Client, CommandConfig, CommandData, EventData, Interaction, ParsedCommandData } from '@/types';
+import type { Client, CommandConfig, CommandData, EventData, ResolvedCommandData } from '@/types';
 
 export default {
   name: 'applicationCommand',
   dontLoad: true,
-  run: async (client: Client, interaction: Interaction) => {
+  run: async (client: Client, interaction: ChatInputCommandInteraction) => {
     const cmd = client.commands.find(x => x.data.name === interaction.commandName);
     if (!cmd) return;
 
@@ -39,10 +39,11 @@ export default {
 
     try {
       const commandTranslations = getTranslations(interaction, `commands.${interaction.commandName}`);
-      await commandData.run({ client, interaction, translations: commandTranslations });
+      return await commandData.run({ client, interaction, translations: commandTranslations });
     } catch (error) {
-      logger.error(error);
-      await interaction.error({
+      global.logger.error(error);
+
+      return await interaction.error({
         description: changeVariables(translations.unexpectedErrorOccurred, { support: config.guilds.supportServer.invite }),
         ephemeral: true
       });
@@ -50,23 +51,12 @@ export default {
   }
 } satisfies EventData;
 
-function matchCommandData(command: CommandData, interaction: Interaction): ParsedCommandData {
-  const matchedCommand: ParsedCommandData = {
+function matchCommandData(command: CommandData, interaction: ChatInputCommandInteraction) {
+  const matchedCommand: ResolvedCommandData = {
     ...command.data,
     ...command.config,
     run: command.run
   };
-
-  const variableFields: (keyof CommandConfig)[] = [
-    'tags',
-    'guildOnly',
-    'botAdminOnly',
-    'dmOnly',
-    'memberPermission',
-    'botPermission',
-    'disabled',
-    'supportServerOnly'
-  ];
 
   const subcommandGroup = interaction.options.getSubcommandGroup(false);
   const subcommand = interaction.options.getSubcommand(false);
@@ -74,7 +64,6 @@ function matchCommandData(command: CommandData, interaction: Interaction): Parse
 
   for (const entries of Object.entries(command.config)) {
     const [key, value] = entries as [keyof CommandConfig, never];
-    if (!variableFields.includes(key)) continue;
 
     if (!Array.isArray(value) && typeof value === 'object') {
       matchedCommand[key] = value[optionsText] ?? value['*'] ?? null;

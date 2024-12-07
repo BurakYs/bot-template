@@ -2,16 +2,20 @@
   "commands": {
     "help": {
       "commandNotFound": "No command was found with the name {name}.",
-      "info": "Information",
-      "command": "Command",
-      "category": "Category",
       "embed": {
         "title": "Help Menu",
         "description": "I'm a very cool bot!"
       },
-      "links": "Links",
-      "supportServer": "Support Server",
-      "inviteLink": "Invite Link"
+      "info": {
+        "title": "Information",
+        "description": "Description",
+        "category": "Category"
+      },
+      "links": {
+        "title": "Links",
+        "supportServer": "Support Server",
+        "invite": "Invite Me"
+      }
     }
   },
   "permissions": {
