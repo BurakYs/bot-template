@@ -12,7 +12,6 @@ type StartOptions = {
 
 class Client extends DiscordClient<true> {
   commands: CommandData[] = [];
-  commandMentions: Record<string, string> = {};
 
   constructor() {
     super({

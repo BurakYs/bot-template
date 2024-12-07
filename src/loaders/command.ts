@@ -1,9 +1,9 @@
-import type { ApplicationCommand, Collection, Locale, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder, Snowflake } from 'discord.js';
+import type { Locale, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 import { APIApplicationCommandSubcommandGroupOption, ApplicationCommandOptionType, REST, Routes } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
 import client from '@/loaders/client';
-import type { Client, CommandData } from '@/types';
+import type { CommandData } from '@/types';
 
 type CommandLocalization = {
   name: string;
@@ -51,31 +51,7 @@ export default class CommandLoader {
         await rest.put(Routes.applicationGuildCommands(botId, config.guilds.test), { body: adminCommands });
         global.logger.info('Loaded test guild slash commands');
       }
-    } else {
-      this.setCommandMentions(client, await client.application.commands.fetch());
     }
-  }
-
-  static setCommandMentions(client: Client, commands: Collection<Snowflake, ApplicationCommand>) {
-    client.commandMentions = {};
-
-    commands.forEach(x => {
-      client.commandMentions[x.name] = `</${x.name}:${x.id}>`;
-
-      x.options?.filter(x => x.type === ApplicationCommandOptionType.Subcommand)
-        .forEach(y => {
-          client.commandMentions[`${x.name} ${y.name}`] = `</${x.name} ${y.name}:${x.id}>`;
-        });
-
-      x.options?.filter(x => x.type === ApplicationCommandOptionType.SubcommandGroup)
-        .forEach((y: unknown) => {
-          const subcommandGroup = y as APIApplicationCommandSubcommandGroupOption;
-          subcommandGroup.options?.filter(x => x.type === ApplicationCommandOptionType.Subcommand)
-            .forEach(z => {
-              client.commandMentions[`${x.name} ${subcommandGroup.name} ${z.name}`] = `</${x.name} ${subcommandGroup.name} ${z.name}:${x.id}>`;
-            });
-        });
-    });
   }
 
   static setLocalizations(lang: Locale, command: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder, commandData: CommandLocalization | undefined) {
