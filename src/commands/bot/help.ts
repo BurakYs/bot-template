@@ -46,7 +46,7 @@ ${translations.info.category}: ${command.config.category}
             name: '> ' + translations.links.title,
             value: `
 🛠️ [${translations.links.supportServer}](${config.guilds.supportServer.invite})
-🔗 [${translations.links.inviteLink}](${client.getInviteURL()})
+🔗 [${translations.links.invite}](${client.getInviteURL()})
 `
           }
         ])
