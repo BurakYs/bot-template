@@ -32,21 +32,7 @@ class Client extends DiscordClient<true> {
 
       await CommandLoader.loadCommands();
       await EventLoader(this);
-
-      this.setPresence();
-
-      setInterval(() => {
-        this.setPresence();
-      }, 60000);
     });
-  }
-
-  setPresence() {
-    config.presence.activities[0].state = config.presence.activities[0].state
-      .replace(/{u}/g, this.guilds.cache.reduce((a, g) => a + g.memberCount, 0).toLocaleString())
-      .replace(/{s}/g, this.guilds.cache.size.toString());
-
-    return this.user.setPresence(config.presence);
   }
 
   getInviteURL() {

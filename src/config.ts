@@ -14,7 +14,7 @@ export default {
     activities: [{
       type: ActivityType.Custom,
       name: 'status',
-      state: '/help | {u} users | {s} servers'
+      state: 'Hi'
     }],
     status: 'online'
   } satisfies PresenceData,
