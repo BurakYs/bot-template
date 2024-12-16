@@ -19,14 +19,14 @@ A template for creating Discord bots with Discord.js using TypeScript
 ## ✨ Features
 
 - ### Multiple Language Support
-    - Add your new language to the `src/localizations` folder and update `supportedLanguages` in the `src/config.ts` file
-    - The `src/localizations/commandData` folder contains command names and descriptions
-    - The value in `supportedLanguages` must be the same as the file name in the `src/localizations` folder
+    - To add a new language, add the file in `src/localizations` folder and update `supportedLanguages` array in `src/config.ts`
+    - Command names and descriptions are stored in the `src/localizations/commandData` folder.
+    - Ensure the values in `supportedLanguages` match the files' name in the `src/localizations` folder.
 
 - ### Command Handler
     - You can create as many subfolders as you want in the `src/commands` folder
-    - See the command configurations you can use in the [types](./src/types/index.ts#L12-L22) file
-        - If you want to give a subcommand group or a subcommand specific configuration, you can do this:
+    - Refer to the available command configurations in the [types](./src/types/index.ts#L12-L22) file
+        - To give a subcommand a specific configuration, do this:
           ```ts
           config: {
             someOtherConfig: true,
