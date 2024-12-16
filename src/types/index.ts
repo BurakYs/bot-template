@@ -1,24 +1,24 @@
-import type { ChatInputCommandInteraction, ColorResolvable, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
+import type { ChatInputCommandInteraction, ColorResolvable, PermissionResolvable, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 import type ClientInstance from '@/loaders/client';
 
-type PrimitiveOrDictionary<T> = T | Record<string, T>;
-type PropertiesOnly<T> = { [K in keyof T as T[K] extends CallableFunction ? never : K]: T[K]; };
+type PrimitiveOrDictionary<P, T> = P extends true ? T : T | Record<string, T>;
+type NonFunctionProperties<T> = { [K in keyof T as T[K] extends CallableFunction ? never : K]: T[K]; };
 
 export type Client = typeof ClientInstance;
 
 export type RunFunctionOptions = { client: Client, interaction: ChatInputCommandInteraction, translations: any }
 export type RunFunction = (options: RunFunctionOptions) => Promise<unknown>;
 
-export type CommandConfig = {
-  category: PrimitiveOrDictionary<string>;
-  tags?: PrimitiveOrDictionary<string[]>;
-  guildOnly?: PrimitiveOrDictionary<boolean>;
-  dmOnly?: PrimitiveOrDictionary<boolean>;
-  supportServerOnly?: PrimitiveOrDictionary<boolean>;
-  memberPermission?: PrimitiveOrDictionary<string>;
-  botPermission?: PrimitiveOrDictionary<string>;
-  botAdminOnly?: PrimitiveOrDictionary<boolean>;
-  disabled?: PrimitiveOrDictionary<boolean>;
+export type CommandConfig<P = false> = {
+  category: PrimitiveOrDictionary<P, string>;
+  tags?: PrimitiveOrDictionary<P, string[]>;
+  guildOnly?: PrimitiveOrDictionary<P, boolean>;
+  dmOnly?: PrimitiveOrDictionary<P, boolean>;
+  supportServerOnly?: PrimitiveOrDictionary<P, boolean>;
+  requiredMemberPermissions?: PrimitiveOrDictionary<P, PermissionResolvable[]>;
+  requiredBotPermissions?: PrimitiveOrDictionary<P, PermissionResolvable[]>;
+  botAdminOnly?: PrimitiveOrDictionary<P, boolean>;
+  disabled?: PrimitiveOrDictionary<P, boolean>;
 }
 
 export type CommandData = {
@@ -27,7 +27,7 @@ export type CommandData = {
   run: RunFunction;
 }
 
-export type ResolvedCommandData = CommandConfig & PropertiesOnly<SlashCommandBuilder> & { run: RunFunction };
+export type ResolvedCommandData = CommandConfig<true> & NonFunctionProperties<SlashCommandBuilder> & { run: RunFunction };
 
 export type SendMessageOptions = {
   content: string;

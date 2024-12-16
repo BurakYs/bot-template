@@ -30,13 +30,13 @@
     "ManageThreads": "Alt Başlıkları Yönet",
     "ModerateMembers": "Üyelere Zaman Aşımı Uygula"
   },
-  "general": {
-    "commandDMOnly": "Bu komut sadece DM'lerde kullanılabilir.",
-    "commandGuildOnly": "Bu komut sadece sunucularda kullanılabilir.",
-    "commandDisabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
-    "commandSupportServerOnly": "Bu komut yalnızca [destek sunucumuzda]({support}) kullanılabilir.",
-    "commandUserMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: {permissions}",
-    "commandBotMissingPerms": "Bu komutu çalıştırmak için şu izinlere sahip olmalıyım: {permissions}",
+  "commandErrors": {
+    "disabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
+    "dmOnly": "Bu komut sadece DM'lerde kullanılabilir.",
+    "guildOnly": "Bu komut sadece sunucularda kullanılabilir.",
+    "supportServerOnly": "Bu komut yalnızca [destek sunucumuzda]({support}) kullanılabilir.",
+    "userMissingPermissions": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: {permissions}",
+    "botMissingPermissions": "Bu komutu çalıştırmak için bot şu izinlere sahip olmalı: {permissions}",
     "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin."
   },
   "embeds": {
