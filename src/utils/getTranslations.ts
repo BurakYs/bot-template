@@ -2,13 +2,10 @@ import config from '@/config';
 import JSONDatabase from '@/utils/classes/JSONDatabase';
 import type { CommandInteraction } from 'discord.js';
 
-const languages: Record<string, JSONDatabase> = {
-  'tr': new JSONDatabase({ path: './src/localizations/tr.json', cache: true }),
-  'en-US': new JSONDatabase({ path: './src/localizations/en.json', cache: true })
-};
-
-languages['en-GB'] = languages['en-US'];
-languages['en'] = languages['en-US'];
+const languages = Object.fromEntries(
+  Object.entries(config.bot.supportedLanguages)
+    .map(([key, value]) => [key, new JSONDatabase({ path: `./src/localizations/${value}.json`, cache: true })])
+);
 
 export default function getTranslations(interaction: CommandInteraction, path: string): any {
   const { defaultLanguage } = config.bot;

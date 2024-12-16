@@ -3,27 +3,27 @@ import fs from 'node:fs';
 type JSONDatabaseOptions = {
   path: string;
   cache?: boolean;
+  spaces?: number;
 }
 
 export default class JSONDatabase {
   path: string;
+  spaces: number;
   private cache?: Record<string, unknown>;
 
   constructor(options: JSONDatabaseOptions) {
     this.path = options.path;
-    this.cache = options.cache ? {} : undefined;
+    this.spaces = options.spaces || 2;
 
     const fileExists = fs.existsSync(this.path);
-    if (!fileExists && !this.cache) {
+    if (!fileExists) {
       const folderPath = this.path.substring(0, this.path.lastIndexOf('/'));
       fs.mkdirSync(folderPath, { recursive: true });
       fs.writeFileSync(this.path, '{}');
+    }
 
-      if (this.cache) this.cache = {};
-    } else {
-      if (this.cache) {
-        this.cache = this.path ? JSON.parse(fs.readFileSync(this.path, 'utf8')) : {};
-      }
+    if (options.cache) {
+      this.cache = fileExists ? JSON.parse(fs.readFileSync(this.path, 'utf8')) : {};
     }
   }
 
@@ -43,7 +43,7 @@ export default class JSONDatabase {
     current[keys[keys.length - 1]] = value;
 
     if (!this.cache) {
-      fs.writeFileSync(this.path, JSON.stringify(current, null, 2));
+      fs.writeFileSync(this.path, JSON.stringify(current, null, this.spaces));
     } else {
       this.cache = current;
     }
@@ -53,17 +53,17 @@ export default class JSONDatabase {
 
   get<T>(key: string): T | null {
     const keys = key.split('.') || [];
-    let current = this.all();
+    let currentData = this.all();
 
     for (const key of keys) {
-      if (current[key] !== undefined) {
-        current = current[key];
+      if (currentData[key] !== undefined) {
+        currentData = currentData[key];
       } else {
         return null;
       }
     }
 
-    return current;
+    return currentData;
   }
 
   push<T>(key: string, value: T): T {
@@ -95,7 +95,7 @@ export default class JSONDatabase {
   }
 
   destroy() {
-    this.cache = {};
+    if (this.cache) this.cache = {};
     fs.writeFileSync(this.path, '{}');
   }
 }

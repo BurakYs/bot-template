@@ -1,29 +1,32 @@
 import { type ChatInputCommandInteraction, type ColorResolvable, EmbedBuilder } from 'discord.js';
 import config from '@/config';
-import randomArray from '@/utils/randomArray';
+import randomFromArray from '@/utils/randomFromArray';
 import getTranslations from '@/utils/getTranslations';
 
 import type { SendMessageOptions } from '@/types';
 
-function createTitle(titleTemplate: string, defaultTitle: string, emoji: string) {
-  if (titleTemplate?.includes(':')) return titleTemplate;
-  let title: string | null = titleTemplate;
+function createTitle(titleTemplate = '', defaultTitle: string, emoji: string) {
+  if (titleTemplate.includes(':')) return titleTemplate;
+
+  let title: string | undefined = titleTemplate;
 
   if (Math.random() < 0.9) {
     title ||= defaultTitle;
     title = Math.random() < 0.5 ? title + ` ${emoji}` : `${emoji} ` + title;
   } else if (Math.random() < 0.25) {
-    title = null;
+    title = undefined;
   }
 
   return title;
 }
 
 export default function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<SendMessageOptions> & { embedType: 'error' | 'success' }) {
-  const action = options.action || interaction.deferred || interaction.replied ? 'editReply' : 'reply';
-  const randomTitle = getTranslations(interaction, `embeds.${options.embedType}Titles`);
+  const action = options.action || (interaction.deferred || interaction.replied ? 'editReply' : 'reply');
 
-  options.title = createTitle(options.title || '', randomArray(randomTitle), options.embedType === 'error' ? ':x:' : ':white_check_mark:') || undefined;
+  const embedTitles = getTranslations(interaction, `embeds.${options.embedType}Titles`);
+  const embedEmoji = options.embedType === 'error' ? ':x:' : ':white_check_mark:';
+
+  options.title = createTitle(options.title, randomFromArray(embedTitles), embedEmoji);
   options.color ??= config.embedColors[options.embedType];
 
   return interaction[action]({
