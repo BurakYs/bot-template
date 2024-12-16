@@ -1,5 +1,5 @@
 import { Message } from 'discord.js';
-import { SendMessageOptions } from '@/types/index';
+import { CustomMessageOptions } from '@/types/index';
 
 declare module 'discord.js' {
   interface CommandInteraction {
@@ -7,7 +7,7 @@ declare module 'discord.js' {
   }
 
   interface ChatInputCommandInteraction {
-    success: (options: Partial<SendMessageOptions>) => Promise<Message>;
-    error: (options: Partial<SendMessageOptions>) => Promise<Message>;
+    success: (options: Partial<CustomMessageOptions>) => Promise<Message>;
+    error: (options: Partial<CustomMessageOptions>) => Promise<Message>;
   }
 }

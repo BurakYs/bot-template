@@ -4,7 +4,7 @@ import sendEmbed from '@/utils/sendEmbed';
 import CommandLoader from '@/loaders/command';
 import EventLoader from '@/loaders/event';
 
-import type { CommandData, SendMessageOptions } from '@/types';
+import type { CommandData, CustomMessageOptions } from '@/types';
 
 class Client extends DiscordClient<true> {
   commands: CommandData[] = [];
@@ -66,12 +66,12 @@ class Client extends DiscordClient<true> {
     [Message, ChatInputCommandInteraction, MessageComponentInteraction].forEach((classType) => {
       Object.defineProperties(classType.prototype, {
         error: {
-          value(options: Partial<SendMessageOptions>) {
+          value(options: Partial<CustomMessageOptions>) {
             return sendEmbed(this, { ...options, embedType: 'error' });
           }
         },
         success: {
-          value(options: Partial<SendMessageOptions>) {
+          value(options: Partial<CustomMessageOptions>) {
             return sendEmbed(this, { ...options, embedType: 'success' });
           }
         }

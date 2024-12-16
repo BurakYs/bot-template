@@ -29,7 +29,7 @@ export type CommandData = {
 
 export type ResolvedCommandData = CommandConfig<true> & NonFunctionProperties<SlashCommandBuilder> & { run: RunFunction };
 
-export type SendMessageOptions = {
+export type CustomMessageOptions = {
   content: string;
   title: string;
   author: { name: string; iconURL?: string };

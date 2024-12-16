@@ -3,7 +3,7 @@ import config from '@/config';
 import randomFromArray from '@/utils/randomFromArray';
 import getTranslations from '@/utils/getTranslations';
 
-import type { SendMessageOptions } from '@/types';
+import type { CustomMessageOptions } from '@/types';
 
 function createTitle(titleTemplate = '', defaultTitle: string, emoji: string) {
   if (titleTemplate.includes(':')) return titleTemplate;
@@ -20,7 +20,7 @@ function createTitle(titleTemplate = '', defaultTitle: string, emoji: string) {
   return title;
 }
 
-export default function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<SendMessageOptions> & { embedType: 'error' | 'success' }) {
+export default function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<CustomMessageOptions> & { embedType: 'error' | 'success' }) {
   const action = options.action || (interaction.deferred || interaction.replied ? 'editReply' : 'reply');
 
   const embedTitles = getTranslations(interaction, `embeds.${options.embedType}Titles`);
