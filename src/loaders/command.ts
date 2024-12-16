@@ -14,11 +14,10 @@ type CommandLocalization = {
 
 export default class CommandLoader {
   static async loadCommands(registerOnly = false) {
-    const localizations: Partial<Record<Locale, CommandLocalization[]>> = {
-      'en-US': await this.importLanguageFile('en'),
-      'en-GB': await this.importLanguageFile('en'),
-      'tr': await this.importLanguageFile('tr')
-    };
+    const localizations: Record<Locale, CommandLocalization[]> = Object.fromEntries(await Promise.all(
+      Object.entries(config.bot.supportedLanguages)
+        .map(async ([key, value]) => [key, await this.importLanguageFile(value)])
+    ));
 
     const folder = await glob('./dist/commands/**/*.js');
     const commands: CommandData['data'][] = [];
