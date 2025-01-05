@@ -2,6 +2,8 @@
 
 A template for creating Discord bots with Discord.js using TypeScript
 
+[🇹🇷 Bu dosyanın Türkçe hali](./README.tr.md)
+
 ## 📦 Installation
 
 1. Run this codeblock in your terminal:
@@ -20,8 +22,8 @@ A template for creating Discord bots with Discord.js using TypeScript
 
 - ### Multiple Language Support
     - To add a new language, add the file in `src/localizations` folder and update `supportedLanguages` array in `src/config.ts`
-    - Command names and descriptions are stored in the `src/localizations/commandData` folder.
-    - Ensure the values in `supportedLanguages` match the files' name in the `src/localizations` folder.
+    - Command names and descriptions are stored in the `src/localizations/commandData` folder
+    - Ensure the values in `supportedLanguages` match the files' name in the `src/localizations` folder
 
 - ### Command Handler
     - You can create as many subfolders as you want in the `src/commands` folder
