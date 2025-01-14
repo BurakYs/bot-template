@@ -19,16 +19,15 @@
     }
   },
   "permissions": {
-    "KickMembers": "Kick Members",
-    "BanMembers": "Ban Members",
     "Administrator": "Administrator",
-    "ManageChannels": "Manage Channels",
     "ManageGuild": "Manage Server",
-    "ManageMessages": "Manage Messages",
-    "ManageNicknames": "Manage Nicknames",
     "ManageRoles": "Manage Roles",
-    "ManageThreads": "Manage Threads",
-    "ModerateMembers": "Timeout Members"
+    "ManageChannels": "Manage Channels",
+    "BanMembers": "Ban Members",
+    "KickMembers": "Kick Members",
+    "ModerateMembers": "Timeout Members",
+    "ManageMessages": "Manage Messages",
+    "ManageNicknames": "Manage Nicknames"
   },
   "commandErrors": {
     "disabled": "This command is disabled temporarily.",

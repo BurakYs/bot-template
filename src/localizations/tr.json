@@ -19,16 +19,15 @@
     }
   },
   "permissions": {
-    "KickMembers": "Üyeleri At",
-    "BanMembers": "Üyeleri Yasakla",
     "Administrator": "Yönetici",
-    "ManageChannels": "Kanalları Yönet",
     "ManageGuild": "Sunucuyu Yönet",
-    "ManageMessages": "Mesajları Yönet",
-    "ManageNicknames": "Takma Adları Yönet",
     "ManageRoles": "Rolleri Yönet",
-    "ManageThreads": "Alt Başlıkları Yönet",
-    "ModerateMembers": "Üyelere Zaman Aşımı Uygula"
+    "ManageChannels": "Kanalları Yönet",
+    "BanMembers": "Üyeleri Yasakla",
+    "KickMembers": "Üyeleri At",
+    "ModerateMembers": "Üyelere Zaman Aşımı Uygula",
+    "ManageMessages": "Mesajları Yönet",
+    "ManageNicknames": "Takma Adları Yönet"
   },
   "commandErrors": {
     "disabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
