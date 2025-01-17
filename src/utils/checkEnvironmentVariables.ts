@@ -1,5 +1,5 @@
 export default function checkEnvironmentVariables() {
-  const requiredVariables = ['BOT_TOKEN'];
+  const requiredVariables: (keyof NodeJS.ProcessEnv)[] = ['BOT_TOKEN'];
   const missingVariables = requiredVariables.filter(env => !process.env[env]);
 
   if (missingVariables.length) {

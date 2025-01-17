@@ -1,4 +1,4 @@
-import { type ChatInputCommandInteraction, type ColorResolvable, EmbedBuilder } from 'discord.js';
+import { type ChatInputCommandInteraction, type ColorResolvable, EmbedBuilder, MessageFlags } from 'discord.js';
 import config from '@/config';
 import randomFromArray from '@/utils/randomFromArray';
 import getTranslations from '@/utils/getTranslations';
@@ -41,7 +41,7 @@ export default function sendEmbed(interaction: ChatInputCommandInteraction, opti
       .setFooter(options.footer || null)
       .setFields(options.fields || [])
     ],
-    ephemeral: options.ephemeral || false,
+    flags: options.ephemeral ? [MessageFlags.Ephemeral] : [],
     components: []
   });
 }
