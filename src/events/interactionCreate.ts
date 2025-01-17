@@ -1,19 +1,17 @@
 import type { CommandInteraction } from 'discord.js';
 import { Events, InteractionType } from 'discord.js';
 import config from '@/config';
+import applicationCommandHandler from '@/events/interactions/applicationCommand';
 import type { Client, EventData } from '@/types';
 
 export default {
   name: Events.InteractionCreate,
   run: async (client: Client, interaction: CommandInteraction) => {
-    const interactionTypes = {
-      [InteractionType.ApplicationCommand]: 'applicationCommand'
+    const interactionTypes: Partial<Record<InteractionType, EventData>> = {
+      [InteractionType.ApplicationCommand]: applicationCommandHandler
     };
 
-    const interactionType = interactionTypes[interaction.type];
-    if (!interactionType) return;
-
-    const handler = (await import(`@/events/interactions/${interactionTypes[interaction.type]}`))?.default;
+    const handler = interactionTypes[interaction.type];
     if (!handler) return;
 
     const isCurrentLanguageSupported = Object.keys(config.bot.supportedLanguages).includes(interaction.locale);
