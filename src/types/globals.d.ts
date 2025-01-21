@@ -1,4 +1,4 @@
-import Logger from '@/utils/classes/Logger';
+import type { Logger } from 'pino';
 
 /* eslint-disable no-var */
 declare global {

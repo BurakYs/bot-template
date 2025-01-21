@@ -17,7 +17,8 @@
     "dotenv": "^16.4.7",
     "glob": "^11.0.1",
     "module-alias": "^2.2.3",
-    "tslog": "^4.9.3"
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.18.0",
