@@ -1,12 +1,11 @@
-import type { CommandInteraction } from 'discord.js';
-import { Events, InteractionType } from 'discord.js';
+import { Events, Interaction, InteractionType } from 'discord.js';
 import config from '@/config';
 import applicationCommandHandler from '@/events/interactions/applicationCommand';
 import type { Client, EventData } from '@/types';
 
 export default {
   name: Events.InteractionCreate,
-  run: async (client: Client, interaction: CommandInteraction) => {
+  run: async (client: Client, interaction: Interaction) => {
     const interactionTypes: Partial<Record<InteractionType, EventData>> = {
       [InteractionType.ApplicationCommand]: applicationCommandHandler
     };
