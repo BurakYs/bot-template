@@ -1,6 +1,5 @@
 import { type ChatInputCommandInteraction } from 'discord.js';
-import changeVariables from '@/utils/changeVariables';
-import getTranslations from '@/utils/getTranslations';
+import { changeVariables, getTranslations } from '@/utils';
 import config from '@/config';
 
 import type { Client, CommandConfig, CommandData, EventData, ResolvedCommandData } from '@/types';

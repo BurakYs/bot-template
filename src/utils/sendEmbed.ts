@@ -1,7 +1,6 @@
 import { type ChatInputCommandInteraction, type ColorResolvable, EmbedBuilder, MessageFlags } from 'discord.js';
 import config from '@/config';
-import randomFromArray from '@/utils/randomFromArray';
-import getTranslations from '@/utils/getTranslations';
+import { getTranslations, randomFromArray } from '@/utils';
 
 import type { CustomMessageOptions } from '@/types';
 

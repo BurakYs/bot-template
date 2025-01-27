@@ -1,6 +1,6 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import config from '@/config';
-import changeVariables from '@/utils/changeVariables';
+import { changeVariables } from '@/utils';
 
 import type { CommandData } from '@/types';
 
