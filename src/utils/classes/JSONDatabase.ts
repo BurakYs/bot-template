@@ -93,9 +93,4 @@ export default class JSONDatabase {
   subtract<T extends number>(key: string, value: T): T {
     return this.add(key, -value as T);
   }
-
-  destroy() {
-    if (this.cache) this.cache = {};
-    fs.writeFileSync(this.path, '{}');
-  }
 }

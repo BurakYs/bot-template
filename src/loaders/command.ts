@@ -55,14 +55,17 @@ export default class CommandLoader {
     }
   }
 
-  static setLocalizations(lang: Locale, command: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder, commandData: CommandLocalization) {
+  static setLocalizations(lang: Locale, command: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder, commandData: CommandLocalization | undefined) {
     if (!commandData) return;
 
     command.setNameLocalization(lang, commandData.localizedName);
     command.setDescriptionLocalization(lang, commandData.localizedDescription);
 
     if (command.options?.length)
-      command.options.forEach((option, index) => this.setLocalizations(lang, option as unknown as SlashCommandBuilder, commandData.options![index]));
+      command.options.forEach((opt: unknown) => {
+        const option = opt as SlashCommandBuilder;
+        this.setLocalizations(lang, option, commandData.options?.find(x => x.name === option.name));
+      });
   }
 
   private static async importLanguageFile(lang: string) {
