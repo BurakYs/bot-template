@@ -19,9 +19,6 @@ class Client extends DiscordClient<true> {
   }
 
   async start() {
-    process.on('unhandledRejection', (error) => global.logger.error(error));
-    process.on('uncaughtException', (error) => global.logger.error(error));
-
     await setupI18n();
     this.extendPrototypes();
 
