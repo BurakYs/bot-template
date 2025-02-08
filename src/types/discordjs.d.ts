@@ -1,6 +1,6 @@
-import { Message } from 'discord.js';
-import { CustomMessageOptions } from '@/types/index';
-import { TFunction } from 'i18next';
+import type { Message } from 'discord.js';
+import type { CustomMessageOptions } from '@/types/index';
+import type { TFunction } from 'i18next';
 
 declare module 'discord.js' {
   interface BaseInteraction {
