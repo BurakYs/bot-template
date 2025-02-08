@@ -1,5 +1,4 @@
-import type { Locale, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
-import { REST, Routes } from 'discord.js';
+import { ApplicationIntegrationType, InteractionContextType, type Locale, REST, Routes, type  SlashCommandBuilder, type SlashCommandOptionsOnlyBuilder, type  SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
 import client from '@/loaders/client';
@@ -27,6 +26,16 @@ export default class CommandLoader {
 
     await Promise.all(folder.map(async value => {
       const file: CommandData = (await import(`../../${value.replace(/\\/g, '/')}`)).default;
+
+      if (!file.config.botAdminsOnly) {
+        file.data
+          .setContexts([InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel])
+          .setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall]);
+      } else {
+        file.data
+          .setContexts([InteractionContextType.Guild])
+          .setIntegrationTypes([]);
+      }
 
       for (const lang in localizations) {
         const language = lang as Locale;
