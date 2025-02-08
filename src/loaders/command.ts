@@ -31,10 +31,6 @@ export default class CommandLoader {
         file.data
           .setContexts([InteractionContextType.Guild, InteractionContextType.BotDM, InteractionContextType.PrivateChannel])
           .setIntegrationTypes([ApplicationIntegrationType.GuildInstall, ApplicationIntegrationType.UserInstall]);
-      } else {
-        file.data
-          .setContexts([InteractionContextType.Guild])
-          .setIntegrationTypes([]);
       }
 
       for (const lang in localizations) {
