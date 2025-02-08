@@ -29,6 +29,13 @@ export type CommandData = {
 
 export type ResolvedCommandData = CommandConfig<true> & NonFunctionProperties<SlashCommandBuilder> & { run: RunFunction };
 
+export type EventData = {
+  name: string;
+  once?: boolean;
+  dontLoad?: boolean;
+  run: CallableFunction;
+}
+
 export type CustomMessageOptions = {
   content: string;
   title: string;
@@ -40,12 +47,4 @@ export type CustomMessageOptions = {
   image: string;
   footer: { text: string; iconURL?: string };
   ephemeral: boolean;
-  action: 'reply' | 'editReply' | 'followUp';
-}
-
-export type EventData = {
-  name: string;
-  once?: boolean;
-  dontLoad?: boolean;
-  run: CallableFunction;
 }
