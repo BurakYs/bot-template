@@ -19,6 +19,7 @@ TypeScript ve Discord.js kullanarak Discord botları yapabileceğiniz bir altyap
 ## ✨ Özellikler
 
 - ### Çoklu Dil Desteği
+    - Yerelleştirme için `i18next` kütüphanesini kullanır
     - Yeni bir dil eklemek için dosyayı `src/localizations` klasörüne ekleyin ve `src/config.ts` dosyasındaki `supportedLanguages` dizisini güncelleyin
     - Komut adları ve açıklamaları `src/localizations/commandData` klasöründe saklanır
     - `src/localizations` klasöründeki dosyaların adıyla `supportedLanguages` içindeki değerlerin eşleştiğinden emin olun
@@ -38,6 +39,11 @@ TypeScript ve Discord.js kullanarak Discord botları yapabileceğiniz bir altyap
             }
           }
           ```
+
+- ### Yardımcı Fonksiyonlar
+    - `interaction.success()`: Başarılı bir mesaj gönderir
+    - `interaction.error()`: Hata mesajı gönderir
+    - `interaction.translate()`: Bir anahtarı çevirir
 
 ## 📝 Lisans
 

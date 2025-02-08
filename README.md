@@ -21,6 +21,7 @@ A template for creating Discord bots with Discord.js using TypeScript
 ## ✨ Features
 
 - ### Multiple Language Support
+    - Uses the `i18next` library for localization
     - To add a new language, add the file in `src/localizations` folder and update `supportedLanguages` array in `src/config.ts`
     - Command names and descriptions are stored in the `src/localizations/commandData` folder
     - Ensure the values in `supportedLanguages` match the files' name in the `src/localizations` folder
@@ -40,6 +41,11 @@ A template for creating Discord bots with Discord.js using TypeScript
             }
           }
           ```
+
+- ### Utility Functions
+    - `interaction.success()`: Sends a success message
+    - `interaction.error()`: Sends an error message
+    - `interaction.translate()`: Translates a key
 
 ## 📝 License
 

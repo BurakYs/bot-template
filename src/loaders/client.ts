@@ -3,6 +3,8 @@ import config from '@/config';
 import sendEmbed from '@/utils/sendEmbed';
 import CommandLoader from '@/loaders/command';
 import EventLoader from '@/loaders/event';
+import setupI18n from '@/utils/setupI18n';
+import i18next, { type TFunction, type TOptions } from 'i18next';
 
 import type { CommandData, CustomMessageOptions } from '@/types';
 
@@ -20,6 +22,7 @@ class Client extends DiscordClient<true> {
     process.on('unhandledRejection', (error) => global.logger.error(error));
     process.on('uncaughtException', (error) => global.logger.error(error));
 
+    await setupI18n();
     this.extendPrototypes();
 
     await this.login(process.env.BOT_TOKEN).catch((error) => {
@@ -59,6 +62,14 @@ class Client extends DiscordClient<true> {
         success: {
           value(options: Partial<CustomMessageOptions>) {
             return sendEmbed(this, { ...options, embedType: 'success' });
+          }
+        },
+        translate: {
+          value(...args: Parameters<TFunction>) {
+            const options: TOptions = (typeof args[1] === 'object' && args[1] != null) ? args[1] : {};
+            options.lng = this.preferences?.language || this.locale;
+
+            return i18next.t(...args);
           }
         }
       });

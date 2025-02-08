@@ -16,17 +16,18 @@
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",
     "glob": "^11.0.1",
+    "i18next": "^24.2.2",
     "module-alias": "^2.2.3",
     "pino": "^9.6.0",
     "pino-pretty": "^13.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "^9.20.0",
     "@types/module-alias": "^2.0.4",
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.13.1",
     "cross-env": "^7.0.3",
-    "eslint": "~9.18.0",
-    "typescript-eslint": "^8.20.0"
+    "eslint": "~9.20.0",
+    "typescript-eslint": "^8.23.0"
   },
   "_moduleAliases": {
     "@": "./dist"

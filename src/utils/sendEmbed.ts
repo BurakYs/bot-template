@@ -1,31 +1,16 @@
 import { type ChatInputCommandInteraction, type ColorResolvable, EmbedBuilder, MessageFlags } from 'discord.js';
 import config from '@/config';
-import { getTranslations, randomFromArray } from '@/utils';
+import { randomFromArray } from '@/utils';
 
 import type { CustomMessageOptions } from '@/types';
-
-function createTitle(titleTemplate = '', defaultTitle: string, emoji: string) {
-  if (titleTemplate.includes(':')) return titleTemplate;
-
-  let title: string | undefined = titleTemplate;
-
-  if (Math.random() < 0.9) {
-    title ||= defaultTitle;
-    title = Math.random() < 0.5 ? title + ` ${emoji}` : `${emoji} ` + title;
-  } else if (Math.random() < 0.25) {
-    title = undefined;
-  }
-
-  return title;
-}
 
 export default function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<CustomMessageOptions> & { embedType: 'error' | 'success' }) {
   const action = options.action || (interaction.deferred || interaction.replied ? 'editReply' : 'reply');
 
-  const embedTitles = getTranslations(interaction, `embeds.${options.embedType}Titles`);
+  const embedTitles = interaction.translate(`embeds.${options.embedType}Titles`, { returnObjects: true });
   const embedEmoji = options.embedType === 'error' ? ':x:' : ':white_check_mark:';
 
-  options.title = createTitle(options.title, randomFromArray(embedTitles), embedEmoji);
+  options.title = `${embedEmoji} ${options.title || randomFromArray(embedTitles)}`;
   options.color ??= config.embedColors[options.embedType];
 
   return interaction[action]({

@@ -1,25 +1,25 @@
 import type { ChatInputCommandInteraction, ColorResolvable, PermissionResolvable, SlashCommandBuilder, SlashCommandOptionsOnlyBuilder, SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 import type ClientInstance from '@/loaders/client';
 
-type PrimitiveOrDictionary<P, T> = P extends true ? T : T | Record<string, T>;
+type PrimitiveOrDictionary<P extends boolean, T> = P extends true ? T : { [K in keyof T]: T[K] | Record<string, T[K]> }
 type NonFunctionProperties<T> = { [K in keyof T as T[K] extends CallableFunction ? never : K]: T[K]; };
 
 export type Client = typeof ClientInstance;
 
-export type RunFunctionOptions = { client: Client, interaction: ChatInputCommandInteraction, translations: any }
+export type RunFunctionOptions = { client: Client, interaction: ChatInputCommandInteraction }
 export type RunFunction = (options: RunFunctionOptions) => Promise<unknown>;
 
-export type CommandConfig<P = false> = {
-  category: PrimitiveOrDictionary<P, string>;
-  tags?: PrimitiveOrDictionary<P, string[]>;
-  guildOnly?: PrimitiveOrDictionary<P, boolean>;
-  dmOnly?: PrimitiveOrDictionary<P, boolean>;
-  supportServerOnly?: PrimitiveOrDictionary<P, boolean>;
-  requiredMemberPermissions?: PrimitiveOrDictionary<P, PermissionResolvable[]>;
-  requiredBotPermissions?: PrimitiveOrDictionary<P, PermissionResolvable[]>;
-  botAdminOnly?: PrimitiveOrDictionary<P, boolean>;
-  disabled?: PrimitiveOrDictionary<P, boolean>;
-}
+export type CommandConfig<P extends boolean = false> = PrimitiveOrDictionary<P, {
+  category: string;
+  tags?: string[];
+  guildOnly?: boolean;
+  dmOnly?: boolean;
+  supportServerOnly?: boolean;
+  requiredMemberPermissions?: PermissionResolvable[];
+  requiredBotPermissions?: PermissionResolvable[];
+  botAdminsOnly?: boolean;
+  disabled?: boolean;
+}>
 
 export type CommandData = {
   data: SlashCommandBuilder | SlashCommandOptionsOnlyBuilder | SlashCommandSubcommandsOnlyBuilder;

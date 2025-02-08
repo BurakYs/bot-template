@@ -30,6 +30,7 @@
     "ManageNicknames": "Manage Nicknames"
   },
   "commandErrors": {
+    "botAdminsOnly": "This command can only be used by bot administrators.",
     "disabled": "This command is disabled temporarily.",
     "dmOnly": "This command can only be used in DMs.",
     "guildOnly": "This command can only be used in servers.",

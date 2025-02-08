@@ -1,6 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import config from '@/config';
-import { changeVariables } from '@/utils';
 
 import type { CommandData } from '@/types';
 
@@ -14,39 +13,39 @@ export default {
   config: {
     category: 'Bot'
   },
-  run: async ({ client, interaction, translations }) => {
+  run: async ({ client, interaction }) => {
     const commandName = interaction.options.getString('command')?.split(' ')[0];
     const command = commandName && client.commands.find(x => x.data.name.toLowerCase() === commandName.toLowerCase());
 
     const embed = new EmbedBuilder()
-      .setTitle(translations.embed.title)
+      .setTitle(interaction.translate('commands.help.embed.title'))
       .setColor(config.embedColors.default)
       .setThumbnail(client.user.displayAvatarURL());
 
     if (commandName) {
-      if (!command || command.config.botAdminOnly)
-        return await interaction.error({ description: changeVariables(translations.commandNotFound, { name: `\`${commandName}\`` }) });
+      if (!command || command.config.botAdminsOnly)
+        return await interaction.error({ description: interaction.translate('commands.help.commandNotFound', { name: `\`${commandName}\`` }) });
 
       embed
         .setDescription(command.data.description)
         .setFields([
           {
-            name: '> ' + translations.info.title,
+            name: '> ' + interaction.translate('commands.help.info.title'),
             value: `
-${translations.info.description}: ${command.data.description}
-${translations.info.category}: ${command.config.category}
+${interaction.translate('commands.help.info.description')}: ${command.data.description}
+${interaction.translate('commands.help.info.category')}: ${command.config.category}
 `
           }
         ]);
     } else {
       embed
-        .setDescription(changeVariables(translations.embed.description, { name: client.user.username }))
+        .setDescription(interaction.translate('commands.help.embed.description', { name: client.user.username }))
         .setFields([
           {
-            name: '> ' + translations.links.title,
+            name: '> ' + interaction.translate('commands.help.links.title'),
             value: `
-🛠️ [${translations.links.supportServer}](${config.guilds.supportServer.invite})
-🔗 [${translations.links.invite}](${client.getInviteURL()})
+🛠️ [${interaction.translate('commands.help.links.supportServer')}](${config.guilds.supportServer.invite})
+🔗 [${interaction.translate('commands.help.links.invite')}](${client.getInviteURL()})
 `
           }
         ])

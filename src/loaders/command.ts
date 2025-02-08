@@ -34,7 +34,7 @@ export default class CommandLoader {
         if (commandData) this.setLocalizations(language, file.data, commandData);
       }
 
-      const commandList = file.config.botAdminOnly ? adminCommands : commands;
+      const commandList = file.config.botAdminsOnly ? adminCommands : commands;
       commandList.push(file.data);
 
       if (!registerOnly) client.commands.push(file);

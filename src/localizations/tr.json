@@ -30,6 +30,7 @@
     "ManageNicknames": "Takma Adları Yönet"
   },
   "commandErrors": {
+    "botAdminsOnly": "Bu komut yalnızca bot yöneticileri tarafından kullanılabilir.",
     "disabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
     "dmOnly": "Bu komut sadece DM'lerde kullanılabilir.",
     "guildOnly": "Bu komut sadece sunucularda kullanılabilir.",

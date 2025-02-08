@@ -7,7 +7,7 @@ export default {
       [Locale.EnglishUS]: 'en',
       [Locale.EnglishGB]: 'en',
       [Locale.Turkish]: 'tr'
-    } as Record<Locale, string>,
+    },
     defaultLanguage: Locale.EnglishUS
   },
   presence: {
