@@ -39,13 +39,13 @@
     "botMissingPermissions": "Bu komutu çalıştırmak için bot şu izinlere sahip olmalı: {permissions}",
     "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin."
   },
-  "embeds": {
-    "errorTitles": [
+  "embedTitles": {
+    "error": [
       "Hata!",
       "Oops!",
       "Uh oh!"
     ],
-    "successTitles": [
+    "success": [
       "Başarılı!",
       "Güzel!",
       "Harika!"

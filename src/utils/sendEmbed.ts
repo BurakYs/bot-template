@@ -7,7 +7,7 @@ import type { CustomMessageOptions } from '@/types';
 export default function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<CustomMessageOptions> & { embedType: 'error' | 'success' }) {
   const action = interaction.deferred || interaction.replied ? 'editReply' : 'reply';
 
-  const embedTitles = interaction.translate(`embeds.${options.embedType}Titles`, { returnObjects: true });
+  const embedTitles = interaction.translate(`embedTitles.${options.embedType}`, { returnObjects: true });
   const embedEmoji = options.embedType === 'error' ? ':x:' : ':white_check_mark:';
 
   options.title = `${embedEmoji} ${options.title || randomFromArray(embedTitles)}`;

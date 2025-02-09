@@ -39,13 +39,13 @@
     "botMissingPermissions": "The bot is missing the following permissions to run this command: {permissions}",
     "unexpectedErrorOccurred": "An unexpected error occurred. Please try again later."
   },
-  "embeds": {
-    "errorTitles": [
+  "embedTitles": {
+    "error": [
       "Error!",
       "Oops!",
       "Uh oh!"
     ],
-    "successTitles": [
+    "success": [
       "Success!",
       "Nice!",
       "Great!"
