@@ -2,8 +2,6 @@
 
 A template for creating Discord bots with Discord.js using TypeScript
 
-[🇹🇷 Bu dosyanın Türkçe hali](./README.tr.md)
-
 ## 📦 Installation
 
 1. Run this codeblock in your terminal:
