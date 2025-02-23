@@ -9,8 +9,9 @@
     "start": "cross-env NODE_ENV=production node .",
     "dev": "tsc && cross-env NODE_ENV=development node .",
     "register-commands": "tsc && cross-env NODE_ENV=production node ./dist/registerCommands.js",
+    "lint": "biome lint ./src",
     "build": "tsc",
-    "lint": "eslint"
+    "check": "tsc --noEmit && pnpm run lint"
   },
   "dependencies": {
     "discord.js": "^14.17.3",
@@ -22,14 +23,17 @@
     "pino-pretty": "^13.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
+    "@biomejs/biome": "1.9.4",
     "@types/module-alias": "^2.0.4",
     "@types/node": "^22.13.1",
-    "cross-env": "^7.0.3",
-    "eslint": "~9.20.0",
-    "typescript-eslint": "^8.23.0"
+    "cross-env": "^7.0.3"
   },
   "_moduleAliases": {
     "@": "./dist"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome"
+    ]
   }
 }

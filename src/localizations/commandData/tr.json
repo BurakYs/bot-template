@@ -1,19 +1,19 @@
 [
-  {
-    "name": "help",
-    "localizedName": "yardım",
-    "localizedDescription": "Bot ve komutları hakkındaki bilgileri görüntüleyin",
-    "options": [
-      {
-        "name": "command",
-        "localizedName": "komut",
-        "localizedDescription": "Hakkında bilgi almak istediğiniz komut"
-      }
-    ]
-  },
-  {
-    "name": "ping",
-    "localizedName": "ping",
-    "localizedDescription": "Botun gecikme ve yanıt süresini kontrol edin"
-  }
+    {
+        "name": "help",
+        "localizedName": "yardım",
+        "localizedDescription": "Bot ve komutları hakkındaki bilgileri görüntüleyin",
+        "options": [
+            {
+                "name": "command",
+                "localizedName": "komut",
+                "localizedDescription": "Hakkında bilgi almak istediğiniz komut"
+            }
+        ]
+    },
+    {
+        "name": "ping",
+        "localizedName": "ping",
+        "localizedDescription": "Botun gecikme ve yanıt süresini kontrol edin"
+    }
 ]
