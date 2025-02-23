@@ -1,10 +1,9 @@
 import config from '@/config';
-import { randomFromArray } from '@/utils';
-import { type ChatInputCommandInteraction, type ColorResolvable, EmbedBuilder, MessageFlags } from 'discord.js';
-
 import type { CustomMessageOptions } from '@/types';
+import { randomFromArray } from '@/utils';
+import { type ChatInputCommandInteraction, EmbedBuilder, type InteractionEditReplyOptions, type InteractionReplyOptions, MessageFlags } from 'discord.js';
 
-export default function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<CustomMessageOptions> & { embedType: 'error' | 'success' }) {
+export default async function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<CustomMessageOptions> & { embedType: 'error' | 'success' }) {
     const action = interaction.deferred || interaction.replied ? 'editReply' : 'reply';
 
     const embedTitles = interaction.translate(`embedTitles.${options.embedType}`, { returnObjects: true });
@@ -13,7 +12,7 @@ export default function sendEmbed(interaction: ChatInputCommandInteraction, opti
     options.title = `${embedEmoji} ${options.title || randomFromArray(embedTitles)}`;
     options.color ??= config.embedColors[options.embedType];
 
-    return interaction[action]({
+    const messagePayload: InteractionReplyOptions | InteractionEditReplyOptions = {
         content: options.content || undefined,
         embeds: [
             new EmbedBuilder()
@@ -21,12 +20,17 @@ export default function sendEmbed(interaction: ChatInputCommandInteraction, opti
                 .setThumbnail(options.thumbnail || null)
                 .setImage(options.image || null)
                 .setTitle(options.title || null)
-                .setColor(options.color as ColorResolvable)
+                .setColor(options.color || null)
                 .setDescription(options.description || null)
                 .setFooter(options.footer || null)
                 .setFields(options.fields || [])
         ],
-        flags: options.ephemeral ? [MessageFlags.Ephemeral] : [],
         components: []
-    });
+    };
+
+    if (action === 'reply' && options.ephemeral) {
+        messagePayload.flags = [MessageFlags.Ephemeral];
+    }
+
+    return interaction[action](messagePayload as never);
 }

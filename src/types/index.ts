@@ -51,7 +51,7 @@ export type CustomMessageOptions = {
     author: { name: string; iconURL?: string };
     description: string;
     fields: { name: string; value: string; inline?: boolean }[];
-    color: ColorResolvable | string;
+    color: ColorResolvable;
     thumbnail: string;
     image: string;
     footer: { text: string; iconURL?: string };
