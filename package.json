@@ -14,7 +14,7 @@
     "check": "tsc --noEmit && pnpm run lint"
   },
   "dependencies": {
-    "discord.js": "^14.17.3",
+    "discord.js": "^14.18.0",
     "dotenv": "^16.4.7",
     "glob": "^11.0.1",
     "i18next": "^24.2.2",
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/module-alias": "^2.0.4",
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.5",
     "cross-env": "^7.0.3"
   },
   "_moduleAliases": {
