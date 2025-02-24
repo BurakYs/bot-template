@@ -20,7 +20,7 @@ class Client extends DiscordClient<true> {
 
     async start() {
         await setupI18n();
-        this.extendPrototypes();
+        this.extendInteractionPrototype();
 
         await this.login(process.env.BOT_TOKEN).catch((error) => {
             global.logger.error(error);
@@ -48,7 +48,7 @@ class Client extends DiscordClient<true> {
         });
     }
 
-    private extendPrototypes() {
+    private extendInteractionPrototype() {
         Object.defineProperties(BaseInteraction.prototype, {
             error: {
                 value(options: Partial<CustomMessageOptions>) {
