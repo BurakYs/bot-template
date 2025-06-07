@@ -5,8 +5,12 @@ import type { TFunction } from 'i18next';
 declare module 'discord.js' {
     interface BaseInteraction {
         language: string;
-        success: (options: Partial<CustomMessageOptions>) => Promise<Message>;
-        error: (options: Partial<CustomMessageOptions>) => Promise<Message>;
         translate: TFunction;
+
+        success(options: Partial<CustomMessageOptions>): Promise<Message>;
+        success(message: string): Promise<Message>;
+
+        error(options: Partial<CustomMessageOptions>): Promise<Message>;
+        error(message: string): Promise<Message>;
     }
 }

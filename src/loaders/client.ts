@@ -51,12 +51,24 @@ class Client extends DiscordClient<true> {
     private extendInteractionPrototype() {
         Object.defineProperties(BaseInteraction.prototype, {
             error: {
-                value(options: Partial<CustomMessageOptions>) {
+                value(optionsOrMessage: string | Partial<CustomMessageOptions>) {
+                    let options: Partial<CustomMessageOptions> | string = optionsOrMessage;
+
+                    if (typeof options === 'string') {
+                        options = { description: options };
+                    }
+
                     return sendEmbed(this, { ...options, embedType: 'error' });
                 }
             },
             success: {
-                value(options: Partial<CustomMessageOptions>) {
+                value(optionsOrMessage: string | Partial<CustomMessageOptions>) {
+                    let options: Partial<CustomMessageOptions> | string = optionsOrMessage;
+
+                    if (typeof options === 'string') {
+                        options = { description: options };
+                    }
+
                     return sendEmbed(this, { ...options, embedType: 'success' });
                 }
             },
