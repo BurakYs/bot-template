@@ -1,7 +1,16 @@
 import config from '@/config';
 import client from '@/loaders/client';
 import type { CommandData } from '@/types';
-import { ApplicationIntegrationType, InteractionContextType, type Locale, REST, Routes, type SlashCommandBuilder, type SlashCommandOptionsOnlyBuilder, type SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
+import {
+    ApplicationIntegrationType,
+    InteractionContextType,
+    type Locale,
+    REST,
+    Routes,
+    type SlashCommandBuilder,
+    type SlashCommandOptionsOnlyBuilder,
+    type SlashCommandSubcommandsOnlyBuilder
+} from 'discord.js';
 import { glob } from 'glob';
 
 type CommandLocalization = {
@@ -19,7 +28,7 @@ export default class CommandLoader {
             )
         );
 
-        const folder = await glob('./dist/commands/**/*.js');
+        const folder = await glob('./src/commands/**/*.ts');
         const commands: CommandData['data'][] = [];
         const adminCommands: CommandData['data'][] = [];
 
@@ -85,7 +94,8 @@ export default class CommandLoader {
 
     private static async importLanguageFile(lang: string) {
         try {
-            return (await import(`@/localizations/commandData/${lang}.json`)).default;
+            const file = await import(`@/localizations/commandData/${lang}.json`, { with: { type: 'json' } });
+            return file.default as CommandLocalization[];
         } catch {
             return null;
         }

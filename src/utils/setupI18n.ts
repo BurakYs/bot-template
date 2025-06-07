@@ -17,7 +17,7 @@ export default async function setupI18n() {
 
     await Promise.all(
         Object.entries(supportedLanguages).map(async ([key, value]) => {
-            const { default: language } = await import(`@/localizations/${value}.json`);
+            const { default: language } = await import(`@/localizations/${value}.json`, { with: { type: 'json' } });
             i18next.addResourceBundle(key, 'translation', language);
         })
     );

@@ -3,7 +3,7 @@ import { glob } from 'glob';
 import type { Client, EventData } from '@/types';
 
 export default async (client: Client) => {
-    const eventFiles = await glob('./dist/events/**/*.js');
+    const eventFiles = await glob('./src/events/**/*.ts');
 
     eventFiles.map(async (value) => {
         const event: EventData = (await import(`../../${value.replace(/\\/g, '/')}`)).default;
