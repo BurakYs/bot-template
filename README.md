@@ -1,48 +1,60 @@
 # 🤖 Discord Bot Template
 
-A template for creating Discord bots with Discord.js using TypeScript
+A TypeScript template for creating Discord bots with discord.js
 
-## 📦 Installation
+## 📦 Setup
 
-1. Run this codeblock in your terminal:
-    ```bash
+1. Clone the repo and install dependencies:
+    ```sh
     git clone https://github.com/BurakYs/bot-template.git
     cd bot-template
     pnpm install
     cp .env.template .env
     ```
-2. Fill in the `.env` file with your bot token
-3. Run `pnpm register-commands` to register the commands
-4. Start the bot with `pnpm start`
+
+2. Add your bot token to the `.env` file
+3. Register slash commands:
+    ```sh
+    pnpm register-commands
+    ```
+4. Start the bot:
+    ```sh
+    pnpm start
+    ```
 
 ## ✨ Features
 
-- ### Multiple Language Support
-    - Uses the `i18next` library for localization
-    - To add a new language, add the file in `src/localizations` folder and update `supportedLanguages` array in `src/config.ts`
-    - Command names and descriptions are stored in the `src/localizations/commandData` folder
+### 🌐 Localization
 
-- ### Command Handler
-    - You can create as many subfolders as you want in the `src/commands` folder
-    - Refer to the available command configurations in the [types](src/types/index.d.ts#L12-L22) file
-        - To give a subcommand a specific configuration, do this:
-          ```ts
-          config: {
-            someOtherConfig: true,
-            configName: {
-              '*': false, // Default configuration
-              'groupName subCommandName': true, // Specific configuration for this subcommand
-              // or
-              'subCommandName': true
-            }
-          }
-          ```
+- Add new languages by:
+    - Creating a JSON file in `src/localizations`
+    - Updating the `supportedLanguages` array in `src/config.ts`
+- Command names/descriptions are in `src/localizations/commandData`
 
-- ### Utility Functions
-    - `interaction.success()`: Sends a success message
-    - `interaction.error()`: Sends an error message
-    - `interaction.translate()`: Translates a key
+### ⚙️ Command Handler
+
+- Organize commands in subfolders under `src/commands`
+- See [`types/index.d.ts`](src/types/index.d.ts#L18-L31) for config structure
+- Example of a subcommand-specific config:
+    ```ts
+    {
+      config: {
+        someOtherConfig: true,
+        premiumOnly: {
+          '*': false, // Default
+          'subcommandName': true, // Only for this subcommand
+          'groupName subcommandName': true, // For group subcommands
+        }
+      }
+    }
+    ```
+
+### 🛠 Utility Functions
+
+- [`interaction.success()`](src/types/discordjs.d.ts#L10-L11) - Sends a success message
+- [`interaction.error()`](src/types/discordjs.d.ts#L13-L14) - Sends an error message
+- [`interaction.translate()`](src/types/discordjs.d.ts#L8) - Translates a key using the current language
 
 ## 📝 License
 
-This project is licensed under the [MIT License](./LICENSE) - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the [MIT License](./LICENSE).
