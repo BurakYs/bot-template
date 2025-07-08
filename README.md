@@ -10,7 +10,6 @@ A template for creating Discord bots with Discord.js using TypeScript
     cd bot-template
     pnpm install
     cp .env.template .env
-    pnpm build
     ```
 2. Fill in the `.env` file with your bot token
 3. Run `pnpm register-commands` to register the commands
