@@ -11,19 +11,19 @@
         "dev": "cross-env NODE_ENV=development node --loader ./custom-loader.js --no-warnings .",
         "register-commands": "cross-env NODE_ENV=production node --loader ./custom-loader.js --no-warnings ./src/registerCommands.ts",
         "lint": "biome lint",
-        "check": "pnpm exec tsc --noEmit && pnpm run lint"
+        "check": "tsc --noEmit && pnpm run lint"
     },
     "dependencies": {
-        "@biomejs/biome": "^1.9.4",
-        "discord.js": "^14.19.3",
-        "dotenv": "^16.5.0",
-        "glob": "^11.0.2",
-        "i18next": "^25.2.1",
+        "discord.js": "^14.21.0",
+        "dotenv": "^17.1.0",
+        "glob": "^11.0.3",
+        "i18next": "^25.3.1",
         "pino": "^9.7.0",
         "pino-pretty": "^13.0.0"
     },
     "devDependencies": {
-        "@types/node": "^22.15.30",
+        "@biomejs/biome": "^2.1.0",
+        "@types/node": "^24.0.10",
         "cross-env": "^7.0.3",
         "typescript": "^5.8.3"
     }
