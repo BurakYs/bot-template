@@ -1,5 +1,5 @@
-import config from '@/config';
 import type { ChatInputCommandInteraction } from 'discord.js';
+import config from '@/config';
 
 import type { Client, CommandConfig, CommandData, EventData, ResolvedCommandData } from '@/types';
 

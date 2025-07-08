@@ -1,5 +1,5 @@
-import config from '@/config';
 import i18next from 'i18next';
+import config from '@/config';
 
 const { defaultLanguage, supportedLanguages } = config.bot;
 

@@ -11,6 +11,7 @@
         "dev": "cross-env NODE_ENV=development node --loader ./custom-loader.js --no-warnings .",
         "register-commands": "cross-env NODE_ENV=production node --loader ./custom-loader.js --no-warnings ./src/registerCommands.ts",
         "lint": "biome lint",
+        "lint:fix": "biome check --write",
         "check": "tsc --noEmit && pnpm run lint"
     },
     "dependencies": {

@@ -1,7 +1,7 @@
+import { type ChatInputCommandInteraction, EmbedBuilder, type InteractionEditReplyOptions, type InteractionReplyOptions, MessageFlags } from 'discord.js';
 import config from '@/config';
 import type { CustomMessageOptions } from '@/types';
 import { randomFromArray } from '@/utils';
-import { type ChatInputCommandInteraction, EmbedBuilder, type InteractionEditReplyOptions, type InteractionReplyOptions, MessageFlags } from 'discord.js';
 
 export default async function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<CustomMessageOptions> & { embedType: 'error' | 'success' }) {
     const action = interaction.deferred || interaction.replied ? 'editReply' : 'reply';

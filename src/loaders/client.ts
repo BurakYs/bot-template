@@ -1,12 +1,11 @@
+import { BaseInteraction, Client as DiscordClient, GatewayIntentBits, OAuth2Scopes, PermissionsBitField } from 'discord.js';
+import i18next, { type TFunction, type TOptions } from 'i18next';
 import config from '@/config';
 import CommandLoader from '@/loaders/command';
 import EventLoader from '@/loaders/event';
+import type { CommandData, CustomMessageOptions } from '@/types';
 import sendEmbed from '@/utils/sendEmbed';
 import setupI18n from '@/utils/setupI18n';
-import { BaseInteraction, Client as DiscordClient, GatewayIntentBits, OAuth2Scopes, PermissionsBitField } from 'discord.js';
-import i18next, { type TFunction, type TOptions } from 'i18next';
-
-import type { CommandData, CustomMessageOptions } from '@/types';
 
 class Client extends DiscordClient<true> {
     commands: CommandData[] = [];

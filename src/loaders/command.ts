@@ -1,6 +1,3 @@
-import config from '@/config';
-import client from '@/loaders/client';
-import type { CommandData } from '@/types';
 import {
     ApplicationIntegrationType,
     InteractionContextType,
@@ -12,6 +9,9 @@ import {
     type SlashCommandSubcommandsOnlyBuilder
 } from 'discord.js';
 import { glob } from 'glob';
+import config from '@/config';
+import client from '@/loaders/client';
+import type { CommandData } from '@/types';
 
 type CommandLocalization = {
     name: string;

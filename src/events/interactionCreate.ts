@@ -1,8 +1,8 @@
+import type { Interaction } from 'discord.js';
+import { Events, InteractionType } from 'discord.js';
 import config from '@/config';
 import applicationCommandHandler from '@/events/interactions/applicationCommand';
 import type { Client, EventData } from '@/types';
-import type { Interaction } from 'discord.js';
-import { Events, InteractionType } from 'discord.js';
 
 export default {
     name: Events.InteractionCreate,
