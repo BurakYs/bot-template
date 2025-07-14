@@ -22,7 +22,9 @@ export default {
             .setThumbnail(client.user.displayAvatarURL());
 
         if (commandName) {
-            if (!command || command.config.botAdminsOnly) return await interaction.error(interaction.translate('commands.help.commandNotFound', { name: `\`${commandName}\`` }));
+            if (!command || command.config.botAdminsOnly) {
+                return await interaction.error(interaction.translate('commands.help.commandNotFound', { name: `\`${commandName}\`` }));
+            }
 
             embed.setDescription(command.data.description).setFields([
                 {
@@ -34,7 +36,7 @@ ${interaction.translate('commands.help.info.category')}: ${command.config.catego
                 }
             ]);
         } else {
-            embed.setDescription(interaction.translate('commands.help.embed.description', { name: client.user.username })).setFields([
+            embed.setDescription(interaction.translate('commands.help.embed.description')).setFields([
                 {
                     name: interaction.translate('commands.help.links.title'),
                     value: `

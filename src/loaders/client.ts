@@ -74,7 +74,8 @@ class Client extends DiscordClient<true> {
             translate: {
                 value(...args: Parameters<TFunction>) {
                     const options: TOptions = typeof args[1] === 'object' && args[1] != null ? args[1] : {};
-                    if (!options.lng) options.lng = this.locale;
+                    if (!options.lng) options.lng = this.language || this.locale;
+                    (args[1] as unknown as TOptions) = options;
 
                     return i18next.t(...args);
                 }
