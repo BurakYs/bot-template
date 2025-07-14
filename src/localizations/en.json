@@ -1,54 +1,46 @@
 {
-  "commands": {
-    "help": {
-      "commandNotFound": "No command with the name {name} was found.",
-      "embed": {
-        "title": "Help Menu",
-        "description": "This is a very useful help menu."
-      },
-      "info": {
-        "title": "Information",
-        "description": "Description",
-        "category": "Category"
-      },
-      "links": {
-        "title": "Links",
-        "supportServer": "Support Server",
-        "invite": "Invite Me"
-      }
+    "commands": {
+        "help": {
+            "commandNotFound": "No command with the name {name} was found.",
+            "embed": {
+                "title": "Help Menu",
+                "description": "This is a very useful help menu."
+            },
+            "info": {
+                "title": "Information",
+                "description": "Description",
+                "category": "Category"
+            },
+            "links": {
+                "title": "Links",
+                "supportServer": "Support Server",
+                "invite": "Invite Me"
+            }
+        }
+    },
+    "permissions": {
+        "Administrator": "Administrator",
+        "ManageGuild": "Manage Server",
+        "ManageRoles": "Manage Roles",
+        "ManageChannels": "Manage Channels",
+        "BanMembers": "Ban Members",
+        "KickMembers": "Kick Members",
+        "ModerateMembers": "Timeout Members",
+        "ManageMessages": "Manage Messages",
+        "ManageNicknames": "Manage Nicknames"
+    },
+    "commandErrors": {
+        "botAdminsOnly": "This command can only be used by bot administrators.",
+        "disabled": "This command is disabled temporarily.",
+        "dmOnly": "This command can only be used in DMs.",
+        "guildOnly": "This command can only be used in servers.",
+        "supportServerOnly": "This command can only be used in [our support server]({support}).",
+        "userMissingPermissions": "You are missing the following permissions to run this command: {permissions}",
+        "botMissingPermissions": "The bot is missing the following permissions to run this command: {permissions}",
+        "unexpectedErrorOccurred": "An unexpected error occurred. Please try again later."
+    },
+    "embedTitles": {
+        "error": ["Error!", "Oops!", "Uh oh!"],
+        "success": ["Success!", "Nice!", "Great!"]
     }
-  },
-  "permissions": {
-    "Administrator": "Administrator",
-    "ManageGuild": "Manage Server",
-    "ManageRoles": "Manage Roles",
-    "ManageChannels": "Manage Channels",
-    "BanMembers": "Ban Members",
-    "KickMembers": "Kick Members",
-    "ModerateMembers": "Timeout Members",
-    "ManageMessages": "Manage Messages",
-    "ManageNicknames": "Manage Nicknames"
-  },
-  "commandErrors": {
-    "botAdminsOnly": "This command can only be used by bot administrators.",
-    "disabled": "This command is disabled temporarily.",
-    "dmOnly": "This command can only be used in DMs.",
-    "guildOnly": "This command can only be used in servers.",
-    "supportServerOnly": "This command can only be used in [our support server]({support}).",
-    "userMissingPermissions": "You are missing the following permissions to run this command: {permissions}",
-    "botMissingPermissions": "The bot is missing the following permissions to run this command: {permissions}",
-    "unexpectedErrorOccurred": "An unexpected error occurred. Please try again later."
-  },
-  "embedTitles": {
-    "error": [
-      "Error!",
-      "Oops!",
-      "Uh oh!"
-    ],
-    "success": [
-      "Success!",
-      "Nice!",
-      "Great!"
-    ]
-  }
 }

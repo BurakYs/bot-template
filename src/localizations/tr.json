@@ -1,54 +1,46 @@
 {
-  "commands": {
-    "help": {
-      "commandNotFound": "{name} adında bir komut bulunamadı.",
-      "embed": {
-        "title": "Yardım Menüsü",
-        "description": "Bu çok kullanışlı bir yardım menüsü."
-      },
-      "info": {
-        "title": "Bilgiler",
-        "description": "Açıklama",
-        "category": "Kategori"
-      },
-      "links": {
-        "title": "Linkler",
-        "supportServer": "Destek Sunucusu",
-        "invite": "Davet Et"
-      }
+    "commands": {
+        "help": {
+            "commandNotFound": "{name} adında bir komut bulunamadı.",
+            "embed": {
+                "title": "Yardım Menüsü",
+                "description": "Bu çok kullanışlı bir yardım menüsü."
+            },
+            "info": {
+                "title": "Bilgiler",
+                "description": "Açıklama",
+                "category": "Kategori"
+            },
+            "links": {
+                "title": "Linkler",
+                "supportServer": "Destek Sunucusu",
+                "invite": "Davet Et"
+            }
+        }
+    },
+    "permissions": {
+        "Administrator": "Yönetici",
+        "ManageGuild": "Sunucuyu Yönet",
+        "ManageRoles": "Rolleri Yönet",
+        "ManageChannels": "Kanalları Yönet",
+        "BanMembers": "Üyeleri Yasakla",
+        "KickMembers": "Üyeleri At",
+        "ModerateMembers": "Üyelere Zaman Aşımı Uygula",
+        "ManageMessages": "Mesajları Yönet",
+        "ManageNicknames": "Takma Adları Yönet"
+    },
+    "commandErrors": {
+        "botAdminsOnly": "Bu komut yalnızca bot yöneticileri tarafından kullanılabilir.",
+        "disabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
+        "dmOnly": "Bu komut sadece DM'lerde kullanılabilir.",
+        "guildOnly": "Bu komut sadece sunucularda kullanılabilir.",
+        "supportServerOnly": "Bu komut yalnızca [destek sunucumuzda]({support}) kullanılabilir.",
+        "userMissingPermissions": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: {permissions}",
+        "botMissingPermissions": "Bu komutu çalıştırmak için bot şu izinlere sahip olmalı: {permissions}",
+        "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin."
+    },
+    "embedTitles": {
+        "error": ["Hata!", "Oops!", "Uh oh!"],
+        "success": ["Başarılı!", "Güzel!", "Harika!"]
     }
-  },
-  "permissions": {
-    "Administrator": "Yönetici",
-    "ManageGuild": "Sunucuyu Yönet",
-    "ManageRoles": "Rolleri Yönet",
-    "ManageChannels": "Kanalları Yönet",
-    "BanMembers": "Üyeleri Yasakla",
-    "KickMembers": "Üyeleri At",
-    "ModerateMembers": "Üyelere Zaman Aşımı Uygula",
-    "ManageMessages": "Mesajları Yönet",
-    "ManageNicknames": "Takma Adları Yönet"
-  },
-  "commandErrors": {
-    "botAdminsOnly": "Bu komut yalnızca bot yöneticileri tarafından kullanılabilir.",
-    "disabled": "Bu komut geçici olarak devre dışı bırakılmıştır.",
-    "dmOnly": "Bu komut sadece DM'lerde kullanılabilir.",
-    "guildOnly": "Bu komut sadece sunucularda kullanılabilir.",
-    "supportServerOnly": "Bu komut yalnızca [destek sunucumuzda]({support}) kullanılabilir.",
-    "userMissingPermissions": "Bu komutu çalıştırmak için şu izinlere sahip olmalısınız: {permissions}",
-    "botMissingPermissions": "Bu komutu çalıştırmak için bot şu izinlere sahip olmalı: {permissions}",
-    "unexpectedErrorOccurred": "Beklenmedik bir hata oluştu. Lütfen daha sonra tekrar deneyin."
-  },
-  "embedTitles": {
-    "error": [
-      "Hata!",
-      "Oops!",
-      "Uh oh!"
-    ],
-    "success": [
-      "Başarılı!",
-      "Güzel!",
-      "Harika!"
-    ]
-  }
 }
