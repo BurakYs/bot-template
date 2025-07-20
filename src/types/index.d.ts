@@ -18,7 +18,7 @@ type RunFunction = (options: RunFunctionOptions) => Promise<unknown>;
 export type CommandConfig<P extends boolean = false> = PrimitiveOrDictionary<
     P,
     {
-        category: string;
+        category: 'Bot' | 'Moderation' | 'Admin';
         tags?: string[];
         guildOnly?: boolean;
         dmOnly?: boolean;
