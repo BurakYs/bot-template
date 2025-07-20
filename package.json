@@ -23,8 +23,8 @@
         "pino-pretty": "^13.0.0"
     },
     "devDependencies": {
-        "@biomejs/biome": "^2.1.1",
-        "@types/node": "^24.0.13",
+        "@biomejs/biome": "^2.1.2",
+        "@types/node": "^24.0.15",
         "cross-env": "^7.0.3",
         "typescript": "^5.8.3"
     }
