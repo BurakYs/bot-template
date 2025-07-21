@@ -43,7 +43,7 @@ export default {
         } catch (error) {
             global.logger.error(error);
 
-            return await interaction.error(interaction.translate('commandErrors.unexpectedErrorOccurred', { support: config.guilds.supportServer.invite }));
+            return await interaction.error(interaction.translate('commandErrors.unexpectedErrorOccurred'));
         }
     }
 } satisfies EventData;
