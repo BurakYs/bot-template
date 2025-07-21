@@ -51,8 +51,8 @@ A TypeScript template for creating Discord bots with discord.js
 
 ### 🛠 Utility Functions
 
-- [`interaction.success()`](src/types/discordjs.d.ts#L10-L11) - Sends a success message
-- [`interaction.error()`](src/types/discordjs.d.ts#L13-L14) - Sends an error message
+- [`interaction.success()`](src/types/discordjs.d.ts#L10-L12) - Sends a success message
+- [`interaction.error()`](src/types/discordjs.d.ts#L14-L16) - Sends an error message
 - [`interaction.translate()`](src/types/discordjs.d.ts#L8) - Translates a key using the current language
 
 ## 📝 License
