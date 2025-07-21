@@ -15,7 +15,7 @@ export default {
         activities: [
             {
                 type: ActivityType.Custom,
-                name: 'status',
+                name: 'Hi',
                 state: 'Hi'
             }
         ],
