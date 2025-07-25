@@ -23,7 +23,7 @@ export default {
 
         if (commandName) {
             if (!command || command.config.botAdminsOnly) {
-                return await interaction.error(interaction.translate('commands.help.commandNotFound', { name: `\`${commandName}\`` }));
+                return interaction.error(interaction.translate('commands.help.commandNotFound', { name: `\`${commandName}\`` }));
             }
 
             embed.setDescription(command.data.description).setFields([
@@ -47,7 +47,7 @@ ${interaction.translate('commands.help.info.category')}: ${command.config.catego
             ]);
         }
 
-        await interaction.reply({
+        return interaction.reply({
             embeds: [embed]
         });
     }

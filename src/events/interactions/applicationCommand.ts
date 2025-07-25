@@ -15,12 +15,12 @@ export default {
         const isSupportServer = [config.guilds.supportServer.id, config.guilds.test].includes(interaction.guild?.id || '');
         const isAdmin = config.bot.admins.includes(interaction.user.id);
 
-        if (commandData.botAdminsOnly && !isAdmin) return await interaction.error(interaction.translate('commandErrors.botAdminsOnly'));
-        if (commandData.disabled) return await interaction.error(interaction.translate('commandErrors.disabled'));
-        if (commandData.dmOnly && interaction.guild) return await interaction.error(interaction.translate('commandErrors.dmOnly'));
-        if (commandData.guildOnly && !interaction.guild) return await interaction.error(interaction.translate('commandErrors.guildOnly'));
+        if (commandData.botAdminsOnly && !isAdmin) return interaction.error(interaction.translate('commandErrors.botAdminsOnly'));
+        if (commandData.disabled) return interaction.error(interaction.translate('commandErrors.disabled'));
+        if (commandData.dmOnly && interaction.guild) return interaction.error(interaction.translate('commandErrors.dmOnly'));
+        if (commandData.guildOnly && !interaction.guild) return interaction.error(interaction.translate('commandErrors.guildOnly'));
         if (commandData.supportServerOnly && !isSupportServer)
-            return await interaction.error(interaction.translate('commandErrors.supportServerOnly', { support: config.guilds.supportServer.invite }));
+            return interaction.error(interaction.translate('commandErrors.supportServerOnly', { support: config.guilds.supportServer.invite }));
 
         if (interaction.inCachedGuild()) {
             const missingMemberPermissions = commandData.requiredMemberPermissions?.filter((p) => !interaction.member.permissions.has(p));
@@ -29,21 +29,21 @@ export default {
 
             if (missingMemberPermissions?.length) {
                 const missingPermissions = missingMemberPermissions.map((p) => `\`${permissions[p.toString()] || p.toString()}\``).join(', ');
-                return await interaction.error(interaction.translate('commandErrors.userMissingPermissions', { permissions: missingPermissions }));
+                return interaction.error(interaction.translate('commandErrors.userMissingPermissions', { permissions: missingPermissions }));
             }
 
             if (missingBotPermissions?.length) {
                 const missingPermissions = missingBotPermissions.map((p) => `\`${permissions[p.toString()] || p.toString()}\``).join(', ');
-                return await interaction.error(interaction.translate('commandErrors.botMissingPermissions', { permissions: missingPermissions }));
+                return interaction.error(interaction.translate('commandErrors.botMissingPermissions', { permissions: missingPermissions }));
             }
         }
 
         try {
-            return await commandData.run({ client, interaction });
+            return commandData.run({ client, interaction });
         } catch (error) {
             global.logger.error(error);
 
-            return await interaction.error(interaction.translate('commandErrors.unexpectedErrorOccurred'));
+            return interaction.error(interaction.translate('commandErrors.unexpectedErrorOccurred'));
         }
     }
 } satisfies EventData;

@@ -17,6 +17,6 @@ export default {
         const isLanguageSupported = Object.keys(config.bot.supportedLanguages).includes(interaction.locale);
         interaction.language = isLanguageSupported ? interaction.locale : config.bot.defaultLanguage;
 
-        return await handler.run(client, interaction);
+        return handler.run(client, interaction);
     }
 } satisfies EventData;
