@@ -39,11 +39,11 @@ export default {
         }
 
         try {
-            return commandData.run({ client, interaction });
+            await commandData.run({ client, interaction });
         } catch (error) {
             global.logger.error(error);
 
-            return interaction.error(interaction.translate('commandErrors.unexpectedErrorOccurred'));
+            await interaction.error(interaction.translate('commandErrors.unexpectedErrorOccurred'));
         }
     }
 } satisfies EventData;
