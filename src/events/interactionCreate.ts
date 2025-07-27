@@ -1,16 +1,17 @@
-import type { Interaction } from 'discord.js';
 import { Events, InteractionType } from 'discord.js';
 import config from '@/config';
 import applicationCommandHandler from '@/events/interactions/applicationCommand';
-import type { Client, EventData } from '@/types';
+import type { EventData } from '@/types';
+import defineEvent from '@/utils/defineEvent';
 
-const interactionTypes: Partial<Record<InteractionType, EventData>> = {
+// biome-ignore lint/suspicious/noExplicitAny: We need to allow any type for the handler
+const interactionTypes: Partial<Record<InteractionType, EventData<any>>> = {
     [InteractionType.ApplicationCommand]: applicationCommandHandler
 };
 
-export default {
+export default defineEvent({
     name: Events.InteractionCreate,
-    run: async (client: Client, interaction: Interaction) => {
+    run: async (client, interaction) => {
         const handler = interactionTypes[interaction.type];
         if (!handler) return;
 
@@ -19,4 +20,4 @@ export default {
 
         return handler.run(client, interaction);
     }
-} satisfies EventData;
+});

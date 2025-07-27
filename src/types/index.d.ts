@@ -1,6 +1,7 @@
 import type ClientInstance from '@/loaders/client';
 import type {
     ChatInputCommandInteraction,
+    ClientEvents,
     ColorResolvable,
     PermissionResolvable,
     SlashCommandBuilder,
@@ -37,11 +38,19 @@ export type CommandData = {
 
 export type ResolvedCommandData = CommandConfig<true> & NonFunctionProperties<SlashCommandBuilder> & { run: RunFunction };
 
-export type EventData = {
+export type EventData<T extends keyof ClientEvents> =
+    | {
+    name: T;
+    once?: boolean;
+    dontLoad?: false;
+    run: (client: Client, ...rest: ClientEvents[T]) => void;
+}
+    | {
     name: string;
     once?: boolean;
-    dontLoad?: boolean;
-    run: CallableFunction;
+    dontLoad: true;
+    // biome-ignore lint/suspicious/noExplicitAny: x
+    run: (client: Client, ...rest: any[]) => void;
 };
 
 export type CustomMessageOptions = {

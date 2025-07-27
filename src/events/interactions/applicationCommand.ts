@@ -1,18 +1,18 @@
 import type { ChatInputCommandInteraction } from 'discord.js';
 import config from '@/config';
+import type { CommandConfig, CommandData, ResolvedCommandData } from '@/types';
+import defineEvent from '@/utils/defineEvent';
 
-import type { Client, CommandConfig, CommandData, EventData, ResolvedCommandData } from '@/types';
-
-export default {
+export default defineEvent({
     name: 'applicationCommand',
     dontLoad: true,
-    run: async (client: Client, interaction: ChatInputCommandInteraction) => {
+    run: async (client, interaction: ChatInputCommandInteraction) => {
         const cmd = client.commands.find((x) => x.data.name === interaction.commandName);
         if (!cmd) return;
 
         const commandData = resolveCommandData(cmd, interaction);
 
-        const isSupportServer = [config.guilds.supportServer.id, config.guilds.test].includes(interaction.guild?.id || '');
+        const isSupportServer = interaction.guild?.id === config.guilds.supportServer.id || interaction.guild?.id === config.guilds.test;
         const isAdmin = config.bot.admins.includes(interaction.user.id);
 
         if (commandData.botAdminsOnly && !isAdmin) return interaction.error(interaction.translate('commandErrors.botAdminsOnly'));
@@ -46,7 +46,7 @@ export default {
             await interaction.error(interaction.translate('commandErrors.unexpectedErrorOccurred'));
         }
     }
-} satisfies EventData;
+});
 
 function resolveCommandData(command: CommandData, interaction: ChatInputCommandInteraction) {
     const resolvedCommand = {

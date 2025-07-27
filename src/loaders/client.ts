@@ -2,7 +2,7 @@ import { BaseInteraction, Client as DiscordClient, GatewayIntentBits, OAuth2Scop
 import i18next, { type TFunction, type TOptions } from 'i18next';
 import config from '@/config';
 import CommandLoader from '@/loaders/command';
-import EventLoader from '@/loaders/event';
+import loadEvents from '@/loaders/event';
 import type { CommandData, CustomMessageOptions } from '@/types';
 import sendEmbed from '@/utils/sendEmbed';
 import setupI18n from '@/utils/setupI18n';
@@ -30,7 +30,7 @@ class Client extends DiscordClient<true> {
             global.logger.info(`Logged in as ${client.user.tag}`);
 
             await CommandLoader.loadCommands();
-            await EventLoader(this);
+            await loadEvents(this);
         });
     }
 

@@ -1,7 +1,6 @@
 import { type ChatInputCommandInteraction, EmbedBuilder, type InteractionEditReplyOptions, type InteractionReplyOptions, MessageFlags } from 'discord.js';
 import config from '@/config';
 import type { CustomMessageOptions } from '@/types';
-import { randomFromArray } from '@/utils';
 
 export default async function sendEmbed(interaction: ChatInputCommandInteraction, options: Partial<CustomMessageOptions> & { embedType: 'error' | 'success' }) {
     const action = interaction.deferred || interaction.replied ? 'editReply' : 'reply';
@@ -9,7 +8,7 @@ export default async function sendEmbed(interaction: ChatInputCommandInteraction
     const embedTitles = interaction.translate(`embedTitles.${options.embedType}`, { returnObjects: true });
     const embedEmoji = options.embedType === 'error' ? ':x:' : ':white_check_mark:';
 
-    options.title = `${embedEmoji} ${options.title || randomFromArray(embedTitles)}`;
+    options.title ??= `${embedEmoji} ${embedTitles[Math.floor(Math.random() * embedTitles.length)]}`;
     options.color ??= config.embedColors[options.embedType];
 
     const messagePayload: InteractionReplyOptions | InteractionEditReplyOptions = {
