@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "discord.js": "^14.21.0",
-        "dotenv": "^17.2.0",
+        "dotenv": "^17.2.1",
         "glob": "^11.0.3",
         "i18next": "^25.3.2",
         "pino": "^9.7.0",
@@ -24,8 +24,8 @@
     },
     "devDependencies": {
         "@biomejs/biome": "^2.1.2",
-        "@types/node": "^24.0.15",
-        "cross-env": "^7.0.3",
+        "@types/node": "^24.1.0",
+        "cross-env": "^10.0.0",
         "typescript": "^5.8.3"
     }
 }
