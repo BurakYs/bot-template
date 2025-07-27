@@ -23,8 +23,8 @@ export default {
             return interaction.error(interaction.translate('commandErrors.supportServerOnly', { support: config.guilds.supportServer.invite }));
 
         if (interaction.inCachedGuild()) {
-            const missingMemberPermissions = commandData.requiredMemberPermissions?.filter((p) => !interaction.member.permissions.has(p));
-            const missingBotPermissions = commandData.requiredBotPermissions?.filter((p) => !interaction.guild.members.me?.permissions.has(p));
+            const missingMemberPermissions = commandData.memberPermissions?.filter((p) => !interaction.member.permissions.has(p));
+            const missingBotPermissions = commandData.botPermissions?.filter((p) => !interaction.guild.members.me?.permissions.has(p));
             const permissions: Record<string, string> = interaction.translate('permissions', { returnObjects: true });
 
             if (missingMemberPermissions?.length) {

@@ -19,12 +19,11 @@ export type CommandConfig<P extends boolean = false> = PrimitiveOrDictionary<
     P,
     {
         category: 'Bot' | 'Moderation' | 'Admin';
-        tags?: string[];
         guildOnly?: boolean;
         dmOnly?: boolean;
         supportServerOnly?: boolean;
-        requiredMemberPermissions?: PermissionResolvable[];
-        requiredBotPermissions?: PermissionResolvable[];
+        memberPermissions?: PermissionResolvable[];
+        botPermissions?: PermissionResolvable[];
         botAdminsOnly?: boolean;
         disabled?: boolean;
     }
