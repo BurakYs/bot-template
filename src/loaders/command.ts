@@ -22,11 +22,14 @@ type CommandLocalization = {
 
 export default class CommandLoader {
     static async loadCommands(registerOnly = false) {
-        const localizations: Record<Locale, CommandLocalization[]> = Object.fromEntries(
-            (await Promise.all(Object.entries(config.bot.supportedLanguages).map(async ([key, value]) => [key, await CommandLoader.importLanguageFile(value)]))).filter(
-                ([, value]) => value !== null
-            )
-        );
+        const localizations = {} as Record<Locale, CommandLocalization[]>;
+
+        for (const [locale, filePath] of Object.entries(config.bot.supportedLanguages)) {
+            const data = await CommandLoader.importLanguageFile(filePath);
+            if (data === null) continue;
+
+            localizations[locale as Locale] = data;
+        }
 
         const folder = await glob('./src/commands/**/*.ts');
         const commands: CommandData['data'][] = [];
