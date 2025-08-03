@@ -40,18 +40,18 @@ export type ResolvedCommandData = CommandConfig<true> & NonFunctionProperties<Sl
 
 export type EventData<T extends keyof ClientEvents> =
     | {
-    name: T;
-    once?: boolean;
-    dontLoad?: false;
-    run: (client: Client, ...rest: ClientEvents[T]) => void;
-}
+          name: T;
+          once?: boolean;
+          dontLoad?: false;
+          run: (client: Client, ...rest: ClientEvents[T]) => void;
+      }
     | {
-    name: string;
-    once?: boolean;
-    dontLoad: true;
-    // biome-ignore lint/suspicious/noExplicitAny: x
-    run: (client: Client, ...rest: any[]) => void;
-};
+          name: string;
+          once?: boolean;
+          dontLoad: true;
+          // biome-ignore lint/suspicious/noExplicitAny: x
+          run: (client: Client, ...rest: any[]) => void;
+      };
 
 export type CustomMessageOptions = {
     content: string;

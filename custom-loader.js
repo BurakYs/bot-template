@@ -11,10 +11,8 @@ function resolvePath(specifier) {
 
     for (const ext of extensions) {
         const fullPath = path.resolve(srcPath, filePath + ext);
-        if (fs.existsSync(fullPath)) {
-            if (!fs.statSync(fullPath).isDirectory()) {
-                return `file://${fullPath}`;
-            }
+        if (fs.existsSync(fullPath) && !!fs.statSync(fullPath).isDirectory()) {
+            return `file://${fullPath}`;
         }
     }
 
