@@ -1,4 +1,4 @@
-import { BaseInteraction, Client as DiscordClient, GatewayIntentBits, OAuth2Scopes, PermissionsBitField } from 'discord.js';
+import { BaseInteraction, Client as DiscordClient, Events, GatewayIntentBits, OAuth2Scopes, PermissionsBitField } from 'discord.js';
 import i18next, { type TFunction, type TOptions } from 'i18next';
 import config from '@/config';
 import CommandLoader from '@/loaders/command';
@@ -19,16 +19,16 @@ class Client extends DiscordClient<true> {
         await setupI18n();
         this.extendInteractionPrototype();
 
-        await this.login(process.env.BOT_TOKEN).catch((error) => {
-            global.logger.error(error);
-            process.exit(1);
-        });
-
-        this.once('ready', async (client) => {
+        this.once(Events.ClientReady, async (client) => {
             global.logger.info(`Logged in as ${client.user.tag}`);
 
             await CommandLoader.loadCommands();
             await loadEvents(this);
+        });
+
+        await this.login(process.env.BOT_TOKEN).catch((error) => {
+            global.logger.error(error);
+            process.exit(1);
         });
     }
 
