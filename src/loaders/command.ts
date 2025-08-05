@@ -46,7 +46,7 @@ export default class CommandLoader {
                 const commandList = file.config.botAdminsOnly ? adminCommands : commands;
                 commandList.push(file.data);
 
-                if (!registerOnly) CommandLoader.commands.push(file);
+                CommandLoader.commands.push(file);
             })
         );
 
