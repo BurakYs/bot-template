@@ -34,7 +34,7 @@ A TypeScript template for creating Discord bots with discord.js
 ### ⚙️ Command Handler
 
 - Organize commands in subfolders under `src/commands`
-- See [`types/index.d.ts`](src/types/index.d.ts#L18-L31) for config structure
+- See [`types/index.d.ts`](src/types/index.d.ts#L19-L31) for config structure
 - Example of a subcommand-specific config:
     ```ts
     {
