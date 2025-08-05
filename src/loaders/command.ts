@@ -1,16 +1,6 @@
-import {
-    ApplicationIntegrationType,
-    InteractionContextType,
-    type Locale,
-    REST,
-    Routes,
-    type SlashCommandBuilder,
-    type SlashCommandOptionsOnlyBuilder,
-    type SlashCommandSubcommandsOnlyBuilder
-} from 'discord.js';
+import { ApplicationIntegrationType, InteractionContextType, type Locale, REST, Routes, type SlashCommandBuilder, type SlashCommandOptionsOnlyBuilder, type SlashCommandSubcommandsOnlyBuilder } from 'discord.js';
 import { glob } from 'glob';
 import config from '@/config';
-import client from '@/loaders/client';
 import type { CommandData } from '@/types';
 
 type CommandLocalization = {
@@ -21,6 +11,8 @@ type CommandLocalization = {
 };
 
 export default class CommandLoader {
+    static commands: CommandData[] = [];
+
     static async loadCommands(registerOnly = false) {
         const localizations = {} as Record<Locale, CommandLocalization[]>;
 
@@ -54,7 +46,7 @@ export default class CommandLoader {
                 const commandList = file.config.botAdminsOnly ? adminCommands : commands;
                 commandList.push(file.data);
 
-                if (!registerOnly) client.commands.push(file);
+                if (!registerOnly) CommandLoader.commands.push(file);
             })
         );
 

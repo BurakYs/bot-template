@@ -1,6 +1,6 @@
 import { EmbedBuilder, SlashCommandBuilder } from 'discord.js';
 import config from '@/config';
-
+import CommandLoader from '@/loaders/command';
 import type { CommandData } from '@/types';
 
 export default {
@@ -13,7 +13,7 @@ export default {
     },
     run: async ({ client, interaction }) => {
         const commandName = interaction.options.getString('command')?.split(' ')[0];
-        const command = commandName && client.commands.find((x) => x.data.name.toLowerCase() === commandName.toLowerCase());
+        const command = commandName && CommandLoader.commands.find((x) => x.data.name.toLowerCase() === commandName.toLowerCase());
 
         const embed = new EmbedBuilder()
             .setTitle(interaction.translate('commands.help.embed.title'))

@@ -1,5 +1,6 @@
 import type { ChatInputCommandInteraction } from 'discord.js';
 import config from '@/config';
+import CommandLoader from '@/loaders/command';
 import type { CommandConfig, CommandData, ResolvedCommandData } from '@/types';
 import defineEvent from '@/utils/defineEvent';
 
@@ -7,7 +8,7 @@ export default defineEvent({
     name: 'applicationCommand',
     dontLoad: true,
     run: async (client, interaction: ChatInputCommandInteraction) => {
-        const cmd = client.commands.find((x) => x.data.name === interaction.commandName);
+        const cmd = CommandLoader.commands.find((x) => x.data.name === interaction.commandName);
         if (!cmd) return;
 
         const commandData = resolveCommandData(cmd, interaction);
